@@ -40,7 +40,6 @@ export class HealthController {
               result[name].status = 'up';
             },
             complete: () => {
-              console.log(result);
               resolve(result);
             },
           });
