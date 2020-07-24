@@ -1,30 +1,35 @@
-import { Controller }   from '@nestjs/common';
-import { EventPattern } from '@nestjs/microservices';
-import { AppGateway }   from '../app.gateway';
+import { Controller }                   from '@nestjs/common';
+import { EventPattern, MessagePattern } from '@nestjs/microservices';
+import { EventGateway }                 from './event.gateway';
 
 @Controller('dispatch')
 export class EventController {
 
-  constructor(private gateway: AppGateway) {
+  constructor(private gateway: EventGateway) {
   }
 
-  @EventPattern('presence.*')
-  presence({ event, data }: { event: string, data: any }) {
+  @EventPattern('event.broadcast')
+  broadcast({ event, data }: { event: string, data: any }) {
     this.gateway.namespace.emit(event, data);
   }
 
-  @EventPattern('auth.*')
-  auth({ event, data }: { event: string, data: any }) {
-    this.gateway.namespace.emit(event, data);
+  @EventPattern('event.to')
+  room({ event, room, data }: { event: string, room: string, data: any }) {
+    this.gateway.namespace.to(room).emit(event, data);
   }
 
-  @EventPattern('account.*')
-  account({ event, data }: { event: string, data: any }) {
-    this.gateway.namespace.emit(event, data);
+  @MessagePattern('request.test')
+  testMessage({ event, data }: { event: string, data: any }) {
+    if (event === 'test') {
+      console.log('Test Message Received', data);
+    }
+    return { result: 'ok' };
   }
 
-  @EventPattern('state.*')
-  state({ event, data }: { event: string, data: any }) {
-    this.gateway.namespace.emit(event, data);
+  @EventPattern('emit.test')
+  testEvent({ event, data }: { event: string, data: any }) {
+    if (event === 'test') {
+      console.log('Test Event Received', data);
+    }
   }
 }

@@ -1,9 +1,9 @@
 import { Module }           from '@nestjs/common';
 import { AppService }       from './app.service';
 import { HealthController } from './health/health.controller';
-import { AppGateway }      from './app.gateway';
-import { EventController } from './event/event.controller';
-import { LoginController } from './login/login.controller';
+import { EventGateway }     from './event/event.gateway';
+import { EventController }  from './event/event.controller';
+import { LoginController }  from './login/login.controller';
 import { TerminusModule }   from '@nestjs/terminus';
 import { ClientModule }     from '../../../lib/client.module';
 import { ConfigModule }     from '@nestjs/config';
@@ -17,7 +17,7 @@ import { ConfigModule }     from '@nestjs/config';
     }),
   ],
   controllers: [HealthController, LoginController, EventController],
-  providers  : [AppService, AppGateway],
+  providers  : [AppService, EventGateway],
 })
 export class AppModule {
 }

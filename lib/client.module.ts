@@ -9,7 +9,8 @@ import { ClientController }         from './client.controller';
         name     : process.env.SERVICE_NAME || 'MAIN_SERVICE',
         transport: Transport.NATS,
         options  : {
-          url: process.env.NATS_SERVER,
+          url  : process.env.NATS_SERVER,
+          queue: process.env.SERVICE_NAME || 'MAIN_SERVICE',
         },
       },
     ]),
