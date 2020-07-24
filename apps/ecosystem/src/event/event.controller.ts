@@ -1,11 +1,11 @@
-import { Controller }                   from '@nestjs/common';
-import { EventPattern, MessagePattern } from '@nestjs/microservices';
-import { EventGateway }                 from './event.gateway';
+import { Controller, Inject }                        from '@nestjs/common';
+import { ClientProxy, EventPattern, MessagePattern } from '@nestjs/microservices';
+import { EventGateway }                              from './event.gateway';
 
 @Controller('dispatch')
 export class EventController {
 
-  constructor(private gateway: EventGateway) {
+  constructor(private gateway: EventGateway, @Inject('MAIN_SERVICE') private client: ClientProxy) {
   }
 
   @EventPattern('event.broadcast')
@@ -30,6 +30,10 @@ export class EventController {
   testEvent({ event, data }: { event: string, data: any }) {
     if (event === 'test') {
       console.log('Test Event Received', data);
+      this.client.emit('event.broadcast', {
+        event: 'test',
+        data : 'side effect',
+      });
     }
   }
 }
