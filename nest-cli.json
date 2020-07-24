@@ -1,0 +1,57 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/ecosystem/src",
+  "monorepo": true,
+  "root": "apps/ecosystem",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/ecosystem/tsconfig.app.json"
+  },
+  "projects": {
+    "ecosystem": {
+      "type": "application",
+      "root": "apps/ecosystem",
+      "entryFile": "main",
+      "sourceRoot": "apps/ecosystem/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/ecosystem/tsconfig.app.json"
+      }
+    },
+    "auth": {
+      "type": "application",
+      "root": "apps/auth",
+      "entryFile": "main",
+      "sourceRoot": "apps/auth/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/auth/tsconfig.app.json"
+      }
+    },
+    "account": {
+      "type": "application",
+      "root": "apps/account",
+      "entryFile": "main",
+      "sourceRoot": "apps/account/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/account/tsconfig.app.json"
+      }
+    },
+    "presence": {
+      "type": "application",
+      "root": "apps/presence",
+      "entryFile": "main",
+      "sourceRoot": "apps/presence/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/presence/tsconfig.app.json"
+      }
+    },
+    "state": {
+      "type": "application",
+      "root": "apps/state",
+      "entryFile": "main",
+      "sourceRoot": "apps/state/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/state/tsconfig.app.json"
+      }
+    }
+  }
+}
