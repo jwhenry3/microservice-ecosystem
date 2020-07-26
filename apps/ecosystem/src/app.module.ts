@@ -4,9 +4,9 @@ import { HealthController } from './health/health.controller';
 import { AppGateway }      from './app.gateway';
 import { EventController } from './event/event.controller';
 import { LoginController } from './login/login.controller';
-import { TerminusModule }   from '@nestjs/terminus';
-import { ClientModule }     from '../../../lib/client.module';
-import { ConfigModule }     from '@nestjs/config';
+import { TerminusModule } from '@nestjs/terminus';
+import { ClientModule }   from '../../../lib/server/client.module';
+import { ConfigModule }   from '@nestjs/config';
 
 @Module({
   imports    : [
