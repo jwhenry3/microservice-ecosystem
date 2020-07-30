@@ -14,10 +14,10 @@ import { StateModule }     from '../../state/src/state.module';
 let microservices = [];
 if (process.env.ALL_IN_ONE) {
   microservices = [
-    AccountModule,
-    AuthModule,
-    PresenceModule,
-    StateModule
+    AccountModule.forRoot(),
+    AuthModule.forRoot(),
+    PresenceModule.forRoot(),
+    StateModule.forRoot()
   ];
 }
 @Module({
