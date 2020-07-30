@@ -24,6 +24,7 @@ import { config }                                                    from './con
   ],
   exports    : [
     ClientsModule,
+    ClientProxy
   ],
 })
 export class ClientModule {
