@@ -4,8 +4,17 @@ import { AppService }    from './app.service';
 import { ClientModule }  from '../../../lib/client.module';
 
 @Module({
-  imports: [ClientModule],
+  imports    : [],
   controllers: [AppController],
-  providers: [AppService],
+  providers  : [AppService],
 })
-export class StateModule {}
+export class StateModule {
+  static forRoot() {
+    return {
+      module : StateModule,
+      imports: [
+        ClientModule,
+      ],
+    };
+  }
+}

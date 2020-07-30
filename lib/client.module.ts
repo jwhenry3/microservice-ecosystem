@@ -1,16 +1,17 @@
-import { DynamicModule, Module }    from '@nestjs/common';
+import { Module }                   from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ClientController }         from './client.controller';
+import { config }                   from './config';
 
 @Module({
   imports    : [
     ClientsModule.register([
       {
-        name     : process.env.SERVICE_NAME || 'MAIN_SERVICE',
+        name     : config.serviceName,
         transport: Transport.NATS,
         options  : {
           url  : process.env.NATS_SERVER,
-          queue: process.env.SERVICE_NAME || 'MAIN_SERVICE',
+          queue: config.serviceName,
         },
       },
     ]),

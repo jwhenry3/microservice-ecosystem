@@ -6,7 +6,6 @@ import { ConfigModule }  from '@nestjs/config';
 
 @Module({
   imports    : [
-    ClientModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -15,4 +14,13 @@ import { ConfigModule }  from '@nestjs/config';
   providers  : [AppService],
 })
 export class AuthModule {
+
+  static forRoot() {
+    return {
+      module: AuthModule,
+      imports: [
+        ClientModule
+      ]
+    }
+  }
 }

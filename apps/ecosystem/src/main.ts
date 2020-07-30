@@ -6,7 +6,7 @@ import { config }          from '../../../lib/config';
 async function bootstrap() {
   const app = await NestFactory.create(EcosystemModule);
   app.connectMicroservice({
-    name     : config.serviceName || 'MAIN_SERVICE',
+    name     : config.serviceName,
     transport: Transport.NATS,
     options  : {
       url: process.env.NATS_SERVER,
