@@ -18,7 +18,7 @@ import { config }                  from '../../../../lib/config';
 export class HealthController {
   constructor(
     private health: HealthCheckService,
-    @Inject(config.serviceName) private client: ClientProxy,
+    private client: ClientProxy,
     private microservice: MicroserviceHealthIndicator,
     private dns: DNSHealthIndicator,
   ) {

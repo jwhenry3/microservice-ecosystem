@@ -1,12 +1,11 @@
-import { Controller, Inject }                        from '@nestjs/common';
+import { Controller }                        from '@nestjs/common';
 import { ClientProxy, EventPattern, MessagePattern } from '@nestjs/microservices';
 import { EventGateway }                              from './event.gateway';
-import { config }                                    from '../../../../lib/config';
 
 @Controller('dispatch')
 export class EventController {
 
-  constructor(private gateway: EventGateway, @Inject(config.serviceName) private client: ClientProxy) {
+  constructor(private gateway: EventGateway,  private client: ClientProxy) {
   }
 
   @EventPattern('event.broadcast')

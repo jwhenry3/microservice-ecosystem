@@ -22,12 +22,12 @@ if (process.env.ALL_IN_ONE) {
 }
 @Module({
   imports    : [
+    ...microservices,
     ClientModule,
     TerminusModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    ...microservices
   ],
   controllers: [HealthController, LoginController, EventController],
   providers  : [AppService, EventGateway],

@@ -1,15 +1,13 @@
 import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Namespace }                                           from 'socket.io';
 import { ClientProxy }                                         from '@nestjs/microservices';
-import { Inject }                                              from '@nestjs/common';
-import { config }                                              from '../../../../lib/config';
 
 @WebSocketGateway()
 export class EventGateway {
   @WebSocketServer()
   namespace: Namespace;
 
-  constructor(@Inject(config.serviceName) private client: ClientProxy) {
+  constructor(private client: ClientProxy) {
 
   }
 
