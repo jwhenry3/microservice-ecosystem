@@ -1,9 +1,9 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule }   from './app.module';
-import { Transport }   from '@nestjs/microservices';
+import { NestFactory }     from '@nestjs/core';
+import { EcosystemModule } from './ecosystem.module';
+import { Transport }       from '@nestjs/microservices';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(EcosystemModule);
   app.connectMicroservice({
     name     : process.env.SERVICE_NAME || 'MAIN_SERVICE',
     transport: Transport.NATS,
