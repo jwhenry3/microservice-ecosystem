@@ -1,22 +1,27 @@
-import { Module }                   from '@nestjs/common';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { ClientController }         from './client.controller';
-import { config }                   from './config';
+import { Module }                                                    from '@nestjs/common';
+import { ClientProxy, ClientProxyFactory, ClientsModule, Transport } from '@nestjs/microservices';
+import { ClientController }                                          from './client.controller';
+import { config }                                                    from './config';
 
 @Module({
   imports    : [
-    ClientsModule.register([
-      {
-        name     : config.serviceName,
-        transport: Transport.NATS,
-        options  : {
-          url  : process.env.NATS_SERVER,
-          queue: config.serviceName,
-        },
-      },
-    ]),
+    ClientsModule,
   ],
   controllers: [ClientController],
+  providers: [
+    {
+      provide: ClientProxy,
+      useFactory: () => {
+        return ClientProxyFactory.create({
+          transport: Transport.NATS,
+          options  : {
+            url  : process.env.NATS_SERVER,
+            queue: config.serviceName,
+          },
+        })
+      }
+    }
+  ],
   exports    : [
     ClientsModule,
   ],
