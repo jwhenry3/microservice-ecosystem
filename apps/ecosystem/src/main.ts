@@ -1,11 +1,12 @@
 import { NestFactory }     from '@nestjs/core';
 import { EcosystemModule } from './ecosystem.module';
 import { Transport }       from '@nestjs/microservices';
+import { config }          from '../../../lib/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(EcosystemModule);
   app.connectMicroservice({
-    name     : process.env.SERVICE_NAME || 'MAIN_SERVICE',
+    name     : config.serviceName || 'MAIN_SERVICE',
     transport: Transport.NATS,
     options  : {
       url: process.env.NATS_SERVER,

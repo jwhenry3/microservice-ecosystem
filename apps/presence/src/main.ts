@@ -1,15 +1,7 @@
-import { NestFactory }                    from '@nestjs/core';
-import { PresenceModule }                 from './presence.module';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { createMicroservice }             from '../../../lib/createMicroservice';
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(PresenceModule, {
-    transport: Transport.NATS,
-    options  : {
-      url: process.env.NATS_SERVER,
-      queue: 'PRESENCE_SERVICE',
-    },
-  });
+  const app = await createMicroservice();
 
   await app.listen(() => {
 

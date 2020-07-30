@@ -8,17 +8,17 @@ import {
 }                                  from '@nestjs/terminus';
 import {
   ClientProxy,
-  Transport,
 }                                  from '@nestjs/microservices';
-import { reduce, takeUntil }       from 'rxjs/operators';
+import { takeUntil }               from 'rxjs/operators';
 import { Subject }                 from 'rxjs';
+import { config }                  from '../../../../lib/config';
 
 
 @Controller('health')
 export class HealthController {
   constructor(
     private health: HealthCheckService,
-    @Inject('MAIN_SERVICE') private client: ClientProxy,
+    @Inject(config.serviceName) private client: ClientProxy,
     private microservice: MicroserviceHealthIndicator,
     private dns: DNSHealthIndicator,
   ) {
