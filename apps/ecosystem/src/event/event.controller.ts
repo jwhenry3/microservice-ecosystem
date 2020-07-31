@@ -8,12 +8,12 @@ export class EventController {
   constructor(private gateway: EventGateway,  private client: ClientProxy) {
   }
 
-  @EventPattern('event.broadcast')
+  @EventPattern('emit.event.broadcast')
   broadcast({ event, data }: { event: string, data: any }) {
     this.gateway.namespace.emit(event, data);
   }
 
-  @EventPattern('event.to')
+  @EventPattern('emit.event.to')
   room({ event, room, data }: { event: string, room: string, data: any }) {
     this.gateway.namespace.to(room).emit(event, data);
   }

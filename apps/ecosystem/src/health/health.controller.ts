@@ -11,7 +11,6 @@ import {
 }                                  from '@nestjs/microservices';
 import { takeUntil }               from 'rxjs/operators';
 import { Subject }                 from 'rxjs';
-import { config }                  from '../../../../lib/config';
 
 
 @Controller('health')
@@ -50,10 +49,10 @@ export class HealthController {
   @HealthCheck()
   check() {
     return this.health.check([
-      () => this.checkMicroservice('AUTH_SERVICE'),
-      () => this.checkMicroservice('ACCOUNT_SERVICE'),
-      () => this.checkMicroservice('PRESENCE_SERVICE'),
-      () => this.checkMicroservice('STATE_SERVICE'),
+      ...(process.env.ALL_IN_ONE ? [] : [() => this.checkMicroservice('AUTH_SERVICE'),
+                                         () => this.checkMicroservice('ACCOUNT_SERVICE'),
+                                         () => this.checkMicroservice('PRESENCE_SERVICE'),
+                                         () => this.checkMicroservice('STATE_SERVICE')]),
       () => this.dns.pingCheck('nestjs-docs', 'https://docs.nestjs.com'),
     ]);
   }
