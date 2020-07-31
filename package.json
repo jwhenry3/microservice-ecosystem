@@ -44,7 +44,8 @@
     "rimraf": "^3.0.2",
     "rxjs": "~6.5.4",
     "socket.io": "^2.3.0",
-    "typeorm": "^0.2.20"
+    "typeorm": "^0.2.20",
+    "uuid": "^8.3.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.0.0",

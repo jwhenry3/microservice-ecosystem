@@ -1,21 +1,26 @@
-import { Controller }                        from '@nestjs/common';
+import { Controller }                                from '@nestjs/common';
 import { ClientProxy, EventPattern, MessagePattern } from '@nestjs/microservices';
 import { EventGateway }                              from './event.gateway';
+import { SessionHandler }                            from './handlers/session.handler';
 
 @Controller('dispatch')
 export class EventController {
 
-  constructor(private gateway: EventGateway,  private client: ClientProxy) {
+  constructor(private gateway: EventGateway, private client: ClientProxy) {
   }
 
-  @EventPattern('emit.event.broadcast')
+  @EventPattern('emit.broadcast')
   broadcast({ event, data }: { event: string, data: any }) {
-    this.gateway.namespace.emit(event, data);
+    this.gateway.server.emit(event, data);
   }
 
-  @EventPattern('emit.event.to')
-  room({ event, room, data }: { event: string, room: string, data: any }) {
-    this.gateway.namespace.to(room).emit(event, data);
+  @EventPattern('emit.to')
+  room({ event, id, data }: { event: string, id: string, data: any }) {
+    this.gateway.server.to(id).emit(event, data);
+    if (event.indexOf('session.') === 0) {
+      const session = new SessionHandler(this.gateway.server);
+      session.handleEmitBehavior({ event, data });
+    }
   }
 
   @MessagePattern('request.test')
