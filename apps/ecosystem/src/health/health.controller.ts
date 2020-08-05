@@ -8,9 +8,8 @@ import {
 }                                  from '@nestjs/terminus';
 import {
   ClientProxy,
-  Transport,
 }                                  from '@nestjs/microservices';
-import { reduce, takeUntil }       from 'rxjs/operators';
+import { takeUntil }               from 'rxjs/operators';
 import { Subject }                 from 'rxjs';
 
 
@@ -18,7 +17,7 @@ import { Subject }                 from 'rxjs';
 export class HealthController {
   constructor(
     private health: HealthCheckService,
-    @Inject('MAIN_SERVICE') private client: ClientProxy,
+    private client: ClientProxy,
     private microservice: MicroserviceHealthIndicator,
     private dns: DNSHealthIndicator,
   ) {
@@ -50,10 +49,10 @@ export class HealthController {
   @HealthCheck()
   check() {
     return this.health.check([
-      () => this.checkMicroservice('AUTH_SERVICE'),
-      () => this.checkMicroservice('ACCOUNT_SERVICE'),
-      () => this.checkMicroservice('PRESENCE_SERVICE'),
-      () => this.checkMicroservice('STATE_SERVICE'),
+      ...(process.env.ALL_IN_ONE ? [] : [() => this.checkMicroservice('AUTH_SERVICE'),
+                                         () => this.checkMicroservice('ACCOUNT_SERVICE'),
+                                         () => this.checkMicroservice('PRESENCE_SERVICE'),
+                                         () => this.checkMicroservice('STATE_SERVICE')]),
       () => this.dns.pingCheck('nestjs-docs', 'https://docs.nestjs.com'),
     ]);
   }

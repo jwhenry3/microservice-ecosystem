@@ -6,7 +6,6 @@ import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports    : [
-    ClientModule,
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -14,5 +13,13 @@ import { ConfigModule } from '@nestjs/config';
   controllers: [AppController],
   providers  : [AppService],
 })
-export class AppModule {
+export class PresenceModule {
+  static forRoot() {
+    return {
+      module: PresenceModule,
+      imports: [
+        ClientModule
+      ]
+    }
+  }
 }

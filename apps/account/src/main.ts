@@ -1,15 +1,8 @@
-import { NestFactory }                    from '@nestjs/core';
-import { AppModule }                      from './app.module';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { createMicroservice } from '../../../lib/createMicroservice';
+import { AccountModule }      from './account.module';
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
-    transport: Transport.NATS,
-    options  : {
-      url: process.env.NATS_SERVER,
-      queue: 'ACCOUNT_SERVICE'
-    },
-  });
+  const app = await createMicroservice(AccountModule.forRoot());
 
   await app.listen(() => {
 
