@@ -13,12 +13,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/ecosystem/test/jest-e2e.json"
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
     "@nestjs/common": "^7.3.2",
@@ -51,7 +46,6 @@
     "@nestjs/testing": "^7.0.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.3",
-    "@types/jest": "25.1.4",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/node": "^13.9.1",
     "@types/socket.io": "^2.1.10",
@@ -63,30 +57,11 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.1",
     "expose-loader": "^1.0.0",
-    "jest": "^25.1.0",
     "prettier": "^1.19.1",
     "supertest": "^4.0.2",
-    "ts-jest": "25.2.1",
     "ts-loader": "^6.2.2",
     "ts-node": "^8.6.2",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^3.7.4",
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": ".",
-    "testRegex": ".spec.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "coverageDirectory": "./coverage",
-    "testEnvironment": "node",
-    "roots": [
-      "<rootDir>/apps/"
-    ]
+    "typescript": "^3.7.4"
   }
 }
