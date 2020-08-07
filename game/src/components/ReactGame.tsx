@@ -5,6 +5,7 @@ import { Title }              from '../scenes/lobby/title';
 import UIOverlay              from './UIOverlay';
 import { throttle }           from 'lodash';
 import { CharacterSelection } from '../scenes/lobby/character-selection';
+import { World }              from '../scenes/world/world';
 
 
 export interface ReactGameState {
@@ -25,6 +26,11 @@ export default class ReactGame extends Component<any, ReactGameState> {
 
     let game = new Phaser.Game({
       type  : Phaser.AUTO,
+      banner: false,
+      autoFocus: true,
+      input: {
+        queue: true
+      } as any,
       parent: 'game-container',
       scale : {
         mode: Phaser.Scale.RESIZE,
@@ -32,6 +38,8 @@ export default class ReactGame extends Component<any, ReactGameState> {
     });
     game.scene.add('title', Title);
     game.scene.add('character-selection', CharacterSelection);
+    game.scene.add('world', World);
+
     this.setState({ game });
     const listener = throttle(() => {
       game.scene.getScenes(true).forEach((scene) => scene.events.emit('resize'));

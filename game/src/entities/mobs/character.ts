@@ -1,15 +1,12 @@
-export class Character extends Phaser.GameObjects.Sprite {
+export class Character {
   speed = 2;
+  sprite:Phaser.GameObjects.Sprite;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
-    super(scene, x, y, 'character');
-    this.width = 38;
-    this.height = 48;
-    this.displayWidth = 38;
-    this.displayHeight = 48;
-    scene.add.existing(this);
-    scene.physics?.add.existing(this);
-    if (this.body) {
-    }
+    this.sprite = scene.add.sprite(x, y, 'character');
+    this.sprite.displayWidth  = 38;
+    this.sprite.displayHeight = 48;
+    scene.physics?.add.existing(this.sprite);
+    this.sprite.setInteractive();
   }
 }
