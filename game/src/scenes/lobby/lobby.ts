@@ -2,9 +2,17 @@ export class Lobby extends Phaser.Scene {
   bg!: Phaser.GameObjects.Image;
 
   preload() {
-    this.load.spritesheet('character', '/assets/link.png', {
+    this.load.spritesheet('link-four-swords', '/assets/link.png', {
       frameWidth : 379,
       frameHeight: 484,
+    });
+    this.load.spritesheet('link-awakening', '/assets/link-2.png', {
+      frameWidth : 840,
+      frameHeight: 680,
+    });
+    this.load.spritesheet('link-nes', '/assets/link-3.png', {
+      frameWidth : 300,
+      frameHeight: 300,
     });
     this.load.image('background', '/assets/background.jpg');
     this.load.svg('logo', '/assets/logo.svg', {
