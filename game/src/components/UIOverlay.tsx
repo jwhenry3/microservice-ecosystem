@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './UIOverlay.scss';
 import Connection           from './global/Connection';
-import Login                from './lobby/Login';
+import { Account }          from './lobby/Account';
 
 export default class UIOverlay extends Component<any, any> {
 
@@ -18,7 +18,7 @@ export default class UIOverlay extends Component<any, any> {
       <div className="bottom-right">
       </div>
       <div className="center">
-        <Login/>
+        <Account/>
       </div>
     </div>;
   }
