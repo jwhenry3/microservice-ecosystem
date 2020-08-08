@@ -1,0 +1,17 @@
+.connection {
+  padding: 4px 8px;
+  position: relative;
+  color: #00ff96;
+
+  .not-connected {
+    opacity: 0.2;
+  }
+
+  .warn {
+    color: #ccff00;
+    position: absolute;
+    right: 12px;
+    top: 8px;
+    font-size: 16px;
+  }
+}

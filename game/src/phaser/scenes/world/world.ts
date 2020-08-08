@@ -1,7 +1,7 @@
-import { LinkFourSwords } from '../../entities/mobs/linkFourSwords';
-import { Character }      from '../../entities/mobs/character';
-import { LinkAwakening }  from '../../entities/mobs/linkAwakening';
-import { LinkNes }        from '../../entities/mobs/linkNes';
+import { LinkFourSwords } from '../../../entities/mobs/linkFourSwords';
+import { Character }      from '../../../entities/mobs/character';
+import { LinkAwakening }  from '../../../entities/mobs/linkAwakening';
+import { LinkNes }        from '../../../entities/mobs/linkNes';
 
 export class World extends Phaser.Scene {
   character!: Character;

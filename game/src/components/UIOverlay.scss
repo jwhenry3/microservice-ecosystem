@@ -4,6 +4,58 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.1);
   pointer-events: none;
+
+  .top-right {
+    //background-color: rgba(0,0,0,0.2);
+    border-radius: 4px;
+    //border: 1px solid #f0f0f0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 12px;
+  }
+
+  .bottom-right {
+    //background-color: rgba(0,0,0,0.2);
+    border-radius: 4px;
+    //border: 1px solid #f0f0f0;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 12px;
+  }
+
+  .top-left {
+    //background-color: rgba(0,0,0,0.2);
+    border-radius: 4px;
+    //border: 1px solid #f0f0f0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 12px;
+  }
+
+  .bottom-left {
+    //background-color: rgba(0,0,0,0.2);
+    border-radius: 4px;
+    //border: 1px solid #f0f0f0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 12px;
+  }
+
+  .center {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
 }

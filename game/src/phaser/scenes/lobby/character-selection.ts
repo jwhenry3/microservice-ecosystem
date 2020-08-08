@@ -1,8 +1,8 @@
 import { Lobby }          from './lobby';
-import { LinkFourSwords } from '../../entities/mobs/linkFourSwords';
-import { LinkAwakening }  from '../../entities/mobs/linkAwakening';
-import { LinkNes }        from '../../entities/mobs/linkNes';
-import { Character }      from '../../entities/mobs/character';
+import { LinkFourSwords } from '../../../entities/mobs/linkFourSwords';
+import { LinkAwakening }  from '../../../entities/mobs/linkAwakening';
+import { LinkNes }        from '../../../entities/mobs/linkNes';
+import { Character }      from '../../../entities/mobs/character';
 
 export class CharacterSelection extends Lobby {
   bg!: Phaser.GameObjects.Image;
