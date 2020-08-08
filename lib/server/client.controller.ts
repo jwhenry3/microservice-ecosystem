@@ -1,6 +1,6 @@
 import { Controller }     from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import { config }         from './config';
+import { config }         from '../config';
 
 @Controller()
 export class ClientController {
