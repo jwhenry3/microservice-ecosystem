@@ -1,4 +1,5 @@
 .login {
+  pointer-events: all;
   padding: 8px;
   border-radius: 8px;
   border: 1px solid #fff;
@@ -7,4 +8,19 @@
   min-height: 240px;
   color: #fff;
   text-align: center;
+  .field {
+    text-align:left;
+  }
+  .MuiOutlinedInput-root {
+    background-color: #e0e0e0;
+    input {
+      padding: 8px 12px;
+    }
+    &.Mui-focused .MuiOutlinedInput-notchedOutline {
+      border-color: #fff;
+    }
+  }
+  .MuiFormControl-root {
+    width:100%;
+  }
 }
