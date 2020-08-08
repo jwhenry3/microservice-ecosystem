@@ -2,8 +2,10 @@ import React, { Component }  from 'react';
 import './Login.scss';
 import { Formik }            from 'formik';
 import { Button, TextField } from '@material-ui/core';
-
-export default class Login extends Component<any, any> {
+export interface LoginProps {
+  onRegister: () => void
+}
+export default class Login extends Component<LoginProps, any> {
 
   validate = (values: { email: string, password: string }) => {
     const errors: any = {};
@@ -25,7 +27,7 @@ export default class Login extends Component<any, any> {
 
   render() {
     return <div className="login">
-      <h2>Please Login</h2>
+      <h3>Login</h3>
       <div className="login-form">
         <Formik
           initialValues={{ email: '', password: '' }}
@@ -61,6 +63,10 @@ export default class Login extends Component<any, any> {
               <br/>
               <Button variant="contained" color="primary" type="submit" disabled={isSubmitting}>
                 Login
+              </Button>
+              <br/>
+              <Button type="button" onClick={this.props.onRegister}>
+                No Account? Register!
               </Button>
             </form>
           )}

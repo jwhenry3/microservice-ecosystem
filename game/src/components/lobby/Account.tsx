@@ -4,7 +4,6 @@ import Login                from './Login';
 import Register             from './Register';
 
 export interface AccountState {
-  loggedIn: boolean
   login: boolean
   register: boolean
 }
@@ -14,7 +13,6 @@ export class Account extends Component<any, AccountState> {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false,
       login   : false,
       register: false,
     };
@@ -23,28 +21,24 @@ export class Account extends Component<any, AccountState> {
   componentDidMount(): void {
     SocketClient.socket.on('connect', () => {
       this.setState({
-        loggedIn: false,
         login   : true,
         register: false,
       });
     });
     SocketClient.socket.on('logged-in', () => {
       this.setState({
-        loggedIn: true,
         login   : false,
         register: false,
       });
     });
     SocketClient.socket.on('logged-out', () => {
       this.setState({
-        loggedIn: false,
         login   : true,
         register: false,
       });
     });
     SocketClient.socket.on('disconnect', () => {
       this.setState({
-        loggedIn: false,
         login   : false,
         register: false,
       });
@@ -54,13 +48,13 @@ export class Account extends Component<any, AccountState> {
   componentWillUnmount(): void {
   }
 
+  onRegister = () => this.setState({ login: false, register: true });
+  onLogin    = () => this.setState({ login: true, register: false });
+
   render() {
-    if (this.state.loggedIn) {
-      return '';
-    }
     return (<>
-      {this.state.login ? <Login/> : ''}
-      {this.state.register ? <Register/> : ''}
+      {this.state.login ? <Login onRegister={this.onRegister}/> : ''}
+      {this.state.register ? <Register onLogin={this.onLogin}/> : ''}
     </>);
   }
 }

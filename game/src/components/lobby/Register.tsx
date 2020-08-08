@@ -3,8 +3,11 @@ import './Login.scss';
 import { Formik }            from 'formik';
 import { Button, TextField } from '@material-ui/core';
 
+export interface RegisterProps {
+  onLogin: () => void
+}
 
-export default class Register extends Component<any, any> {
+export default class Register extends Component<RegisterProps, any> {
 
 
   validate = (values: { email: string, password: string, confirmPassword: string }) => {
@@ -32,7 +35,7 @@ export default class Register extends Component<any, any> {
 
   render() {
     return <div className="login">
-      <h2>Register</h2>
+      <h3>Register</h3>
       <div className="login-form">
         <Formik
           initialValues={{ email: '', password: '', confirmPassword: '' }}
@@ -80,7 +83,11 @@ export default class Register extends Component<any, any> {
               </div>
               <br/>
               <Button variant="contained" color="primary" type="submit" disabled={isSubmitting}>
-                Login
+                Register
+              </Button>
+              <br/>
+              <Button type="button" onClick={this.props.onLogin}>
+                Have An Account? Login!
               </Button>
             </form>
           )}
