@@ -14,6 +14,7 @@ export class GameClient {
       autoFocus: true,
       input    : {
         queue: true,
+        gamepad: true
       } as any,
       parent   : 'game-container',
       scale    : {
