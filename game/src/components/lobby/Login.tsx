@@ -2,9 +2,12 @@ import React, { Component }  from 'react';
 import './Login.scss';
 import { Formik }            from 'formik';
 import { Button, TextField } from '@material-ui/core';
+import { SocketClient }      from '../../connection/socketClient';
+
 export interface LoginProps {
   onRegister: () => void
 }
+
 export default class Login extends Component<LoginProps, any> {
 
   validate = (values: { email: string, password: string }) => {
@@ -21,7 +24,13 @@ export default class Login extends Component<LoginProps, any> {
   };
 
   onSubmit = (values: { email: string, password: string }, { setSubmitting }) => {
-    console.log('submit!');
+    console.log('send request');
+    SocketClient.socket.emit('request', {
+      event: 'account.login',
+      data : values,
+    }, (result) => {
+      console.log('got login result', result);
+    });
     setSubmitting(false);
   };
 

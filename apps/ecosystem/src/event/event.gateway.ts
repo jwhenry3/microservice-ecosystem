@@ -15,11 +15,13 @@ export class EventGateway implements OnGatewayDisconnect {
   @SubscribeMessage('request')
   async request(client: Socket, payload: { event: string, data: any, requesterId?: string }) {
     if (payload.event && payload.data) {
-      payload      = {
+      payload = {
         ...payload,
         requesterId: client.id,
       };
+      console.log(payload);
       const result = await this.client.send('request.' + payload.event, payload).toPromise();
+      console.log(result);
       if (payload.event?.indexOf('session.') === 0) {
         const session = new SessionHandler(this.server);
         session.handleRequestBehavior(client, payload, result);

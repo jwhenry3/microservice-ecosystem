@@ -4,7 +4,7 @@
   "monorepo": true,
   "root": "apps/ecosystem",
   "compilerOptions": {
-    "webpack": true,
+    "webpack": false,
     "tsConfigPath": "apps/ecosystem/tsconfig.app.json"
   },
   "projects": {
@@ -15,15 +15,6 @@
       "sourceRoot": "apps/ecosystem/src",
       "compilerOptions": {
         "tsConfigPath": "apps/ecosystem/tsconfig.app.json"
-      }
-    },
-    "auth": {
-      "type": "application",
-      "root": "apps/auth",
-      "entryFile": "main",
-      "sourceRoot": "apps/auth/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/auth/tsconfig.app.json"
       }
     },
     "account": {
