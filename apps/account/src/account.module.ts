@@ -1,10 +1,13 @@
-import { Module }         from '@nestjs/common';
-import { AppController }  from './app.controller';
-import { AccountService } from './account.service';
-import { ClientModule }   from '../../../lib/server/client.module';
-import { ConfigModule }   from '@nestjs/config';
-import { TypeOrmModule }  from '@nestjs/typeorm';
-import * as path          from 'path';
+import { Module }            from '@nestjs/common';
+import { AccountController } from './account.controller';
+import { AccountRepo }       from './account.repo';
+import { ClientModule }  from '../../../lib/server/client.module';
+import { ConfigModule }  from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import * as path         from 'path';
+import { AccountEntity } from './entities/account.entity';
+import { JwtModule }     from '@nestjs/jwt';
+import { AuthService }   from './auth.service';
 
 export const AccountEntities = [
   path.resolve(__dirname, 'entities/*.entity.js'),
@@ -13,10 +16,17 @@ export const AccountEntities = [
 @Module({
   imports    : [
     ConfigModule,
-    TypeOrmModule.forFeature([AccountService]),
+    JwtModule.register({
+      secret     : process.env.JWT_SECRET,
+      signOptions: {
+        expiresIn: '60m',
+      },
+    }),
+    TypeOrmModule.forFeature([AccountEntity, AccountRepo]),
     ClientModule,
   ],
-  controllers: [AppController],
+  providers  : [AuthService],
+  controllers: [AccountController],
   exports    : [TypeOrmModule],
 })
 export class AccountModule {

@@ -24,12 +24,14 @@ export default class Login extends Component<LoginProps, any> {
   };
 
   onSubmit = (values: { email: string, password: string }, { setSubmitting }) => {
-    console.log('send request');
     SocketClient.socket.emit('request', {
       event: 'account.login',
       data : values,
     }, (result) => {
-      console.log('got login result', result);
+      if (result && result.token) {
+        SocketClient.token = result.token;
+        SocketClient.email = values.email;
+      }
     });
     setSubmitting(false);
   };

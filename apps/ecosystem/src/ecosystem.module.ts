@@ -34,6 +34,7 @@ import { TypeOrmModule }                  from '@nestjs/typeorm';
         ...AccountEntities,
       ],
       database: 'game',
+      synchronize: true
     }),
   ],
   controllers: [HealthController, EventController],

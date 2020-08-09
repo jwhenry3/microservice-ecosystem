@@ -19,9 +19,7 @@ export class EventGateway implements OnGatewayDisconnect {
         ...payload,
         requesterId: client.id,
       };
-      console.log(payload);
       const result = await this.client.send('request.' + payload.event, payload).toPromise();
-      console.log(result);
       if (payload.event?.indexOf('session.') === 0) {
         const session = new SessionHandler(this.server);
         session.handleRequestBehavior(client, payload, result);
