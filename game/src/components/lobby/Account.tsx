@@ -22,21 +22,27 @@ export class Account extends Component<any, AccountState> {
   componentDidMount(): void {
     SocketClient.socket.on('connect', () => {
       if (SocketClient.token) {
+        console.log('verify!');
         SocketClient.socket.emit('request', {
           event: 'account.verify',
           data : { token: SocketClient.token },
         }, (result) => {
+          console.log('result', result);
           if (!result?.id) {
             this.setState({
               login   : true,
               register: false,
             });
-            SocketClient.token = '';
-            SocketClient.email = '';
+            SocketClient.token     = '';
+            SocketClient.email     = '';
+            SocketClient.character = {
+              id    : null,
+              name  : '',
+              sprite: '',
+            };
             this.goToScene('title');
           } else {
             SocketClient.email = result.email;
-            this.goToScene('character-selection');
           }
         });
       } else {
@@ -52,13 +58,23 @@ export class Account extends Component<any, AccountState> {
         login   : false,
         register: false,
       });
-      this.goToScene('character-selection');
+      if (SocketClient.character.id) {
+        console.log('reload world');
+        this.goToScene('world', { character: SocketClient.character.sprite });
+      } else {
+        this.goToScene('character-selection');
+      }
     });
     SocketClient.socket.on('account.logged-out', () => {
       this.setState({
         login   : true,
         register: false,
       });
+      SocketClient.character = {
+        id    : null,
+        name  : '',
+        sprite: '',
+      };
       this.goToScene('title');
     });
     SocketClient.socket.on('disconnect', () => {
@@ -69,9 +85,13 @@ export class Account extends Component<any, AccountState> {
     });
   }
 
-  private goToScene(key: string) {
-    GameClient.game.scene.getScenes(true).forEach(scene => scene.scene.stop());
-    GameClient.game.scene.start(key);
+  private goToScene(key: string, data?: any) {
+    GameClient.game.scene.stop(key);
+    let scenes = GameClient.game.scene.getScenes(true);
+    for (let scene of scenes) {
+      scene.scene.stop();
+    }
+    GameClient.game.scene.start(key, data);
   }
 
   componentWillUnmount(): void {

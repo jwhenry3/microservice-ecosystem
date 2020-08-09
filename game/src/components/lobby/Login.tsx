@@ -31,6 +31,11 @@ export default class Login extends Component<LoginProps, any> {
       if (result && result.token) {
         SocketClient.token = result.token;
         SocketClient.email = values.email;
+        SocketClient.character = {
+          id: null,
+          name: '',
+          sprite: ''
+        };
       }
     });
     setSubmitting(false);

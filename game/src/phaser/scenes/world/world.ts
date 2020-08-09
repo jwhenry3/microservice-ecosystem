@@ -2,6 +2,7 @@ import { LinkFourSwords } from '../../../entities/mobs/linkFourSwords';
 import { Character }      from '../../../entities/mobs/character';
 import { LinkAwakening }  from '../../../entities/mobs/linkAwakening';
 import { LinkNes }        from '../../../entities/mobs/linkNes';
+import { SocketClient }   from '../../../connection/socketClient';
 
 export class World extends Phaser.Scene {
   character!: Character;
@@ -39,10 +40,11 @@ export class World extends Phaser.Scene {
 
   create() {
     this.character = new (this.characters[this.selectedCharacter])(this, this.game.scale.canvasBounds.width / 2, this.game.scale.canvasBounds.height / 2);
-    this.up        = this.input.keyboard.addKey('W');
-    this.down      = this.input.keyboard.addKey('S');
-    this.left      = this.input.keyboard.addKey('A');
-    this.right     = this.input.keyboard.addKey('D');
+    console.log(this.character);
+    this.up    = this.input.keyboard.addKey('W');
+    this.down  = this.input.keyboard.addKey('S');
+    this.left  = this.input.keyboard.addKey('A');
+    this.right = this.input.keyboard.addKey('D');
     this.events.on('shutdown', () => {
       this.input.keyboard.removeAllKeys();
     });
@@ -51,8 +53,10 @@ export class World extends Phaser.Scene {
 
   update(time: number, delta: number): void {
     super.update(time, delta);
-    let x = Number(this.input.keyboard.checkDown(this.right)) + Number(-this.input.keyboard.checkDown(this.left));
-    let y = Number(this.input.keyboard.checkDown(this.down)) + Number(-this.input.keyboard.checkDown(this.up));
-    this.character.sprite.setPosition(this.character.sprite.x + (x * this.character.speed), this.character.sprite.y + (y * this.character.speed));
+    if (SocketClient.socket.connected) {
+      let x = Number(this.input.keyboard.checkDown(this.right)) + Number(-this.input.keyboard.checkDown(this.left));
+      let y = Number(this.input.keyboard.checkDown(this.down)) + Number(-this.input.keyboard.checkDown(this.up));
+      this.character.sprite.setPosition(this.character.sprite.x + (x * this.character.speed), this.character.sprite.y + (y * this.character.speed));
+    }
   }
 }
