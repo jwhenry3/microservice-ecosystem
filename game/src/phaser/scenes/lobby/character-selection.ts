@@ -1,9 +1,10 @@
-import { Lobby }          from './lobby';
-import { LinkFourSwords } from '../../../entities/mobs/linkFourSwords';
-import { LinkAwakening }  from '../../../entities/mobs/linkAwakening';
-import { LinkNes }        from '../../../entities/mobs/linkNes';
-import { Character }      from '../../../entities/mobs/character';
-import { SocketClient }   from '../../../connection/socketClient';
+import { Lobby }             from './lobby';
+import { LinkFourSwords }    from '../../../entities/mobs/linkFourSwords';
+import { LinkAwakening }     from '../../../entities/mobs/linkAwakening';
+import { LinkNes }           from '../../../entities/mobs/linkNes';
+import { Character }         from '../../../entities/mobs/character';
+import { store }             from '../../../state/store';
+import { selectedCharacter } from '../../../state/ui.state';
 
 export class CharacterSelection extends Lobby {
   bg!: Phaser.GameObjects.Image;
@@ -37,11 +38,11 @@ export class CharacterSelection extends Lobby {
     character.sprite.on('pointerdown', (pointer) => {
       this.scene.stop('character-selection');
       this.scene.start('world', { character: character.id });
-      SocketClient.character = {
+      store.dispatch<any>(selectedCharacter({
         id    : 1,
         name  : 'Test',
         sprite: character.id,
-      };
+      }));
     });
   }
 

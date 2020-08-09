@@ -13,8 +13,8 @@ export class GameClient {
       banner   : false,
       autoFocus: true,
       input    : {
-        queue: true,
-        gamepad: true
+        queue  : true,
+        gamepad: true,
       } as any,
       parent   : 'game-container',
       scale    : {
@@ -35,6 +35,15 @@ export class GameClient {
     setTimeout(() => {
       this.game.scene.getScenes(true).forEach((scene) => scene.events.emit('resize'));
     }, 300);
+  }
+
+  static goToScene(key: string, data?: any) {
+    GameClient.game.scene.stop(key);
+    let scenes = GameClient.game.scene.getScenes(true);
+    for (let scene of scenes) {
+      scene.scene.stop();
+    }
+    GameClient.game.scene.start(key, data);
   }
 
   static stop() {

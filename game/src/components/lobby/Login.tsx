@@ -2,7 +2,8 @@ import React, { Component }  from 'react';
 import './Login.scss';
 import { Formik }            from 'formik';
 import { Button, TextField } from '@material-ui/core';
-import { SocketClient }      from '../../connection/socketClient';
+import { store } from '../../state/store';
+import { login } from '../../state/actions/authentication';
 
 export interface LoginProps {
   onRegister: () => void
@@ -24,21 +25,11 @@ export default class Login extends Component<LoginProps, any> {
   };
 
   onSubmit = (values: { email: string, password: string }, { setSubmitting }) => {
-    SocketClient.socket.emit('request', {
-      event: 'account.login',
-      data : values,
-    }, (result) => {
-      if (result && result.token) {
-        SocketClient.token = result.token;
-        SocketClient.email = values.email;
-        SocketClient.character = {
-          id: null,
-          name: '',
-          sprite: ''
-        };
+    store.dispatch<any>(login(values.email, values.password)).then(result => {
+      if (!result) {
+        setSubmitting(false);
       }
     });
-    setSubmitting(false);
   };
 
   render() {

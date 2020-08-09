@@ -20,16 +20,16 @@ export class Keyboard {
   handle(controls: Controls) {
     if (this.enabled) {
       if (this.scene.input.keyboard.checkDown(this.right)) {
-        controls.right();
+        controls.moveRight();
       }
       if (this.scene.input.keyboard.checkDown(this.left)) {
-        controls.left();
+        controls.moveLeft();
       }
       if (this.scene.input.keyboard.checkDown(this.down)) {
-        controls.down();
+        controls.moveDown();
       }
       if (this.scene.input.keyboard.checkDown(this.up)) {
-        controls.up();
+        controls.moveUp();
       }
     }
   }

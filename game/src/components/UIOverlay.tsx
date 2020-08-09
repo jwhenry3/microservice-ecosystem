@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './UIOverlay.scss';
 import Connection           from './global/Connection';
-import { Account }          from './lobby/Account';
+import Account              from './lobby/Account';
 
 export default class UIOverlay extends Component<any, any> {
 

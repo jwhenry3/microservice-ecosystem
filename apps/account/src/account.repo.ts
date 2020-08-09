@@ -6,9 +6,14 @@ export class AccountRepo extends Repository<AccountEntity> {
 
 
   async getAccountByEmail(email: string) {
-
     return await this.findOne({
       where: { email },
+    });
+  }
+
+  async getAccountBySocketId(socketId: string) {
+    return await this.findOne({
+      where: { currentSocketId: socketId },
     });
   }
 

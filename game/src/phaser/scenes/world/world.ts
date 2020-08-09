@@ -42,30 +42,39 @@ export class World extends Phaser.Scene {
     this.keyboard  = new Keyboard(this);
     this.gamepad   = new GamePad(this);
     this.character = new (this.characters[this.selectedCharacter])(this, this.game.scale.canvasBounds.width / 2, this.game.scale.canvasBounds.height / 2);
-    console.log(this.character);
     this.events.on('shutdown', () => {
       this.input.keyboard.removeAllKeys();
     });
-    console.log('loaded!');
   }
 
   update(time: number, delta: number): void {
     super.update(time, delta);
     if (SocketClient.socket.connected) {
-
-      let x = 0;
-      let y = 0;
-      let controls:Controls = {
-        up() {
+      let x                  = 0;
+      let y                  = 0;
+      let controls: Controls = {
+        cancel : function() {
+        },
+        confirm: function() {
+        },
+        down   : function() {
+        },
+        left   : function() {
+        },
+        right  : function() {
+        },
+        up     : function() {
+        },
+        moveUp() {
           y--;
         },
-        down() {
+        moveDown() {
           y++;
         },
-        left() {
+        moveLeft() {
           x--;
         },
-        right() {
+        moveRight() {
           x++;
         },
       };

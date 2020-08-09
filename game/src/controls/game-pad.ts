@@ -13,14 +13,14 @@ export class GamePad {
         y: Math.round(this.scene.input.gamepad?.pad1?.leftStick?.y)
       };
       if (normalized.x > 0) {
-        controls.right();
+        controls.moveRight();
       } else if (normalized.x < 0) {
-        controls.left();
+        controls.moveLeft();
       }
       if (normalized.y > 0) {
-        controls.down();
+        controls.moveDown();
       } else if (normalized.y < 0) {
-        controls.up();
+        controls.moveUp();
       }
     }
   }

@@ -1,13 +1,14 @@
 import { Module }            from '@nestjs/common';
 import { AccountController } from './account.controller';
 import { AccountRepo }       from './account.repo';
-import { ClientModule }  from '../../../lib/server/client.module';
-import { ConfigModule }  from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import * as path         from 'path';
-import { AccountEntity } from './entities/account.entity';
-import { JwtModule }     from '@nestjs/jwt';
-import { AuthService }   from './auth.service';
+import { ClientModule }      from '../../../lib/server/client.module';
+import { ConfigModule }      from '@nestjs/config';
+import { TypeOrmModule }     from '@nestjs/typeorm';
+import * as path             from 'path';
+import { AccountEntity }     from './entities/account.entity';
+import { JwtModule }         from '@nestjs/jwt';
+import { AuthService }       from './auth.service';
+import { CharacterRepo }     from './character.repo';
 
 export const AccountEntities = [
   path.resolve(__dirname, 'entities/*.entity.js'),
@@ -22,7 +23,7 @@ export const AccountEntities = [
         expiresIn: '60m',
       },
     }),
-    TypeOrmModule.forFeature([AccountEntity, AccountRepo]),
+    TypeOrmModule.forFeature([AccountRepo, CharacterRepo]),
     ClientModule,
   ],
   providers  : [AuthService],

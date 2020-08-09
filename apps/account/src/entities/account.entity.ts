@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
-import * as bcrypt                                        from 'bcryptjs';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import * as bcrypt                                                   from 'bcryptjs';
+import { CharacterEntity }                                from './character.entity';
 
 @Entity()
 @Unique(['email'])
@@ -13,6 +14,8 @@ export class AccountEntity {
   password: string;
   @Column()
   currentSocketId: string;
+  @OneToMany(t => CharacterEntity, c => c.account)
+  characters:CharacterEntity[];
 
   verify(value: string) {
     return bcrypt.compareSync(value, this.password);
