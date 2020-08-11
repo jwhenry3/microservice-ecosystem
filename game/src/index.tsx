@@ -1,9 +1,12 @@
 import React              from 'react';
 import ReactDOM           from 'react-dom';
-import './index.css';
-import App                from './App';
+import './index.scss';
 import * as serviceWorker from './serviceWorker';
 import 'phaser';
+import { GameClient }     from './game/game.client';
+import App                from './App';
+
+const client = new GameClient();
 
 ReactDOM.render(
   <React.StrictMode>

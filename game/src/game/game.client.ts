@@ -1,11 +1,11 @@
-import Phaser                   from 'phaser';
-import { LoginScene }           from './scenes/lobby/login.scene';
-import { CharactersScene }      from './scenes/lobby/characters.scene';
+import Phaser              from 'phaser';
+import { LoginScene }      from './scenes/lobby/login.scene';
+import { CharactersScene } from './scenes/lobby/characters.scene';
 import { CreateCharacterScene } from './scenes/lobby/create-character.scene';
 import { FindGamesScene }       from './scenes/lobby/find-games.scene';
 import { CreateGameScene }      from './scenes/lobby/create-game.scene';
-import { JoinGameScene }        from './scenes/lobby/join-game.scene';
-import { LobbyScene }           from './scenes/lobby/lobby.scene';
+import { JoinGameScene } from './scenes/lobby/join-game.scene';
+import { LobbyScene }    from './scenes/lobby/lobby.scene';
 
 export class GameClient {
   game: Phaser.Game;
