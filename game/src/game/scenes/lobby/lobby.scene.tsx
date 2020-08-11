@@ -1,15 +1,19 @@
 import { BaseScene }                     from '../base.scene';
-import React, { ReactNode }              from 'react';
+import React                             from 'react';
 import Login                             from '../../Login';
 import Modal                             from '../../../Modal';
 import { addComponent, removeComponent } from '../../../ui-components';
+import { BehaviorSubject }               from 'rxjs';
+import Observe                           from '../../../lib/observe';
 
 
 export class LobbyScene extends BaseScene {
   bg!: Phaser.GameObjects.Image;
 
-  login: ReactNode;
-
+  state = new BehaviorSubject({
+    username: '',
+    password: '',
+  });
 
   preload() {
     this.load.image('background', '/assets/background.jpg');
@@ -24,9 +28,6 @@ export class LobbyScene extends BaseScene {
     this.bg               = this.add.image(this.getSize().x / 2, this.getSize().y / 2, 'background');
     this.bg.displayWidth  = this.getSize().x;
     this.bg.displayHeight = this.getSize().y;
-    setTimeout(() => {
-      this.stop();
-    }, 3000);
   }
 
   resize() {
@@ -36,17 +37,20 @@ export class LobbyScene extends BaseScene {
   }
 
   stop() {
-    console.log('Stopped!');
-    removeComponent('login');
+    removeComponent('lobby');
   }
 
   start() {
-    console.log('Started!');
-    this.login = <Modal key="login" parent={document.getElementById('ui-center-center') as HTMLElement}>
-      <Login/>
-    </Modal>;
-    addComponent('login', this.login);
+    addComponent('lobby', this.render);
   }
+
+  render = <Observe state={this.state} key="login">
+    {(state) => (
+      <Modal parent={document.getElementById('ui-center-center') as HTMLElement}>
+        <Login data={state}/>
+      </Modal>
+    )}
+  </Observe>;
 
   resume(): void {
   }

@@ -22,6 +22,6 @@ export default class Login extends Component<any, { timeout: any, tick: number }
   }
 
   render() {
-    return <div>Works! ({this.state.tick})</div>;
+    return <div>Works! ({this.state.tick}) {JSON.stringify(this.props.data || {})}</div>;
   }
 }
