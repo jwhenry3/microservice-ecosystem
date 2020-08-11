@@ -1,10 +1,10 @@
-import { ReactNode, ReactNodeArray } from 'react';
-import { Subject }                   from 'rxjs';
+import { ReactNode } from 'react';
+import { Subject }   from 'rxjs';
 
 const components: { [key: string]: ReactNode } = {};
 let updated: { [key: string]: ReactNode }      = {};
 
-export const addComponent    = (key: string, component: ReactNode) => {
+export const setComponent    = (key: string, component: ReactNode) => {
   components[key] = component;
   updated         = { ...components };
   Object.freeze(updated);

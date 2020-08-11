@@ -1,21 +1,46 @@
+import { ReactNode }                     from 'react';
+import { removeComponent, setComponent } from '../../ui-components';
+
 export abstract class BaseScene extends Phaser.Scene {
 
+  abstract key: string;
 
   init() {
-    this.events.on('stop', () => this.stop ? this.stop() : null);
+    this.events.on('stop', () => {
+      if (this.stop) {
+        this.stop();
+      }
+      if (this.render) {
+        removeComponent(this.key);
+      }
+    });
     this.events.on('resume', () => {
-      this.resume();
-      this.start();
+      if (this.resume) {
+        this.resume();
+      }
+      if (this.start) {
+        this.start();
+      }
+      if (this.render) {
+        setComponent(this.key, this.render());
+      }
     });
   }
 
   create() {
-    this.start();
+    if (this.start) {
+      this.start();
+    }
+    if (this.render) {
+      setComponent(this.key, this.render());
+    }
   }
 
-  abstract stop(): void;
+  render?: () => ReactNode;
 
-  abstract start(): void;
+  stop?: () => void;
 
-  abstract resume(): void;
+  start?: () => void;
+
+  resume?: () => void;
 }

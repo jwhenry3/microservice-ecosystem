@@ -7,10 +7,12 @@ export interface ModalProps {
 }
 
 class Modal extends Component<ModalProps, any> {
-  el = document.createElement('div');
+  el!: HTMLDivElement;
 
   constructor(props) {
     super(props);
+    this.el           = document.createElement('div');
+    this.el.className = 'modal';
   }
 
   componentDidMount() {

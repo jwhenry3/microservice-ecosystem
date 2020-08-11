@@ -1,13 +1,13 @@
-import { BaseScene }                     from '../base.scene';
-import React                             from 'react';
-import Login                             from '../../Login';
-import Modal                             from '../../../Modal';
-import { addComponent, removeComponent } from '../../../ui-components';
-import { BehaviorSubject }               from 'rxjs';
-import Observe                           from '../../../lib/observe';
+import { BaseScene }       from '../base.scene';
+import React               from 'react';
+import Login               from '../../Login';
+import Modal               from '../../../Modal';
+import { BehaviorSubject } from 'rxjs';
+import Observe             from '../../../lib/observe';
 
 
 export class LobbyScene extends BaseScene {
+  key = 'lobby';
   bg!: Phaser.GameObjects.Image;
 
   state = new BehaviorSubject({
@@ -36,22 +36,14 @@ export class LobbyScene extends BaseScene {
     this.bg.displayHeight = this.getSize().y;
   }
 
-  stop() {
-    removeComponent('lobby');
-  }
+  render = () => {
+    return <Observe state={this.state} key="login">
+      {(state) => (
+        <Modal parent={document.getElementById('ui-center-center') as HTMLElement}>
+          <Login data={state}/>
+        </Modal>
+      )}
+    </Observe>;
+  };
 
-  start() {
-    addComponent('lobby', this.render);
-  }
-
-  render = <Observe state={this.state} key="login">
-    {(state) => (
-      <Modal parent={document.getElementById('ui-center-center') as HTMLElement}>
-        <Login data={state}/>
-      </Modal>
-    )}
-  </Observe>;
-
-  resume(): void {
-  }
 }
