@@ -1,13 +1,23 @@
-import React     from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import ReactGame from './components/ReactGame';
+import { GameClient }       from './game/game.client';
 
-function App() {
-  return (
-    <>
-      <ReactGame/>
-    </>
-  );
+class App extends Component<any, any> {
+
+  client!: GameClient;
+
+  componentDidMount(): void {
+    this.client = new GameClient();
+  }
+
+
+  render() {
+    return (
+      <div id="game-container">
+
+      </div>
+    );
+  }
 }
 
 export default App;
