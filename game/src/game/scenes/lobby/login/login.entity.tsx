@@ -1,7 +1,7 @@
 import { BaseEntity }      from '../../base.entity';
 import Observe             from '../../../../lib/observe';
 import Modal               from '../../../../Modal';
-import Login               from '../../../Login';
+import Login               from './Login';
 import React               from 'react';
 import { BehaviorSubject } from 'rxjs';
 import { BaseScene }       from '../../base.scene';
