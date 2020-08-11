@@ -36,11 +36,15 @@ export class LobbyScene extends BaseScene {
     this.bg.displayHeight = this.getSize().y;
   }
 
+  login = (email: string, password: string) => {
+    console.log('triggered!');
+  };
+
   render = () => {
     return <Observe state={this.state} key="login">
       {(state) => (
         <Modal parent={document.getElementById('ui-center-center') as HTMLElement}>
-          <Login data={state}/>
+          <Login submit={this.login}/>
         </Modal>
       )}
     </Observe>;
