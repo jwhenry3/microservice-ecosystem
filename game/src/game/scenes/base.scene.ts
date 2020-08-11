@@ -1,17 +1,12 @@
-import { ReactNode }                     from 'react';
-import { removeComponent, setComponent } from '../../ui-components';
-
 export abstract class BaseScene extends Phaser.Scene {
-
+  lifecycle: any;
   abstract key: string;
 
-  init() {
+
+  create() {
     this.events.on('stop', () => {
       if (this.stop) {
         this.stop();
-      }
-      if (this.render) {
-        removeComponent(this.key);
       }
     });
     this.events.on('resume', () => {
@@ -21,22 +16,12 @@ export abstract class BaseScene extends Phaser.Scene {
       if (this.start) {
         this.start();
       }
-      if (this.render) {
-        setComponent(this.key, this.render());
-      }
     });
-  }
-
-  create() {
     if (this.start) {
       this.start();
     }
-    if (this.render) {
-      setComponent(this.key, this.render());
-    }
   }
 
-  render?: () => ReactNode;
 
   stop?: () => void;
 

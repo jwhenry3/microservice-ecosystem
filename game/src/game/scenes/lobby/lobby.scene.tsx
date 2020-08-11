@@ -1,19 +1,13 @@
-import { BaseScene }       from '../base.scene';
-import React               from 'react';
-import Login               from '../../Login';
-import Modal               from '../../../Modal';
-import { BehaviorSubject } from 'rxjs';
-import Observe             from '../../../lib/observe';
+import { BaseScene }      from '../base.scene';
+import React           from 'react';
+import { LoginEntity } from './login.entity';
 
 
 export class LobbyScene extends BaseScene {
   key = 'lobby';
   bg!: Phaser.GameObjects.Image;
 
-  state = new BehaviorSubject({
-    username: '',
-    password: '',
-  });
+  login!: LoginEntity;
 
   preload() {
     this.load.image('background', '/assets/background.jpg');
@@ -28,6 +22,14 @@ export class LobbyScene extends BaseScene {
     this.bg               = this.add.image(this.getSize().x / 2, this.getSize().y / 2, 'background');
     this.bg.displayWidth  = this.getSize().x;
     this.bg.displayHeight = this.getSize().y;
+    this.login            = new LoginEntity(this);
+    this.lifecycle.add(this.login);
+    setTimeout(() => {
+      this.scene.stop();
+      setTimeout(() => {
+        this.scene.restart();
+      }, 5 * 1000);
+    }, 5 * 1000);
   }
 
   resize() {
@@ -35,19 +37,4 @@ export class LobbyScene extends BaseScene {
     this.bg.displayWidth  = this.getSize().x;
     this.bg.displayHeight = this.getSize().y;
   }
-
-  login = (email: string, password: string) => {
-    console.log('triggered!');
-  };
-
-  render = () => {
-    return <Observe state={this.state} key="login">
-      {(state) => (
-        <Modal parent={document.getElementById('ui-center-center') as HTMLElement}>
-          <Login submit={this.login}/>
-        </Modal>
-      )}
-    </Observe>;
-  };
-
 }

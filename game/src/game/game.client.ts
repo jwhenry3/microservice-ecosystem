@@ -1,5 +1,6 @@
-import Phaser              from 'phaser';
-import { LobbyScene }    from './scenes/lobby/lobby.scene';
+import Phaser                from 'phaser';
+import { LobbyScene }        from './scenes/lobby/lobby.scene';
+import PhaserLifecyclePlugin from 'phaser-lifecycle-plugin';
 
 export class GameClient {
   game: Phaser.Game;
@@ -16,6 +17,15 @@ export class GameClient {
       parent   : 'game-container',
       scale    : {
         mode: Phaser.Scale.RESIZE,
+      },
+      plugins  : {
+        scene: [
+          {
+            plugin : PhaserLifecyclePlugin,
+            key    : 'lifecycle',
+            mapping: 'lifecycle',
+          },
+        ],
       },
     });
     this.game.scene.add('lobby', LobbyScene);
