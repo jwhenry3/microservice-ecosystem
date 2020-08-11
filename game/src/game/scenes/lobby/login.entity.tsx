@@ -4,6 +4,7 @@ import Modal               from '../../../Modal';
 import Login               from '../../Login';
 import React               from 'react';
 import { BehaviorSubject } from 'rxjs';
+import { BaseScene }       from '../base.scene';
 
 export class LoginEntity extends BaseEntity {
   key = 'login';
@@ -13,7 +14,7 @@ export class LoginEntity extends BaseEntity {
     password: '',
   });
 
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: BaseScene) {
     super(scene, 0, 0, []);
     this.create();
   }
@@ -21,6 +22,7 @@ export class LoginEntity extends BaseEntity {
   login = (email: string, password: string) => {
     console.log('triggered!', email, password);
   };
+
 
   render = () => {
     return <Observe state={this.uiState} key="login">

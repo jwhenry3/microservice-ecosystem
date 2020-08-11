@@ -1,10 +1,11 @@
 import React, { ReactNode }              from 'react';
 import { removeComponent, setComponent } from '../../ui-components';
+import { BaseScene }                     from './base.scene';
 
 export abstract class BaseEntity extends Phaser.GameObjects.Container {
   key = 'test-entity';
 
-  protected constructor(scene: Phaser.Scene, x?: number, y?: number, children?: Phaser.GameObjects.GameObject[]) {
+  protected constructor(scene: BaseScene, x?: number, y?: number, children?: Phaser.GameObjects.GameObject[]) {
     super(scene, x, y, children);
     scene.add.existing(this);
   }

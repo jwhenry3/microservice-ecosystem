@@ -23,13 +23,6 @@ export class LobbyScene extends BaseScene {
     this.bg.displayWidth  = this.getSize().x;
     this.bg.displayHeight = this.getSize().y;
     this.login            = new LoginEntity(this);
-    this.lifecycle.add(this.login);
-    setTimeout(() => {
-      this.scene.stop();
-      setTimeout(() => {
-        this.scene.restart();
-      }, 5 * 1000);
-    }, 5 * 1000);
   }
 
   resize() {
