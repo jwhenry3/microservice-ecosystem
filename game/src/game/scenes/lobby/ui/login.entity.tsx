@@ -1,10 +1,10 @@
-import { BaseEntity }      from '../base.entity';
-import Observe             from '../../../lib/observe';
-import Modal               from '../../../Modal';
-import Login               from '../../Login';
+import { BaseEntity }      from '../../base.entity';
+import Observe             from '../../../../lib/observe';
+import Modal               from '../../../../Modal';
+import Login               from '../../../Login';
 import React               from 'react';
 import { BehaviorSubject } from 'rxjs';
-import { BaseScene }       from '../base.scene';
+import { BaseScene }       from '../../base.scene';
 
 export class LoginEntity extends BaseEntity {
   key = 'login';

@@ -1,5 +1,5 @@
 import { BaseScene }   from '../base.scene';
-import { LoginEntity } from './login.entity';
+import { LoginEntity } from './ui/login.entity';
 
 export class LobbyScene extends BaseScene {
   key = 'lobby';
