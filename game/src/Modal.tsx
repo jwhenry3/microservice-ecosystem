@@ -1,5 +1,5 @@
-import React, { Component, ReactNode } from 'react';
-import ReactDOM                        from 'react-dom';
+import { Component, ReactNode } from 'react';
+import ReactDOM                 from 'react-dom';
 
 export interface ModalProps {
   parent: HTMLElement

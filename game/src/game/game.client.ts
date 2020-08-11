@@ -1,10 +1,10 @@
-import Phaser                from 'phaser';
-import { LobbyScene }        from './scenes/lobby/lobby.scene';
+import Phaser         from 'phaser';
+import { LobbyScene } from './scenes/lobby/lobby.scene';
 
 export class GameClient {
-  game: Phaser.Game;
+  static game: Phaser.Game;
 
-  constructor() {
+  static start() {
     this.game = new Phaser.Game({
       type     : Phaser.CANVAS,
       banner   : false,
@@ -16,8 +16,9 @@ export class GameClient {
       parent   : 'game-container',
       scale    : {
         mode: Phaser.Scale.RESIZE,
-      }
+      },
     });
+
     this.game.scene.add('lobby', LobbyScene);
     window.addEventListener('resize', () => {
       this.game.scene.getScenes(true).forEach(scene => {

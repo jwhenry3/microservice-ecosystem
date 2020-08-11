@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { BehaviorSubject }            from 'rxjs';
-import { distinctUntilChanged }       from 'rxjs/operators';
+import { useEffect, useState }  from 'react';
+import { BehaviorSubject }      from 'rxjs';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 const Observe = (props: { children: any, state: BehaviorSubject<any> }) => {
   const [state, setState] = useState(props.state?.getValue() || {});

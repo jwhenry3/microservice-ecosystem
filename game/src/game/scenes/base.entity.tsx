@@ -1,4 +1,4 @@
-import React, { ReactNode }              from 'react';
+import { ReactNode }              from 'react';
 import { removeComponent, setComponent } from '../../ui-components';
 import { BaseScene }                     from './base.scene';
 

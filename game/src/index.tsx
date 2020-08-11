@@ -6,7 +6,8 @@ import 'phaser';
 import { GameClient }     from './game/game.client';
 import App                from './App';
 
-const client = new GameClient();
+
+GameClient.start();
 
 ReactDOM.render(
   <React.StrictMode>

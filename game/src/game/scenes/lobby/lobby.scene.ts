@@ -1,7 +1,5 @@
-import { BaseScene }      from '../base.scene';
-import React           from 'react';
+import { BaseScene }   from '../base.scene';
 import { LoginEntity } from './login.entity';
-
 
 export class LobbyScene extends BaseScene {
   key = 'lobby';
