@@ -1,11 +1,11 @@
-import { BaseScene }   from '../base.scene';
-import { LoginEntity } from './login/login.entity';
+import { BaseScene } from '../base.scene';
+import { LobbyUI }   from './login/lobby.ui';
 
 export class LobbyScene extends BaseScene {
   key = 'lobby';
   bg!: Phaser.GameObjects.Image;
 
-  login!: LoginEntity;
+  login!: LobbyUI;
 
   preload() {
     this.load.image('background', '/assets/background.jpg');
@@ -20,7 +20,7 @@ export class LobbyScene extends BaseScene {
     this.bg               = this.add.image(this.getSize().x / 2, this.getSize().y / 2, 'background');
     this.bg.displayWidth  = this.getSize().x;
     this.bg.displayHeight = this.getSize().y;
-    this.login            = new LoginEntity(this);
+    this.login            = new LobbyUI(this);
   }
 
   resize() {

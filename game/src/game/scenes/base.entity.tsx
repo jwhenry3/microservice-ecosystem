@@ -6,7 +6,7 @@ export abstract class BaseEntity extends Phaser.GameObjects.Container {
   key = 'test-entity';
 
 
-  protected constructor(scene: BaseScene, x?: number, y?: number, children?: Phaser.GameObjects.GameObject[]) {
+  protected constructor(public scene: BaseScene, x?: number, y?: number, children?: Phaser.GameObjects.GameObject[]) {
     super(scene, x, y, children);
     scene.add.existing(this);
   }

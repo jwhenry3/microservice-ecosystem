@@ -3,20 +3,21 @@ import { Button }                            from '@material-ui/core';
 import { Network }                           from '../../../network';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
-export interface LoginProps {
+export interface RegisterProps {
   network: Network
-  loggedIn: () => void
-  toRegister: () => void
+  registered: () => void
+  toLogin: () => void
 }
 
-export class LoginForm {
-  email: string    = '';
-  password: string = '';
+export class RegisterForm {
+  email: string           = '';
+  password: string        = '';
+  confirmPassword: string = '';
 }
 
-export default class Login extends Component<LoginProps, any> {
+export default class Register extends Component<RegisterProps, any> {
 
-  validate = (values: LoginForm) => {
+  validate = (values: RegisterForm) => {
     let errors: any = {};
     if (!values.email) {
       errors.email = 'Required';
@@ -26,17 +27,22 @@ export default class Login extends Component<LoginProps, any> {
     if (!values.password) {
       errors.password = 'Required';
     }
+    if (!values.confirmPassword) {
+      errors.confirmPassword = 'Required';
+    } else if (values.confirmPassword !== values.password) {
+      errors.confirmPassword = 'Passwords Must Match';
+    }
     return errors;
   };
 
-  onSubmit = (values: LoginForm) => {
-    this.props.network.auth.login(values.email, values.password).then((result: { token: string }) => {
+  onSubmit = (values: RegisterForm) => {
+    this.props.network.auth.register(values.email, values.password).then((result: { token: string }) => {
       if (result.token) {
         this.props.network.auth.session = {
           email: values.email,
           token: result.token,
         };
-        this.props.loggedIn();
+        this.props.registered();
       }
     });
   };
@@ -45,7 +51,7 @@ export default class Login extends Component<LoginProps, any> {
     return <div className="panel">
       <div className="backdrop"/>
       <Formik
-        initialValues={new LoginForm()}
+        initialValues={new RegisterForm()}
         validate={this.validate}
         onSubmit={this.onSubmit}
       >
@@ -53,17 +59,19 @@ export default class Login extends Component<LoginProps, any> {
             isSubmitting,
             /* and other goodies */
           }) => (
-          <Form autoComplete="no">
+          <Form autoComplete="off">
             <Field type="email" name="email" placeholder="Email Address" autoComplete="new-password"/><br/>
             <ErrorMessage name="email" component="div"/><br/>
             <Field type="password" name="password" placeholder="Password" autoComplete="new-password"/><br/>
             <ErrorMessage name="password" component="div"/><br/>
+            <Field type="password" name="confirmPassword" placeholder="Confirm Password" autoComplete="new-password"/><br/>
+            <ErrorMessage name="confirmPassword" component="div"/><br/>
             <br/>
             <Button variant="contained" type="submit" disabled={isSubmitting}>
-              Login
+              Register
             </Button><br/><br/>
-            <Button type="button" onClick={this.props.toRegister}>
-              Create an Account!
+            <Button type="button" onClick={this.props.toLogin}>
+              Have an account?
             </Button>
           </Form>
         )}
