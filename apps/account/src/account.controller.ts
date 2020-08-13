@@ -40,9 +40,13 @@ export class AccountController {
   }
 
   @MessagePattern('request.account.logout')
-  async onLogout({ requesterId, data }: { requesterId: string, data: { email: string } }) {
-    this.client.emit('emit.to', { event: 'account.logged-out', id: requesterId, data: {} });
-    await this.account.logout(data.email);
+  async onLogout({ requesterId, data }: { requesterId: string, data: { } }) {
+    let account = await this.account.getAccountBySocketId(requesterId);
+    if (account) {
+      this.client.emit('emit.to', { event: 'account.logged-out', id: requesterId, data: {} });
+      return await this.account.logout(account.email);
+    }
+    return null;
   }
 
   @MessagePattern('request.account.verify')

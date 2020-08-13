@@ -14,6 +14,10 @@ export class AuthNet {
     return this.net.request<{ token: string }>('account.login', { email, password });
   }
 
+  logout() {
+    return this.net.request<{ token: string }>('account.logout', {});
+  }
+
   register(email: string, password: string) {
     return this.net.request<{ token: string }>('account.register', { email, password });
   }

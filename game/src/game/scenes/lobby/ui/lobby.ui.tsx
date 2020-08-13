@@ -71,20 +71,27 @@ export class LobbyUI extends BaseEntity {
         <Modal parent={document.getElementById('ui-center-center') as HTMLElement}>
           {state.login
            ?
-           <Login loggedIn={this.toCharacters} network={this.scene.game.network} toRegister={this.toRegister}/>
+           <Login loggedIn={this.toCharacters}
+                  network={this.scene.game.network}
+                  toRegister={this.toRegister}/>
            : ''}
           {state.register
            ?
-           <Register registered={this.toCharacters} network={this.scene.game.network} toLogin={this.toLogin}/>
+           <Register registered={this.toCharacters}
+                     network={this.scene.game.network}
+                     toLogin={this.toLogin}/>
            : ''}
           {state.characters
            ?
-           <Characters network={this.scene.game.network} onSelected={this.onCharacterSelected}
+           <Characters network={this.scene.game.network}
+                       onSelected={this.onCharacterSelected}
+                       toLogin={this.toLogin}
                        toCreateCharacter={this.toCreateCharacter}/>
            : ''}
           {state.createCharacter
            ?
-           <CreateCharacter network={this.scene.game.network} toCharacters={this.toCharacters}/>
+           <CreateCharacter network={this.scene.game.network}
+                            toCharacters={this.toCharacters}/>
            : ''}
         </Modal>
       )}

@@ -50,9 +50,7 @@ export default class Register extends Component<RegisterProps, any> {
 
   render() {
     return <>
-      <div className="backdrop"/>
-      <Panel>
-        <h3>Register</h3>
+      <Panel title="Register">
         <Formik
           initialValues={new RegisterForm()}
           validate={this.validate}
@@ -71,9 +69,9 @@ export default class Register extends Component<RegisterProps, any> {
                      autoComplete="new-password"/><br/>
               <ErrorMessage name="confirmPassword" component="div"/><br/>
               <br/>
-              <Button variant="contained" type="submit" disabled={isSubmitting}>
+              <Button variant="contained" color="primary" type="submit" disabled={isSubmitting}>
                 Register
-              </Button><br/><br/>
+              </Button>&nbsp;
               <Button type="button" onClick={this.props.toLogin}>
                 Have an account?
               </Button>

@@ -21,7 +21,7 @@ export default class CreateCharacter extends Component<CreateCharacterProps, any
 
   render() {
     return <>
-      <Panel title="Create Character" canDrag={true}>
+      <Panel title="Create Character" canDrag={true} close={this.props.toCharacters}>
         <Button type="button" onClick={this.props.toCharacters}>
           Go Back
         </Button>

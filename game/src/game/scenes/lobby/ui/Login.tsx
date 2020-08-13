@@ -44,7 +44,6 @@ export default class Login extends Component<LoginProps, any> {
 
   render() {
     return <>
-      <div className="backdrop"/>
       <Panel title="Login">
         <Formik
           initialValues={new LoginForm()}

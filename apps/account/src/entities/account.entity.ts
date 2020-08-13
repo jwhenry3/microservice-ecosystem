@@ -12,7 +12,7 @@ export class AccountEntity {
   email: string;
   @Column()
   password: string;
-  @Column()
+  @Column({nullable:true})
   currentSocketId: string;
   @OneToMany(t => CharacterEntity, c => c.account)
   characters:CharacterEntity[];
