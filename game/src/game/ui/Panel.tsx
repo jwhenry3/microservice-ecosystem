@@ -50,10 +50,15 @@ export default class Panel extends Component<PanelProps, PanelState> {
       x          : this.props.x || 0,
       y          : this.props.y || 0,
     });
+    if (!!this.props.hasInitialPosition || this.props.canDrag) {
+      window.addEventListener('resize', this.snapPosition);
+    }
   }
+
 
   componentWillUnmount(): void {
     window.removeEventListener('mousemove', this.onMouseMove);
+    window.removeEventListener('resize', this.snapPosition);
   }
 
   onMouseDown = (e: any) => {
@@ -93,20 +98,12 @@ export default class Panel extends Component<PanelProps, PanelState> {
       }
     }
   };
-  onMouseUp   = () => {
+  onMouseUp   = (e: any) => {
     window.removeEventListener('mouseup', this.onMouseUp);
     window.removeEventListener('mousemove', this.onMouseMove);
     if (this.props.canDrag) {
       if (this.state.dragging) {
-        this.setState({
-          hasDragged : true,
-          mouseIsDown: false,
-          dragging   : false,
-          originX    : 0,
-          originY    : 0,
-          x          : this.state.x,
-          y          : this.state.y,
-        });
+        this.snapPosition();
         return;
       }
     }
@@ -116,19 +113,44 @@ export default class Panel extends Component<PanelProps, PanelState> {
     });
   };
 
+  snapPosition = () => {
+    let snap = this.getSnappedPosition();
+    this.setState({
+      hasDragged : true,
+      mouseIsDown: false,
+      dragging   : false,
+      originX    : 0,
+      originY    : 0,
+      x          : snap.x,
+      y          : snap.y,
+    });
+  };
+
+  private getSnappedPosition() {
+    let bounds = this.ref.getBoundingClientRect();
+    let snap   = {
+      x: Math.round(bounds.x / 16) * 16,
+      y: Math.round(bounds.y / 16) * 16,
+    };
+    if (snap.x < 16) {
+      snap.x = 16;
+    }
+    if (snap.y < 16) {
+      snap.y = 16;
+    }
+    if (snap.x + this.ref.offsetWidth > window.innerWidth - 16) {
+      snap.x = window.innerWidth - 16 - this.ref.offsetWidth;
+    }
+    if (snap.y + this.ref.offsetHeight > window.innerHeight - 16) {
+      snap.y = window.innerHeight - 16 - this.ref.offsetHeight;
+    }
+    return snap;
+  }
+
   onRef = (node: HTMLDivElement) => {
     if (node) {
       this.ref   = node;
-      let bounds = node.getBoundingClientRect();
-      this.setState({
-        hasDragged : true,
-        mouseIsDown: false,
-        dragging   : false,
-        originX    : 0,
-        originY    : 0,
-        x          : bounds.x,
-        y          : bounds.y,
-      });
+      this.snapPosition();
     }
   };
 
