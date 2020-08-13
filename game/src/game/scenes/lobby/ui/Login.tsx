@@ -44,7 +44,7 @@ export default class Login extends Component<LoginProps, any> {
 
   render() {
     return <>
-      <Panel title="Login">
+      <Panel uiName="login" title="Login">
         <Formik
           initialValues={new LoginForm()}
           validate={this.validate}

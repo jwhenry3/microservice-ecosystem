@@ -2,8 +2,10 @@ import React, { Component, ReactNode } from 'react';
 import './Panel.scss';
 import { IconButton }                  from '@material-ui/core';
 import { Close, OpenWith }             from '@material-ui/icons';
+import { focusComponent }              from '../../ui-components';
 
 export interface PanelProps {
+  uiName?:string
   title?: string
   x?: number
   y?: number
@@ -11,6 +13,7 @@ export interface PanelProps {
   children: ReactNode
   canDrag?: boolean
   close?: () => void
+  panelName?:string
 }
 
 export interface PanelState {
@@ -166,10 +169,17 @@ export default class Panel extends Component<PanelProps, PanelState> {
     return '';
   }
 
+  focus = () => {
+    if (this.props.uiName) {
+      console.log('focus component');
+      focusComponent(this.props.uiName);
+    }
+  };
+
   render() {
     if (!this.props.canDrag) {
       return <>
-        <div ref={this.onRef} className="panel" style={this.getStyle()}>
+        <div ref={this.onRef} className="panel" style={this.getStyle()} onClick={this.focus}>
           <div className="panel-container">
             <div className={'panel-top ' + (this.props.title ? 'title' : '')}>
               <div className="left">
@@ -185,7 +195,7 @@ export default class Panel extends Component<PanelProps, PanelState> {
       </>;
     }
     return <>
-      <div ref={this.onRef} className="panel" style={this.getStyle()}>
+      <div ref={this.onRef} className={'panel ' + (this.props.panelName || '') } style={this.getStyle()} onMouseDown={this.focus}>
         <div className="panel-container">
           <div className={'panel-top ' + (this.props.title ? 'title' : '')} onMouseDown={this.onMouseDown}>
             <div className="left">

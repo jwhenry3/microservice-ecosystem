@@ -50,7 +50,7 @@ export default class Register extends Component<RegisterProps, any> {
 
   render() {
     return <>
-      <Panel title="Register">
+      <Panel uiName="register" title="Register">
         <Formik
           initialValues={new RegisterForm()}
           validate={this.validate}

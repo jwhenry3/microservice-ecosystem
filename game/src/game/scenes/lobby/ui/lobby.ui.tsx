@@ -1,100 +1,95 @@
-import { BaseEntity }      from '../../base.entity';
-import Observe             from '../../../../lib/observe';
-import Modal               from '../../../../Modal';
-import Login               from './Login';
-import React               from 'react';
-import { BehaviorSubject } from 'rxjs';
-import { BaseScene }       from '../../base.scene';
-import Register            from './Register';
-import Characters          from './Characters';
-import CreateCharacter     from './CreateCharacter';
-import { CharacterModel }  from '../../../../../../lib/models/character.model';
+import { BaseEntity }       from '../../base.entity';
+import Observe              from '../../../../lib/observe';
+import Modal                from '../../../../Modal';
+import Login                from './Login';
+import React, { ReactNode } from 'react';
+import { BehaviorSubject }  from 'rxjs';
+import { BaseScene }        from '../../base.scene';
+import Register             from './Register';
+import Characters           from './Characters';
+import CreateCharacter      from './CreateCharacter';
+import { CharacterModel }   from '../../../../../../lib/models/character.model';
+import { UiEntity }         from './ui.entity';
 
 export class LobbyUI extends BaseEntity {
   key = 'login';
 
-  uiState = new BehaviorSubject({
-    login          : true,
-    register       : false,
-    characters     : false,
-    createCharacter: false,
-  });
+  login!: UiEntity;
+  register!: UiEntity;
+  characters!: UiEntity;
+  createCharacter!: UiEntity;
 
   constructor(scene: BaseScene) {
     super(scene, 0, 0, []);
+    this.login           = new UiEntity(this.scene, 'login', this.getTemplate('login'));
+    this.register        = new UiEntity(this.scene, 'register', this.getTemplate('register'));
+    this.characters      = new UiEntity(this.scene, 'characters', this.getTemplate('characters'));
+    this.createCharacter = new UiEntity(this.scene, 'create-character', this.getTemplate('create-character'));
     this.create();
   }
 
+  create() {
+    super.create();
+    this.toLogin();
+  }
+
   toCharacters      = () => {
-    this.uiState.next({
-      login          : false,
-      register       : false,
-      characters     : true,
-      createCharacter: false,
-    });
+    this.login.removeUI();
+    this.register.removeUI();
+    this.characters.addUI();
+    this.createCharacter.removeUI();
   };
   toCreateCharacter = () => {
-    this.uiState.next({
-      login          : false,
-      register       : false,
-      characters     : true,
-      createCharacter: true,
-    });
+    this.login.removeUI();
+    this.register.removeUI();
+    this.characters.addUI();
+    this.createCharacter.addUI();
   };
 
   toRegister = () => {
-    this.uiState.next({
-      login          : false,
-      register       : true,
-      characters     : false,
-      createCharacter: false,
-    });
+    this.login.removeUI();
+    this.register.addUI();
+    this.characters.removeUI();
+    this.createCharacter.removeUI();
   };
 
   toLogin = () => {
-    this.uiState.next({
-      login          : true,
-      register       : false,
-      characters     : false,
-      createCharacter: false,
-    });
+    this.login.addUI();
+    this.register.removeUI();
+    this.characters.removeUI();
+    this.createCharacter.removeUI();
   };
 
   onCharacterSelected = (character: CharacterModel) => {
 
   };
 
-
-  render = () => {
-    return <Observe state={this.uiState} key="login">
-      {(state) => (
-        <Modal parent={document.getElementById('ui-center-center') as HTMLElement}>
-          {state.login
-           ?
-           <Login loggedIn={this.toCharacters}
-                  network={this.scene.game.network}
-                  toRegister={this.toRegister}/>
-           : ''}
-          {state.register
-           ?
-           <Register registered={this.toCharacters}
-                     network={this.scene.game.network}
-                     toLogin={this.toLogin}/>
-           : ''}
-          {state.characters
-           ?
-           <Characters network={this.scene.game.network}
-                       onSelected={this.onCharacterSelected}
-                       toLogin={this.toLogin}
-                       toCreateCharacter={this.toCreateCharacter}/>
-           : ''}
-          {state.createCharacter
-           ?
-           <CreateCharacter network={this.scene.game.network}
-                            toCharacters={this.toCharacters}/>
-           : ''}
-        </Modal>
-      )}
-    </Observe>;
-  };
+  getTemplate(value: string) {
+    return <Modal uiKey={value} key={value} parent={document.getElementById('ui-center-center') as HTMLElement}>
+      {value === 'login'
+       ?
+       <Login loggedIn={this.toCharacters}
+              network={this.scene.game.network}
+              toRegister={this.toRegister}/>
+       : ''}
+      {value === 'register'
+       ?
+       <Register registered={this.toCharacters}
+                 network={this.scene.game.network}
+                 toLogin={this.toLogin}/>
+       : ''}
+      {value === 'characters'
+       ?
+       <Characters network={this.scene.game.network}
+                   onSelected={this.onCharacterSelected}
+                   toLogin={this.toLogin}
+                   toCreateCharacter={this.toCreateCharacter}/>
+       : ''}
+      {value === 'create-character'
+       ?
+       <CreateCharacter network={this.scene.game.network}
+                        toCharacters={this.toCharacters}/>
+       : ''}
+    </Modal>;
+  }
 }

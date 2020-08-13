@@ -32,7 +32,7 @@ export default class Characters extends Component<CharactersProps, CharacterMode
 
   render() {
     return <>
-      <Panel canDrag={true} title="Characters" close={this.logout}>
+      <Panel uiName="characters" panelName="characters" canDrag={true} title="Characters" close={this.logout}>
         <Button type="button" onClick={this.props.toCreateCharacter}>
           Create Character
         </Button>

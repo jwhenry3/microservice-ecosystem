@@ -11,14 +11,24 @@ export abstract class BaseEntity extends Phaser.GameObjects.Container {
     scene.add.existing(this);
   }
 
+  removeUI() {
+    if (this.render) {
+      removeComponent(this.key);
+    }
+  }
+
+  addUI() {
+    if (this.render) {
+      setComponent(this.key, this.render());
+    }
+  }
+
   destroy(fromScene?: boolean): void {
     super.destroy(fromScene);
     if (this.stop) {
       this.stop();
     }
-    if (this.render) {
-      removeComponent(this.key);
-    }
+    this.removeUI();
   }
 
   create() {
@@ -26,9 +36,7 @@ export abstract class BaseEntity extends Phaser.GameObjects.Container {
       if (this.stop) {
         this.stop();
       }
-      if (this.render) {
-        removeComponent(this.key);
-      }
+      this.removeUI();
     });
     this.scene.events.on('resume', () => {
       if (this.resume) {
@@ -37,16 +45,12 @@ export abstract class BaseEntity extends Phaser.GameObjects.Container {
       if (this.start) {
         this.start();
       }
-      if (this.render) {
-        setComponent(this.key, this.render());
-      }
+      this.addUI();
     });
     if (this.start) {
       this.start();
     }
-    if (this.render) {
-      setComponent(this.key, this.render());
-    }
+    this.addUI();
   }
 
   stop() {

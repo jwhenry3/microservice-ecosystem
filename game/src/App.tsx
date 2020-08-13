@@ -1,23 +1,22 @@
-import React, {  ReactNode,   useLayoutEffect, useState } from 'react';
+import React, { ReactNode, useLayoutEffect, useState }   from 'react';
 import './App.css';
-import {  getComponents, updateComponents } from './ui-components';
-import { isEqual }                                     from 'lodash';
+import { displayOrder, getComponents, updateComponents } from './ui-components';
+import { isEqual }                                       from 'lodash';
 
-let components = getComponents();
 const App = () => {
-  const [componentList, setComponentList] = useState<{ [key: string]: ReactNode }>(components);
+  const [componentList, setComponentList] = useState<string[]>([]);
   useLayoutEffect(() => {
     let sub = updateComponents.subscribe(() => {
-      let components = getComponents();
-      if (!isEqual(components, componentList)) {
+      if (JSON.stringify(displayOrder) !== JSON.stringify(componentList)) {
         console.log('update component list');
-        setComponentList({ ...components });
+        setComponentList([...displayOrder]);
       }
     });
     return () => sub.unsubscribe();
   }, [componentList, setComponentList]);
 
-  return <>{Object.keys(componentList).map(key => componentList[key])}</>;
+  let components = getComponents();
+  return <>{componentList.map((key: string) => components[key])}</>;
 };
 
 export default App;
