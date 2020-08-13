@@ -3,6 +3,7 @@ import { AccountRepo }                               from './account.repo';
 import { ClientProxy, EventPattern, MessagePattern } from '@nestjs/microservices';
 import { AuthService }                               from './auth.service';
 import { CharacterRepo }                             from './character.repo';
+import { CharacterModel }                            from '../../../lib/models/character.model';
 
 @Controller()
 export class AccountController {
@@ -54,17 +55,14 @@ export class AccountController {
   }
 
   @MessagePattern('request.character.create')
-  async onCreateCharacter({ requesterId, data }: { requesterId: string, data: { name: string, sprite: string } }) {
+  async onCreateCharacter({ requesterId, data }: { requesterId: string, data: CharacterModel }) {
     let account = await this.account.getAccountBySocketId(requesterId);
     if (account) {
-      let result = await this.character.createCharacter(account, data.name, data.sprite);
+      let result = await this.character.createCharacter(account, data);
       if (result) {
         this.client.emit('emit.to', { event: 'account.character-created', id: requesterId, data: {} });
-        return {
-          id    : result.character.id,
-          name  : result.character.name,
-          sprite: result.character.sprite,
-        };
+        let { name, hairColor, hairStyle, skinTone, gender, id, race } = result.character;
+        return { id, name, gender, hairColor, hairStyle, skinTone, race } as CharacterModel;
       }
     }
     return false;
@@ -74,11 +72,10 @@ export class AccountController {
   async onGetCharacters({ requesterId, data }: { requesterId: string, data: {} }) {
     let account = await this.account.getAccountBySocketId(requesterId);
     if (account) {
-      return account.characters.map(character => ({
-        id    : character.id,
-        name  : character.name,
-        sprite: character.sprite,
-      }));
+      return (account.characters || []).map(character => {
+        let { name, hairColor, hairStyle, skinTone, gender, id, race } = character;
+        return { id, name, gender, hairColor, hairStyle, skinTone, race } as CharacterModel;
+      });
     }
     return [];
   }

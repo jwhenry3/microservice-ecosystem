@@ -2,6 +2,7 @@ import React, { Component }                  from 'react';
 import { Button }                            from '@material-ui/core';
 import { Network }                           from '../../../network';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import Panel                                 from '../../../ui/Panel';
 
 export interface RegisterProps {
   network: Network
@@ -48,34 +49,38 @@ export default class Register extends Component<RegisterProps, any> {
   };
 
   render() {
-    return <div className="panel">
+    return <>
       <div className="backdrop"/>
-      <Formik
-        initialValues={new RegisterForm()}
-        validate={this.validate}
-        onSubmit={this.onSubmit}
-      >
-        {({
-            isSubmitting,
-            /* and other goodies */
-          }) => (
-          <Form autoComplete="off">
-            <Field type="email" name="email" placeholder="Email Address" autoComplete="new-password"/><br/>
-            <ErrorMessage name="email" component="div"/><br/>
-            <Field type="password" name="password" placeholder="Password" autoComplete="new-password"/><br/>
-            <ErrorMessage name="password" component="div"/><br/>
-            <Field type="password" name="confirmPassword" placeholder="Confirm Password" autoComplete="new-password"/><br/>
-            <ErrorMessage name="confirmPassword" component="div"/><br/>
-            <br/>
-            <Button variant="contained" type="submit" disabled={isSubmitting}>
-              Register
-            </Button><br/><br/>
-            <Button type="button" onClick={this.props.toLogin}>
-              Have an account?
-            </Button>
-          </Form>
-        )}
-      </Formik>
-    </div>;
+      <Panel>
+        <h3>Register</h3>
+        <Formik
+          initialValues={new RegisterForm()}
+          validate={this.validate}
+          onSubmit={this.onSubmit}
+        >
+          {({
+              isSubmitting,
+              /* and other goodies */
+            }) => (
+            <Form autoComplete="off">
+              <Field type="email" name="email" placeholder="Email Address" autoComplete="new-password"/><br/>
+              <ErrorMessage name="email" component="div"/><br/>
+              <Field type="password" name="password" placeholder="Password" autoComplete="new-password"/><br/>
+              <ErrorMessage name="password" component="div"/><br/>
+              <Field type="password" name="confirmPassword" placeholder="Confirm Password"
+                     autoComplete="new-password"/><br/>
+              <ErrorMessage name="confirmPassword" component="div"/><br/>
+              <br/>
+              <Button variant="contained" type="submit" disabled={isSubmitting}>
+                Register
+              </Button><br/><br/>
+              <Button type="button" onClick={this.props.toLogin}>
+                Have an account?
+              </Button>
+            </Form>
+          )}
+        </Formik>
+      </Panel>
+    </>;
   }
 }

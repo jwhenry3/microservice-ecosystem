@@ -1,6 +1,7 @@
-import { CharacterEntity }              from './entities/character.entity';
-import { EntityRepository, Repository } from 'typeorm';
-import { AccountEntity }                from './entities/account.entity';
+import { CharacterEntity }                  from './entities/character.entity';
+import { EntityRepository, Repository }     from 'typeorm';
+import { AccountEntity }                    from './entities/account.entity';
+import { CHARACTER_FIELDS, CharacterModel } from '../../../lib/models/character.model';
 
 @EntityRepository(CharacterEntity)
 export class CharacterRepo extends Repository<CharacterEntity> {
@@ -11,15 +12,20 @@ export class CharacterRepo extends Repository<CharacterEntity> {
     });
   }
 
-  async createCharacter(account: AccountEntity, name: string, sprite: string) {
+  async createCharacter(account: AccountEntity, model: CharacterModel) {
     let result = await this.getCharacterByName(name);
     if (!result) {
-      let character     = new CharacterEntity();
-      character.name    = name;
+      let character = new CharacterEntity();
+      for (let prop in model) {
+        if (model.hasOwnProperty(prop)) {
+          if (CHARACTER_FIELDS.includes(prop)) {
+            character[prop] = model[prop];
+          }
+        }
+      }
       character.account = account;
-      character.sprite  = sprite;
       await this.save(character, { reload: true });
-      return {character};
+      return { character };
     }
     return null;
   }

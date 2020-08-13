@@ -1,5 +1,5 @@
 import { BaseScene } from '../base.scene';
-import { LobbyUI }   from './login/lobby.ui';
+import { LobbyUI }   from './ui/lobby.ui';
 
 export class LobbyScene extends BaseScene {
   key = 'lobby';

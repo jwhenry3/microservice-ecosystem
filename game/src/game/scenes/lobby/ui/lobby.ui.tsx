@@ -6,6 +6,9 @@ import React               from 'react';
 import { BehaviorSubject } from 'rxjs';
 import { BaseScene }       from '../../base.scene';
 import Register            from './Register';
+import Characters          from './Characters';
+import CreateCharacter     from './CreateCharacter';
+import { CharacterModel }  from '../../../../../../lib/models/character.model';
 
 export class LobbyUI extends BaseEntity {
   key = 'login';
@@ -22,12 +25,20 @@ export class LobbyUI extends BaseEntity {
     this.create();
   }
 
-  toCharacters = () => {
+  toCharacters      = () => {
     this.uiState.next({
       login          : false,
       register       : false,
       characters     : true,
       createCharacter: false,
+    });
+  };
+  toCreateCharacter = () => {
+    this.uiState.next({
+      login          : false,
+      register       : false,
+      characters     : true,
+      createCharacter: true,
     });
   };
 
@@ -49,17 +60,32 @@ export class LobbyUI extends BaseEntity {
     });
   };
 
+  onCharacterSelected = (character: CharacterModel) => {
+
+  };
+
 
   render = () => {
     return <Observe state={this.uiState} key="login">
       {(state) => (
         <Modal parent={document.getElementById('ui-center-center') as HTMLElement}>
-          {state.login ? <Login loggedIn={this.toCharacters}
-                                network={this.scene.game.network}
-                                toRegister={this.toRegister}/> : ''}
-          {state.register ? <Register registered={this.toCharacters}
-                                      network={this.scene.game.network}
-                                      toLogin={this.toLogin}/> : ''}
+          {state.login
+           ?
+           <Login loggedIn={this.toCharacters} network={this.scene.game.network} toRegister={this.toRegister}/>
+           : ''}
+          {state.register
+           ?
+           <Register registered={this.toCharacters} network={this.scene.game.network} toLogin={this.toLogin}/>
+           : ''}
+          {state.characters
+           ?
+           <Characters network={this.scene.game.network} onSelected={this.onCharacterSelected}
+                       toCreateCharacter={this.toCreateCharacter}/>
+           : ''}
+          {state.createCharacter
+           ?
+           <CreateCharacter network={this.scene.game.network} toCharacters={this.toCharacters}/>
+           : ''}
         </Modal>
       )}
     </Observe>;

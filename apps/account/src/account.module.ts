@@ -5,7 +5,6 @@ import { ClientModule }      from '../../../lib/server/client.module';
 import { ConfigModule }      from '@nestjs/config';
 import { TypeOrmModule }     from '@nestjs/typeorm';
 import * as path             from 'path';
-import { AccountEntity }     from './entities/account.entity';
 import { JwtModule }         from '@nestjs/jwt';
 import { AuthService }       from './auth.service';
 import { CharacterRepo }     from './character.repo';
