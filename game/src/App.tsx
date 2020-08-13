@@ -8,7 +8,6 @@ const App = () => {
   useLayoutEffect(() => {
     let sub = updateComponents.subscribe(() => {
       if (JSON.stringify(displayOrder) !== JSON.stringify(componentList)) {
-        console.log('update component list');
         setComponentList([...displayOrder]);
       }
     });
