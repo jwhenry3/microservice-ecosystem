@@ -1,7 +1,6 @@
-import React, { ReactNode, useLayoutEffect, useState }   from 'react';
+import React, { useLayoutEffect, useState }              from 'react';
 import './App.css';
 import { displayOrder, getComponents, updateComponents } from './ui-components';
-import { isEqual }                                       from 'lodash';
 
 const App = () => {
   const [componentList, setComponentList] = useState<string[]>([]);

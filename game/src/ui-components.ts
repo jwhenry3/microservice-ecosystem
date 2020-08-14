@@ -29,7 +29,6 @@ export function focusComponent(key: string) {
   if (displayOrder.includes(key)) {
     displayOrder.splice(displayOrder.indexOf(key), 1);
     displayOrder.push(key);
-    console.log(displayOrder);
     updateComponents.next();
   }
 }

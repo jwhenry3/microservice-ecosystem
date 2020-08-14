@@ -1,9 +1,9 @@
-import React, { Component }                  from 'react';
-import { Network }                           from '../../../network';
-import { Button }                            from '@material-ui/core';
+import React, { Component }                    from 'react';
+import { Network }                             from '../../../network';
+import { Button, MenuItem, Select, TextField } from '@material-ui/core';
 import './CreateCharacter.scss';
-import Panel                                 from '../../../ui/Panel';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import Panel                                   from '../../../ui/Panel';
+import { ErrorMessage, Field, Form, Formik }   from 'formik';
 
 export interface CreateCharacterProps {
   network: Network
@@ -53,8 +53,20 @@ export default class CreateCharacter extends Component<CreateCharacterProps, any
               /* and other goodies */
             }) => (
             <Form autoComplete="off">
-              <Field type="text" name="name" placeholder="Name"/><br/>
-              <ErrorMessage name="name" component="div"/><br/>
+              <Field name="name">
+                {({ field, form, meta }) => (
+                  <TextField variant="outlined" label="Character Name" {...field}/>
+                )}
+              </Field><br/>
+              <div className="error"><ErrorMessage name="name" component="div"/></div>
+              <Field name="race" placeholder="Race">
+                {({ field, form, meta }) => (
+                  <Select variant="outlined" label="Race" {...field}>
+                    <MenuItem value="human">Human</MenuItem>
+                  </Select>
+                )}
+              </Field><br/>
+              <div className="error"/>
               <Button variant="contained" color="primary" type="submit" disabled={isSubmitting}>
                 Create
               </Button>&nbsp;

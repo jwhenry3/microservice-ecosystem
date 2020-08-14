@@ -52,13 +52,9 @@ code {
       }
     }
 
-    > [id*='-center'] {
-      text-align: center;
-    }
 
     > #ui-center-center {
       flex-direction: row;
-      text-align: center;
       justify-content: center;
       align-items: center;
     }
@@ -70,21 +66,84 @@ code {
 }
 
 .panel {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #fff;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000,
+  -1px 1px 0 #000, 1px 1px 0 #000;
+  input:-webkit-autofill::first-line,
+  input:-internal-autofill-previewed,
+  input:-internal-autofill-selected,
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 30px #fafafa inset !important;
+    font-size:16px !important;
+  }
+
+  button {
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000,
+    -1px 1px 0 #000, 1px 1px 0 #000;
+    text-transform: none;
+  }
+
+  label, .MuiInputBase-root {
+    text-shadow: none;
+  }
 
   .MuiButton-text .MuiButton-label {
     color: #fff;
   }
 
-  input[type="text"], input[type="password"], input[type="email"] {
+  div.error {
+    height: 24px;
+    padding: 4px 16px;
+    font-size: 16px;
+    color: #ff9294;
+  }
+
+  .MuiInputBase-root.MuiOutlinedInput-root > :first-child {
     padding: 8px 16px;
     border-radius: 8px;
     border: 1px solid #e0e0e0;
     background-color: #fafafa;
+    height: 36px;
+    width: 100%;
+    box-sizing: border-box;
 
     &:focus {
       outline: none;
       border: 1px solid #679cfb;
     }
+  }
+
+  .MuiFormControl-root, .MuiInputBase-root.MuiOutlinedInput-root, .MuiInputBase-formControl.MuiOutlinedInput-root {
+    width: 100%;
+    text-align: left;
+  }
+
+  .MuiInputBase-root.MuiOutlinedInput-root > .MuiSelect-outlined.MuiSelect-selectMenu {
+    padding-right: 32px;
+  }
+
+  label.MuiInputLabel-root {
+    transform: translate(14px, 12px) scale(1);
+  }
+
+  label.MuiFormLabel-root.MuiInputLabel-shrink {
+    transform: translate(14px, -4px) scale(0.75);
+    background-color: #fafafa;
+    padding: 4px;
+    margin-top: -6px;
+    border-radius: 8px;
+    color: #333;
+    font-weight: 500;
   }
 }
 

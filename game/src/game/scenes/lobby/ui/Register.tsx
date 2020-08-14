@@ -1,5 +1,5 @@
 import React, { Component }                  from 'react';
-import { Button }                            from '@material-ui/core';
+import { Button, TextField }                 from '@material-ui/core';
 import { Network }                           from '../../../network';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import Panel                                 from '../../../ui/Panel';
@@ -61,13 +61,29 @@ export default class Register extends Component<RegisterProps, any> {
               /* and other goodies */
             }) => (
             <Form autoComplete="off">
-              <Field type="email" name="email" placeholder="Email Address" autoComplete="new-password"/><br/>
-              <ErrorMessage name="email" component="div"/><br/>
-              <Field type="password" name="password" placeholder="Password" autoComplete="new-password"/><br/>
-              <ErrorMessage name="password" component="div"/><br/>
-              <Field type="password" name="confirmPassword" placeholder="Confirm Password"
-                     autoComplete="new-password"/><br/>
-              <ErrorMessage name="confirmPassword" component="div"/><br/>
+              <input type="email" hidden id="Email" value="Email" name="hidden-email" readOnly={true}/>
+              <input type="password" hidden id="Password" value="Password" name="hidden-password" readOnly={true} />
+              <Field name="email">
+                {({ field, form, meta }) => (
+                  <TextField variant="outlined" type="email" label="Email Address"
+                             autoComplete="new-email" {...field}/>
+                )}
+              </Field><br/>
+              <div className="error"><ErrorMessage name="email" component="div"/></div>
+              <Field name="password">
+                {({ field, form, meta }) => (
+                  <TextField variant="outlined" type="password" label="Password"
+                             autoComplete="new-password" {...field}/>
+                )}
+              </Field><br/>
+              <div className="error"><ErrorMessage name="password" component="div"/></div>
+              <Field name="confirmPassword">
+                {({ field, form, meta }) => (
+                  <TextField variant="outlined" type="password" label="Confirm Password"
+                             autoComplete="new-password" {...field}/>
+                )}
+              </Field><br/>
+              <div className="error"><ErrorMessage name="confirmPassword" component="div"/></div>
               <br/>
               <Button variant="contained" color="primary" type="submit" disabled={isSubmitting}>
                 Register
