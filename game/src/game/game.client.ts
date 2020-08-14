@@ -15,7 +15,7 @@ export class GameClient {
         queue  : true,
         gamepad: true,
       } as any,
-      parent   : 'game-container',
+      canvas: document.getElementById('game-canvas') as HTMLCanvasElement,
       scale    : {
         mode: Phaser.Scale.RESIZE,
       },

@@ -20,3 +20,8 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+const canvas = document.getElementById('game-canvas') as HTMLCanvasElement;
+canvas.addEventListener('click', () => {
+  canvas.focus();
+});

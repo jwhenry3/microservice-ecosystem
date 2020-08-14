@@ -3,6 +3,7 @@ html, body {
   height: 100%;
   margin: 0;
   position: relative;
+  overflow:hidden;
 }
 
 .game {
@@ -60,7 +61,9 @@ code {
     }
   }
 }
-
+canvas {
+  pointer-events: all;
+}
 .modal {
   position: relative;
 }

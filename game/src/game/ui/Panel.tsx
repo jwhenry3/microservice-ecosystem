@@ -171,7 +171,6 @@ export default class Panel extends Component<PanelProps, PanelState> {
 
   focus = () => {
     if (this.props.uiName) {
-      console.log('focus component');
       focusComponent(this.props.uiName);
     }
   };
