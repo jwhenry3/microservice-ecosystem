@@ -2,9 +2,9 @@ import React, { Component }                    from 'react';
 import { Network }                             from '../../../network';
 import { Button, MenuItem, Select, TextField } from '@material-ui/core';
 import './CreateCharacter.scss';
-import Panel                                   from '../../../ui/Panel';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { HAIR_STYLE }                        from '../../../../models/character.model';
+import Panel                                                from '../../../ui/Panel';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import { HAIR_STYLE }                                       from '../../../../models/character.model';
 
 export interface CreateCharacterProps {
   network: Network
@@ -36,8 +36,8 @@ export default class CreateCharacter extends Component<CreateCharacterProps, any
     return errors;
   };
 
-  onSubmit = (values: CreateCharacterForm) => {
-
+  onSubmit = (values: CreateCharacterForm, helpers:FormikHelpers<CreateCharacterForm>) => {
+    helpers.setSubmitting(false);
   };
 
   render() {

@@ -1,8 +1,8 @@
 import React, { Component }                  from 'react';
 import { Button, TextField }                 from '@material-ui/core';
-import { Network }                           from '../../../network';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import Panel                                 from '../../../ui/Panel';
+import { Network }                                          from '../../../network';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import Panel                                                from '../../../ui/Panel';
 
 export interface RegisterProps {
   network: Network
@@ -36,7 +36,7 @@ export default class Register extends Component<RegisterProps, any> {
     return errors;
   };
 
-  onSubmit = (values: RegisterForm) => {
+  onSubmit = (values: RegisterForm, helpers:FormikHelpers<RegisterForm>) => {
     this.props.network.auth.register(values.email, values.password).then((result: { token: string }) => {
       if (result.token) {
         this.props.network.auth.session = {
@@ -45,6 +45,7 @@ export default class Register extends Component<RegisterProps, any> {
         };
         this.props.registered();
       }
+      helpers.setSubmitting(false);
     });
   };
 

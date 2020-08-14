@@ -1,8 +1,8 @@
-import React, { Component }                  from 'react';
-import { Button, TextField }                 from '@material-ui/core';
-import { Network }                           from '../../../network';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import Panel                                 from '../../../ui/Panel';
+import React, { Component }                                 from 'react';
+import { Button, TextField }                                from '@material-ui/core';
+import { Network }                                          from '../../../network';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import Panel                                                from '../../../ui/Panel';
 
 export interface LoginProps {
   network: Network
@@ -30,7 +30,7 @@ export default class Login extends Component<LoginProps, any> {
     return errors;
   };
 
-  onSubmit = (values: LoginForm) => {
+  onSubmit = (values: LoginForm, helpers: FormikHelpers<LoginForm>) => {
     this.props.network.auth.login(values.email, values.password).then((result: { token: string }) => {
       if (result.token) {
         this.props.network.auth.session = {
@@ -39,6 +39,7 @@ export default class Login extends Component<LoginProps, any> {
         };
         this.props.loggedIn();
       }
+      helpers.setSubmitting(false);
     });
   };
 
@@ -56,7 +57,7 @@ export default class Login extends Component<LoginProps, any> {
             }) => (
             <Form autoComplete="no">
               <input type="email" hidden id="Email" value="Email" name="hidden-email" readOnly={true}/>
-              <input type="password" hidden id="Password" value="Password" name="hidden-password" readOnly={true} />
+              <input type="password" hidden id="Password" value="Password" name="hidden-password" readOnly={true}/>
               <Field name="email">
                 {({ field, form, meta }) => (
                   <TextField variant="outlined" type="email" label="Email Address"
