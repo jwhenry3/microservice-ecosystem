@@ -1,5 +1,5 @@
 import { Net }            from './net';
-import { CharacterModel } from '../../../../lib/models/character.model';
+import { CharacterModel } from '../../models/character.model';
 
 export class CharacterNet {
 

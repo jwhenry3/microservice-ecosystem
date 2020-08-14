@@ -6,7 +6,7 @@ import { BaseScene }      from '../../base.scene';
 import Register           from './Register';
 import Characters         from './Characters';
 import CreateCharacter    from './CreateCharacter';
-import { CharacterModel } from '../../../../../../lib/models/character.model';
+import { CharacterModel } from '../../../../models/character.model';
 import { UiEntity }       from './ui.entity';
 
 export class LobbyUI extends BaseEntity {

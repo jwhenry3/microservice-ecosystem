@@ -2,8 +2,8 @@ import { Controller, Get }                           from '@nestjs/common';
 import { AccountRepo }                               from './account.repo';
 import { ClientProxy, EventPattern, MessagePattern } from '@nestjs/microservices';
 import { AuthService }                               from './auth.service';
-import { CharacterRepo }                             from './character.repo';
-import { CharacterModel }                            from '../../../lib/models/character.model';
+import { CharacterRepo }  from './character.repo';
+import { CharacterModel } from '../../../game/src/models/character.model';
 
 @Controller()
 export class AccountController {

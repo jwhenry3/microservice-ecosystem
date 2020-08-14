@@ -108,7 +108,7 @@ code {
     color: #ff9294;
   }
 
-  .MuiInputBase-root.MuiOutlinedInput-root > :first-child {
+  .MuiInputBase-root.MuiOutlinedInput-root > :first-child  {
     padding: 8px 16px;
     border-radius: 8px;
     border: 1px solid #e0e0e0;
@@ -121,6 +121,9 @@ code {
       outline: none;
       border: 1px solid #679cfb;
     }
+  }
+  .MuiOutlinedInput-notchedOutline {
+    border-radius: 8px;
   }
 
   .MuiFormControl-root, .MuiInputBase-root.MuiOutlinedInput-root, .MuiInputBase-formControl.MuiOutlinedInput-root {

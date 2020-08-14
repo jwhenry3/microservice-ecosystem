@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Network }          from '../../../network';
-import { CharacterModel }   from '../../../../../../lib/models/character.model';
-import { Button }           from '@material-ui/core';
+import { Network }        from '../../../network';
+import { CharacterModel } from '../../../../models/character.model';
+import { Button }         from '@material-ui/core';
 import './Characters.scss';
 import Panel                from '../../../ui/Panel';
 

@@ -11,5 +11,5 @@ export interface CharacterModel {
 
 export const CHARACTER_FIELDS = ['name', 'gender', 'hairStyle', 'hairColor', 'skinTone', 'race'];
 export const GENDER           = ['male', 'female'];
-export const HAIR_STYLE       = new Array(10).map((v, i) => i + 1);
+export const HAIR_STYLE       = '123456789'.split('');
 export const RACE             = ['human'];

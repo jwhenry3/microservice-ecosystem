@@ -1,7 +1,7 @@
 import { CharacterEntity }                  from './entities/character.entity';
 import { EntityRepository, Repository }     from 'typeorm';
 import { AccountEntity }                    from './entities/account.entity';
-import { CHARACTER_FIELDS, CharacterModel } from '../../../lib/models/character.model';
+import { CHARACTER_FIELDS, CharacterModel } from '../../../game/src/models/character.model';
 
 @EntityRepository(CharacterEntity)
 export class CharacterRepo extends Repository<CharacterEntity> {

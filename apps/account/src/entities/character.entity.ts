@@ -1,6 +1,6 @@
 import { AccountEntity }                                                               from './account.entity';
 import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
-import { CharacterModel }                                                              from '../../../../lib/models/character.model';
+import { CharacterModel }                                                              from '../../../../game/src/models/character.model';
 
 @Entity()
 @Unique(['name'])
