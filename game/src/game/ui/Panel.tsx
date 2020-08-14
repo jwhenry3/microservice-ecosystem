@@ -135,8 +135,8 @@ class Panel extends Component<PanelProps, PanelState> {
   private getSnappedPosition() {
     let bounds = this.ref.getBoundingClientRect();
     let snap   = {
-      x: Math.round(bounds.x / 16) * 16,
-      y: Math.round(bounds.y / 16) * 16,
+      x: Math.round(bounds.x / 8) * 8,
+      y: Math.round(bounds.y / 8) * 8,
     };
     if (snap.x < 16) {
       snap.x = 16;

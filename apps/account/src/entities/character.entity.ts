@@ -12,7 +12,7 @@ export class CharacterEntity implements CharacterModel {
   @Column()
   name: string;
   @Column()
-  hairStyle: string;
+  hairStyle: number;
   @Column()
   hairColor: string;
   @Column()
