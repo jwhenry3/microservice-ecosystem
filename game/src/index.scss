@@ -157,6 +157,65 @@ canvas {
     color: #333;
     font-weight: 500;
   }
+  .field-label {
+    height:24px;
+    display:flex;
+    align-items:center;
+    margin-top:8px;
+  }
+  .MuiButtonGroup-root  {
+    border: 1px solid #f0f0f0;
+    display:flex;
+    button {
+      box-shadow: none;
+      flex:1;
+    }
+    button:not(.active) {
+      background: transparent;
+    }
+    button.active {
+      background-color: rgba(255,255,255,0.5);
+    }
+  }
+  .MuiSlider-colorSecondary {
+    color: #f0f0f0
+  }
+  .padding {
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+  .picker {
+    > div {
+      display:block !important;
+    }
+    > div:first-child > div:first-child {
+      background-color: rgba(255, 255, 255, 0.2) !important;
+    }
+    .compact-picker {
+      width:100% !important;
+      span > div {
+        width:24px !important;
+        height:24px !important;
+        > div {
+          background:none !important;
+          &:after {
+            content: ' ';
+            margin:-5px;
+            box-shadow: 0 0 5px 2px rgba(255,255,255,0.5);
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            border: 2px solid #eee;
+          }
+        }
+      }
+    }
+    .compact-picker > div:last-child {
+      display:none !important;
+    }
+  }
 }
 
 .backdrop {

@@ -25,12 +25,24 @@ export const removeComponent = (key: string) => {
   updateComponents.next();
 };
 
+let focusedComponent = '';
+
 export function focusComponent(key: string) {
   if (displayOrder.includes(key)) {
     displayOrder.splice(displayOrder.indexOf(key), 1);
     displayOrder.push(key);
+    focusedComponent = key;
     updateComponents.next();
   }
+}
+
+export function unFocusComponent() {
+  focusedComponent = '';
+  updateComponents.next();
+}
+
+export function getFocusedComponent() {
+  return focusedComponent;
 }
 
 export const getComponents = () => (updated);

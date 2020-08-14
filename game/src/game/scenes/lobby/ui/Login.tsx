@@ -38,6 +38,7 @@ export default class Login extends Component<LoginProps, any> {
           token: result.token,
         };
         this.props.loggedIn();
+        return;
       }
       helpers.setSubmitting(false);
     });
@@ -46,43 +47,45 @@ export default class Login extends Component<LoginProps, any> {
   render() {
     return <>
       <Panel uiName="login" title="Login">
-        <Formik
-          initialValues={new LoginForm()}
-          validate={this.validate}
-          onSubmit={this.onSubmit}
-        >
-          {({
-              isSubmitting,
-              /* and other goodies */
-            }) => (
-            <Form autoComplete="no">
-              <input type="email" hidden id="Email" value="Email" name="hidden-email" readOnly={true}/>
-              <input type="password" hidden id="Password" value="Password" name="hidden-password" readOnly={true}/>
-              <Field name="email">
-                {({ field, form, meta }) => (
-                  <TextField variant="outlined" type="email" label="Email Address"
-                             autoComplete="new-email" {...field}/>
-                )}
-              </Field><br/>
-              <div className="error"><ErrorMessage name="email" component="div"/></div>
-              <Field name="password">
-                {({ field, form, meta }) => (
-                  <TextField variant="outlined" type="password" label="Password"
-                             autoComplete="new-password" {...field}/>
-                )}
-              </Field><br/>
-              <div className="error"><ErrorMessage name="password" component="div"/></div>
-              <br/>
-              <Button variant="contained" color="primary" type="submit" disabled={isSubmitting}>
-                Login
-              </Button>
-              &nbsp;
-              <Button type="button" onClick={this.props.toRegister}>
-                Register
-              </Button>
-            </Form>
-          )}
-        </Formik>
+        {(focused) => (
+          <Formik
+            initialValues={new LoginForm()}
+            validate={this.validate}
+            onSubmit={this.onSubmit}
+          >
+            {({
+                isSubmitting,
+                /* and other goodies */
+              }) => (
+              <Form autoComplete="no">
+                <input type="email" hidden id="Email" value="Email" name="hidden-email" readOnly={true}/>
+                <input type="password" hidden id="Password" value="Password" name="hidden-password" readOnly={true}/>
+                <Field name="email">
+                  {({ field, form, meta }) => (
+                    <TextField variant="outlined" type="email" label="Email Address"
+                               autoComplete="new-email" {...field}/>
+                  )}
+                </Field><br/>
+                <div className="error"><ErrorMessage name="email" component="div"/></div>
+                <Field name="password">
+                  {({ field, form, meta }) => (
+                    <TextField variant="outlined" type="password" label="Password"
+                               autoComplete="new-password" {...field}/>
+                  )}
+                </Field><br/>
+                <div className="error"><ErrorMessage name="password" component="div"/></div>
+                <br/>
+                <Button variant="contained" color="primary" type="submit" disabled={isSubmitting}>
+                  Login
+                </Button>
+                &nbsp;
+                <Button type="button" onClick={this.props.toRegister}>
+                  Register
+                </Button>
+              </Form>
+            )}
+          </Formik>
+        )}
       </Panel>
     </>;
   }

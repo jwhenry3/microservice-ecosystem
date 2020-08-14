@@ -1,10 +1,12 @@
-import React              from 'react';
-import ReactDOM           from 'react-dom';
+import React                from 'react';
+import ReactDOM             from 'react-dom';
 import './index.scss';
-import * as serviceWorker from './serviceWorker';
+import * as serviceWorker   from './serviceWorker';
 import 'phaser';
-import { GameClient }     from './game/game.client';
-import App                from './App';
+import { GameClient }       from './game/game.client';
+import App                  from './App';
+import { focusedCanvas }    from './game/ui/events';
+import { unFocusComponent } from './ui-components';
 
 
 GameClient.start();
@@ -22,6 +24,8 @@ ReactDOM.render(
 serviceWorker.unregister();
 
 const canvas = document.getElementById('game-canvas') as HTMLCanvasElement;
-canvas.addEventListener('click', () => {
+canvas.addEventListener('mousedown', () => {
   canvas.focus();
+  focusedCanvas.next();
+  unFocusComponent();
 });

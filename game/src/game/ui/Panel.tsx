@@ -1,19 +1,22 @@
-import React, { Component, ReactNode } from 'react';
+import React, { Component, ReactNode, useEffect, useState }      from 'react';
 import './Panel.scss';
-import { IconButton }                  from '@material-ui/core';
-import { Close, OpenWith }             from '@material-ui/icons';
-import { focusComponent }              from '../../ui-components';
+import { IconButton }                                            from '@material-ui/core';
+import { Close, OpenWith }                                       from '@material-ui/icons';
+import { focusComponent, getFocusedComponent, updateComponents } from '../../ui-components';
+
+export declare type ChildFunction = (focused: boolean) => ReactNode;
 
 export interface PanelProps {
-  uiName?:string
+  uiName?: string
   title?: string
   x?: number
   y?: number
   hasInitialPosition?: boolean
-  children: ReactNode
+  children: ReactNode | ChildFunction
   canDrag?: boolean
   close?: () => void
-  panelName?:string
+  panelName?: string
+  focused?: boolean
 }
 
 export interface PanelState {
@@ -26,8 +29,9 @@ export interface PanelState {
   y: number
 }
 
-export default class Panel extends Component<PanelProps, PanelState> {
+class Panel extends Component<PanelProps, PanelState> {
   ref!: HTMLDivElement;
+  focused = false;
 
   constructor(props) {
     super(props);
@@ -57,7 +61,6 @@ export default class Panel extends Component<PanelProps, PanelState> {
       window.addEventListener('resize', this.snapPosition);
     }
   }
-
 
   componentWillUnmount(): void {
     window.removeEventListener('mousemove', this.onMouseMove);
@@ -152,7 +155,7 @@ export default class Panel extends Component<PanelProps, PanelState> {
 
   onRef = (node: HTMLDivElement) => {
     if (node) {
-      this.ref   = node;
+      this.ref = node;
       this.snapPosition();
     }
   };
@@ -169,7 +172,7 @@ export default class Panel extends Component<PanelProps, PanelState> {
     return '';
   }
 
-  focus = () => {
+  focus = (e) => {
     if (this.props.uiName) {
       focusComponent(this.props.uiName);
     }
@@ -178,8 +181,10 @@ export default class Panel extends Component<PanelProps, PanelState> {
   render() {
     if (!this.props.canDrag) {
       return <>
-        <div ref={this.onRef} className="panel" style={this.getStyle()} onClick={this.focus}>
-          <div className="panel-container">
+        <div ref={this.onRef}
+             className={'panel ' + (this.props.panelName || '') + (this.props.focused ? ' focused' : '')}
+             style={this.getStyle()}>
+          <div className="panel-container" onMouseDown={this.focus}>
             <div className={'panel-top ' + (this.props.title ? 'title' : '')}>
               <div className="left">
               </div>
@@ -188,14 +193,15 @@ export default class Panel extends Component<PanelProps, PanelState> {
                 {this.renderClose()}
               </div>
             </div>
-            {this.props.children}
+            {typeof this.props.children === 'function' ? (this.props.children as ChildFunction)(!!this.props.focused) : this.props.children}
           </div>
         </div>
       </>;
     }
     return <>
-      <div ref={this.onRef} className={'panel ' + (this.props.panelName || '') } style={this.getStyle()} onMouseDown={this.focus}>
-        <div className="panel-container">
+      <div ref={this.onRef} className={'panel ' + (this.props.panelName || '') + (this.props.focused ? ' focused' : '')}
+           style={this.getStyle()}>
+        <div className="panel-container" onMouseDown={this.focus}>
           <div className={'panel-top ' + (this.props.title ? 'title' : '')} onMouseDown={this.onMouseDown}>
             <div className="left">
               <IconButton><OpenWith/></IconButton>
@@ -205,9 +211,26 @@ export default class Panel extends Component<PanelProps, PanelState> {
               {this.renderClose()}
             </div>
           </div>
-          {this.props.children}
+          {typeof this.props.children === 'function' ? (this.props.children as ChildFunction)(!!this.props.focused) : this.props.children}
         </div>
       </div>
     </>;
   }
 }
+
+const PanelWrapper = (props: PanelProps) => {
+  const [focused, setFocused] = useState(false);
+  useEffect(() => {
+    let sub = updateComponents.subscribe(() => {
+      let nextFocused = (getFocusedComponent() === props.uiName);
+      if (focused !== nextFocused) {
+        setFocused(nextFocused);
+      }
+    });
+    return () => sub.unsubscribe();
+  }, [focused, setFocused, props.uiName]);
+
+  return <Panel {...props} focused={focused}>{props.children}</Panel>;
+};
+
+export default PanelWrapper;
