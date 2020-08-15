@@ -4,8 +4,6 @@ import { PathFinder }    from './pathfinding';
 import { BodyWithState } from './body-with-state';
 
 export class PhysicalBody extends BodyWithState {
-  playerId: number         = null;
-  isChangingScene: boolean = false;
   world: P2World;
   bodyState: any           = {};
   animationBasedOnPress    = false;
