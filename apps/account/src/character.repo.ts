@@ -13,7 +13,7 @@ export class CharacterRepo extends Repository<CharacterEntity> {
   }
 
   async createCharacter(account: AccountEntity, model: CharacterModel) {
-    let result = await this.getCharacterByName(name);
+    let result = await this.getCharacterByName(model.name);
     if (!result) {
       let character = new CharacterEntity();
       for (let prop in model) {

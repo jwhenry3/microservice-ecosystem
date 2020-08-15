@@ -14,8 +14,8 @@ import {
   GENDER,
   HAIR_COLOR,
   HAIR_STYLE, RACE, SKIN_TONE,
-}                                      from '../../../../models/character.model';
-import { CirclePicker, CompactPicker } from 'react-color';
+}                                                                                    from '../../../../models/character.model';
+import { CirclePicker, CompactPicker }                                               from 'react-color';
 
 export interface CreateCharacterProps {
   network: Network
@@ -41,14 +41,20 @@ export default class CreateCharacter extends Component<CreateCharacterProps, any
 
   }
 
-  validate = () => {
-    let errors = {};
-
+  validate = (values: CreateCharacterForm) => {
+    let errors: any = {};
+    if (!values.name) {
+      errors.name = 'Required';
+    }
     return errors;
   };
 
   onSubmit = (values: CreateCharacterForm, helpers: FormikHelpers<CreateCharacterForm>) => {
     helpers.setSubmitting(false);
+    console.log(values);
+    this.props.network.character.createCharacter(values).then((result) => {
+      console.log('Created!', result);
+    })
   };
 
   render() {
@@ -112,8 +118,8 @@ export default class CreateCharacter extends Component<CreateCharacterProps, any
                     <div className="field-label">Hair Color</div>
                     <div className="picker">
                       <CompactPicker colors={HAIR_COLOR}
-                                    onChange={(color) => setFieldValue('hairColor', color.hex)}
-                                    color={field.value}/>
+                                     onChange={(color) => setFieldValue('hairColor', color.hex)}
+                                     color={field.value}/>
                     </div>
                   </>
                 )}
@@ -124,8 +130,8 @@ export default class CreateCharacter extends Component<CreateCharacterProps, any
                     <div className="field-label">Skin Tone</div>
                     <div className="picker">
                       <CompactPicker colors={SKIN_TONE}
-                                    onChange={(color) => setFieldValue('skinTone', color.hex)}
-                                    color={field.value}/>
+                                     onChange={(color) => setFieldValue('skinTone', color.hex)}
+                                     color={field.value}/>
                     </div>
                   </>
                 )}
