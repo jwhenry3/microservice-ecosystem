@@ -2,8 +2,8 @@ import { Controller, Get }                           from '@nestjs/common';
 import { AccountRepo }                               from './account.repo';
 import { ClientProxy, EventPattern, MessagePattern } from '@nestjs/microservices';
 import { AuthService }                               from './auth.service';
-import { CharacterRepo }  from './character.repo';
-import { CharacterModel } from '../../../game/src/models/character.model';
+import { CharacterRepo }                             from './character.repo';
+import { CharacterModel }                            from '../../../game/src/models/character.model';
 
 @Controller()
 export class AccountController {
@@ -40,7 +40,7 @@ export class AccountController {
   }
 
   @MessagePattern('request.account.logout')
-  async onLogout({ requesterId, data }: { requesterId: string, data: { } }) {
+  async onLogout({ requesterId, data }: { requesterId: string, data: {} }) {
     let account = await this.account.getAccountBySocketId(requesterId);
     if (account) {
       this.client.emit('emit.to', { event: 'account.logged-out', id: requesterId, data: {} });
@@ -50,12 +50,17 @@ export class AccountController {
   }
 
   @MessagePattern('request.account.verify')
-  onVerify({ requesterId, data }: { requesterId: string, data: { token: string } }) {
+  async onVerify({ requesterId, data }: { requesterId: string, data: { token: string } }) {
     let result = this.auth.verifyToken(data.token);
     if (result) {
-      this.client.emit('emit.to', { event: 'account.logged-in', id: requesterId, data: {} });
+      let account = await this.account.getAccountByEmail(result.email);
+      if (await this.account.updateSocketId(account, requesterId)) {
+        this.client.emit('emit.to', { event: 'account.logged-in', id: requesterId, data: {} });
+        return result;
+      }
     }
-    return result;
+    this.client.emit('emit.to', { event: 'account.logged-out', id: requesterId, data: {} });
+    return false;
   }
 
   @MessagePattern('request.character.create')
@@ -76,7 +81,7 @@ export class AccountController {
   async onGetCharacters({ requesterId, data }: { requesterId: string, data: {} }) {
     let account = await this.account.getAccountBySocketId(requesterId);
     if (account) {
-      return (account.characters || []).map(character => {
+      return (await this.character.getCharactersByAccount(account)).map(character => {
         let { name, hairColor, hairStyle, skinTone, gender, id, race } = character;
         return { id, name, gender, hairColor, hairStyle, skinTone, race } as CharacterModel;
       });

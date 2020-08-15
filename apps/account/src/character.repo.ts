@@ -6,6 +6,11 @@ import { CHARACTER_FIELDS, CharacterModel } from '../../../game/src/models/chara
 @EntityRepository(CharacterEntity)
 export class CharacterRepo extends Repository<CharacterEntity> {
 
+  async getCharactersByAccount(account:AccountEntity) {
+    return await this.find({
+      account
+    });
+  }
   async getCharacterByName(name: string) {
     return await this.findOne({
       where: { name },

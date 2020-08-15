@@ -51,10 +51,13 @@ export default class CreateCharacter extends Component<CreateCharacterProps, any
 
   onSubmit = (values: CreateCharacterForm, helpers: FormikHelpers<CreateCharacterForm>) => {
     helpers.setSubmitting(false);
-    console.log(values);
     this.props.network.character.createCharacter(values).then((result) => {
-      console.log('Created!', result);
-    })
+      if (result) {
+        this.props.toCharacters();
+      } else {
+        alert('Character Name Taken');
+      }
+    });
   };
 
   render() {

@@ -15,10 +15,17 @@ export class GameClient {
         queue  : true,
         gamepad: true,
       } as any,
-      canvas: document.getElementById('game-canvas') as HTMLCanvasElement,
+      canvas   : document.getElementById('game-canvas') as HTMLCanvasElement,
       scale    : {
         mode: Phaser.Scale.RESIZE,
       },
+    });
+    this.game.network.net.on('connect', () => {
+      if (this.game.network.auth.session.token) {
+        this.game.network.auth.verify().then(() => {
+          this.game.network.net.reconnect.next();
+        });
+      }
     });
 
     this.game.scene.add('lobby', LobbyScene);
@@ -28,7 +35,7 @@ export class GameClient {
           scene['resize']();
         }
       });
-    }, 300, {leading: true,trailing: true}));
+    }, 300, { leading: true, trailing: true }));
     this.game.scene.start('lobby');
   }
 }

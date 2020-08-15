@@ -40,7 +40,7 @@ export class LobbyUI extends BaseEntity {
   toCreateCharacter = () => {
     this.login.removeUI();
     this.register.removeUI();
-    this.characters.addUI();
+    this.characters.removeUI();
     this.createCharacter.addUI();
   };
 

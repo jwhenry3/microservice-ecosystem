@@ -29,6 +29,12 @@ export class AccountRepo extends Repository<AccountEntity> {
     return null;
   }
 
+  async updateSocketId(account: AccountEntity, socketId: string) {
+    account.currentSocketId = socketId;
+    await this.save(account, { reload: true });
+    return { account };
+  }
+
   async register(email: string, password: string, socketId: string) {
     let result = await this.getAccountByEmail(email);
     if (!result) {

@@ -1,4 +1,8 @@
+import { Subject } from 'rxjs';
+
 export class Net {
+
+  reconnect = new Subject();
   constructor(private socket: SocketIOClient.Socket) {
   }
 

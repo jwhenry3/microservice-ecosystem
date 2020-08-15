@@ -22,8 +22,8 @@ export class AuthNet {
     return this.net.request<{ token: string }>('account.register', { email, password });
   }
 
-  verify(token: string) {
-    return this.net.request('account.verify', { token });
+  verify() {
+    return this.net.request('account.verify', { token: this.session.token });
   }
 
   onLoggedIn(cb: (data: any) => void) {
