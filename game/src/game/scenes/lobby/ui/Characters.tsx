@@ -1,10 +1,11 @@
-import React, { Component }               from 'react';
-import { Network }                        from '../../../network';
-import { CharacterModel }                 from '../../../../models/character.model';
-import { Button, ListItem, ListItemText } from '@material-ui/core';
+import React, { Component }                           from 'react';
+import { Network }                                    from '../../../network';
+import { CharacterModel }                             from '../../../../models/character.model';
+import { Button, IconButton, ListItem, ListItemText } from '@material-ui/core';
 import './Characters.scss';
-import Panel                              from '../../../ui/Panel';
-import { Subscription }                   from 'rxjs';
+import Panel                                          from '../../../ui/Panel';
+import { Subscription }                               from 'rxjs';
+import { Close }                                      from '@material-ui/icons';
 
 export interface CharactersProps {
   network: Network
@@ -40,13 +41,21 @@ export default class Characters extends Component<CharactersProps, { characters:
     });
   }
 
-  logout = () => {
+  logout   = () => {
     this.props.network.auth.logout().then(() => {
       this.props.network.auth.session = {
         email: '',
         token: '',
       };
       this.props.toLogin();
+    });
+  };
+  onDelete = (character: CharacterModel) => {
+    this.props.network.character.deleteCharacter(character).then((result) => {
+      this.getCharacters();
+      if (!result) {
+        alert('Could not delete ' + character.name);
+      }
     });
   };
 
@@ -56,6 +65,9 @@ export default class Characters extends Component<CharactersProps, { characters:
         {
           this.state.characters.map(character => <ListItem key={character.id}>
             <ListItemText primary={character.name}/>
+            <IconButton onClick={() => this.onDelete(character)}>
+              <Close/>
+            </IconButton>
           </ListItem>)
         }
         <Button type="button" onClick={this.props.toCreateCharacter}>

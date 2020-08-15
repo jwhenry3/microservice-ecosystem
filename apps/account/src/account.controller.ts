@@ -90,10 +90,10 @@ export class AccountController {
   }
 
   @MessagePattern('request.character.delete')
-  async onDeleteCharacter({ requesterId, data }: { requesterId: string, data: { name: string } }) {
+  async onDeleteCharacter({ requesterId, data }: { requesterId: string, data: { id: number } }) {
     let account = await this.account.getAccountBySocketId(requesterId);
     if (account) {
-      let character = account.characters.find(character => character.name === data.name);
+      let character = await this.character.findOne({ account, id: data.id });
       if (character) {
         await this.character.remove(character);
         return true;
