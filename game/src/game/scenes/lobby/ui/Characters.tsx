@@ -50,7 +50,8 @@ export default class Characters extends Component<CharactersProps, { characters:
       this.props.toLogin();
     });
   };
-  onDelete = (character: CharacterModel) => {
+  onDelete = (e, character: CharacterModel) => {
+    e.stopPropagation();
     this.props.network.character.deleteCharacter(character).then((result) => {
       this.getCharacters();
       if (!result) {
@@ -59,13 +60,15 @@ export default class Characters extends Component<CharactersProps, { characters:
     });
   };
 
+
   render() {
     return <>
       <Panel uiName="characters" panelName="characters" canDrag={true} title="Characters" close={this.logout}>
         {
-          this.state.characters.map(character => <ListItem key={character.id}>
+          this.state.characters.map(character => <ListItem key={character.id}
+                                                           onClick={() => this.props.onSelected(character)}>
             <ListItemText primary={character.name}/>
-            <IconButton onClick={() => this.onDelete(character)}>
+            <IconButton onClick={(e) => this.onDelete(e, character)}>
               <Close/>
             </IconButton>
           </ListItem>)

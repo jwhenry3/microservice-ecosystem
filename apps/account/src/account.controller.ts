@@ -90,6 +90,18 @@ export class AccountController {
     return [];
   }
 
+  @MessagePattern('request.' + CONSTANTS.SELECT_CHARACTER)
+  async onSelectedCharacter({ requesterId, data }: { requesterId: string, data: { id: number | null } }) {
+    let account = await this.account.getAccountBySocketId(requesterId);
+    if (account) {
+      if (!data.id || await this.character.findOne({ account, id: data.id })) {
+        await this.account.selectCharacter(account, data.id);
+        return true;
+      }
+    }
+    return false;
+  }
+
   @MessagePattern('request.' + CONSTANTS.DELETE_CHARACTER)
   async onDeleteCharacter({ requesterId, data }: { requesterId: string, data: { id: number } }) {
     let account = await this.account.getAccountBySocketId(requesterId);

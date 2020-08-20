@@ -21,7 +21,8 @@ export class AccountRepo extends Repository<AccountEntity> {
     let account = await this.getAccountByEmail(email);
     if (account) {
       if (account.verify(password)) {
-        account.currentSocketId = socketId;
+        account.currentSocketId    = socketId;
+        account.currentCharacterId = null;
         await this.save(account, { reload: true });
         return { account };
       }
@@ -33,6 +34,15 @@ export class AccountRepo extends Repository<AccountEntity> {
     account.currentSocketId = socketId;
     await this.save(account, { reload: true });
     return { account };
+  }
+
+  async selectCharacter(account: AccountEntity, characterId: number | null) {
+    if (!characterId || account.currentSocketId) {
+      account.currentCharacterId = characterId;
+      await this.save(account, { reload: true });
+      return { account };
+    }
+    return null;
   }
 
   async register(email: string, password: string, socketId: string) {
@@ -51,7 +61,8 @@ export class AccountRepo extends Repository<AccountEntity> {
   async logout(email: string) {
     let account = await this.getAccountByEmail(email);
     if (account) {
-      account.currentSocketId = null;
+      account.currentSocketId    = null;
+      account.currentCharacterId = null;
       await this.save(account, { reload: true });
       return { account };
     }
