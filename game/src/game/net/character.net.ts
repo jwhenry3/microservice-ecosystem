@@ -17,4 +17,12 @@ export class CharacterNet {
   deleteCharacter(character: CharacterModel) {
     return this.net.request('character.delete', { id: character.id });
   }
+
+  selectCharacter(character: CharacterModel) {
+    return this.net.request('character.select', { id: character.id });
+  }
+
+  removeCharacter() {
+    return this.net.request('character.select', { id: null });
+  }
 }

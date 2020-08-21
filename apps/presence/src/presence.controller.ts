@@ -8,7 +8,7 @@ export interface Session {
 }
 
 @Controller()
-export class AppController {
+export class PresenceController {
   sessions: { [name: string]: Session } = {};
 
   constructor(private client: ClientProxy) {

@@ -1,11 +1,11 @@
-import React, { Component }                           from 'react';
-import { Network }                                    from '../../../network';
-import { CharacterModel }                             from '../../../../models/character.model';
-import { Button, IconButton, ListItem, ListItemText } from '@material-ui/core';
+import React, { Component }                                 from 'react';
+import { Network }                                          from '../../../../network';
+import { CharacterModel }                                   from '../../../../../models/character.model';
+import { Button, IconButton, List, ListItem, ListItemText } from '@material-ui/core';
 import './Characters.scss';
-import Panel                                          from '../../../ui/Panel';
-import { Subscription }                               from 'rxjs';
-import { Close }                                      from '@material-ui/icons';
+import Panel                                                from '../../../../ui/Panel';
+import { Subscription }                                     from 'rxjs';
+import { Close }                                            from '@material-ui/icons';
 
 export interface CharactersProps {
   network: Network
@@ -64,15 +64,17 @@ export default class Characters extends Component<CharactersProps, { characters:
   render() {
     return <>
       <Panel uiName="characters" panelName="characters" canDrag={true} title="Characters" close={this.logout}>
-        {
-          this.state.characters.map(character => <ListItem key={character.id}
-                                                           onClick={() => this.props.onSelected(character)}>
-            <ListItemText primary={character.name}/>
-            <IconButton onClick={(e) => this.onDelete(e, character)}>
-              <Close/>
-            </IconButton>
-          </ListItem>)
-        }
+        <List component="nav">
+          {
+            this.state.characters.map(character => <ListItem button key={character.id}
+                                                             onClick={() => this.props.onSelected(character)}>
+              <ListItemText primary={character.name}/>
+              <IconButton onClick={(e) => this.onDelete(e, character)}>
+                <Close/>
+              </IconButton>
+            </ListItem>)
+          }
+        </List>
         <Button type="button" onClick={this.props.toCreateCharacter}>
           Create Character
         </Button>

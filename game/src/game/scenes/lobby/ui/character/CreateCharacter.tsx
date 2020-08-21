@@ -1,21 +1,21 @@
-import React, { Component }                                                          from 'react';
-import { Network }                                                                   from '../../../network';
+import React, { Component } from 'react';
+import { Network }          from '../../../../network';
 import {
   Button,
   ButtonGroup,
   Slider,
   TextField,
-}                                                                                    from '@material-ui/core';
+}                           from '@material-ui/core';
 import './CreateCharacter.scss';
 import Panel
-                                                                                     from '../../../ui/Panel';
+                            from '../../../../ui/Panel';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import {
   GENDER,
   HAIR_COLOR,
   HAIR_STYLE, RACE, SKIN_TONE,
-}                                                                                    from '../../../../models/character.model';
-import { CirclePicker, CompactPicker }                                               from 'react-color';
+}                                                                                    from '../../../../../models/character.model';
+import { CompactPicker }                                                             from 'react-color';
 
 export interface CreateCharacterProps {
   network: Network

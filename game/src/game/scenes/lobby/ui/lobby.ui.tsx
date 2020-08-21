@@ -4,8 +4,8 @@ import Login              from './Login';
 import React              from 'react';
 import { BaseScene }      from '../../base.scene';
 import Register           from './Register';
-import Characters         from './Characters';
-import CreateCharacter    from './CreateCharacter';
+import Characters         from './character/Characters';
+import CreateCharacter    from './character/CreateCharacter';
 import { CharacterModel } from '../../../../models/character.model';
 import { UiEntity }       from './ui.entity';
 
@@ -59,7 +59,12 @@ export class LobbyUI extends BaseEntity {
   };
 
   onCharacterSelected = (character: CharacterModel) => {
-
+    this.scene.game.network.character.selectCharacter(character).then(result => {
+      if (result) {
+        this.scene.scene.stop('lobby');
+        this.scene.scene.start('zone-1');
+      }
+    });
   };
 
   getTemplate(value: string) {

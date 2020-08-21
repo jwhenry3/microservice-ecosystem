@@ -31,7 +31,7 @@ export class HealthController {
       }, 500);
       const result: HealthIndicatorResult = {
         [name]: { status: 'down' },
-      };
+      } as any;
       this.client.send('health.' + name, {}).pipe(takeUntil(stop))
           .subscribe({
             next    : () => {
@@ -52,6 +52,7 @@ export class HealthController {
       ...(process.env.ALL_IN_ONE ? [] : [() => this.checkMicroservice('AUTH_SERVICE'),
                                          () => this.checkMicroservice('ACCOUNT_SERVICE'),
                                          () => this.checkMicroservice('PRESENCE_SERVICE'),
+                                         () => this.checkMicroservice('MAP_SERVICE'),
                                          () => this.checkMicroservice('STATE_SERVICE')]),
       () => this.dns.pingCheck('nestjs-docs', 'https://docs.nestjs.com'),
     ]);

@@ -1,6 +1,6 @@
-import { Module }        from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService }   from './app.service';
+import { Module }             from '@nestjs/common';
+import { PresenceController } from './presence.controller';
+import { AppService }         from './app.service';
 import { ClientModule } from '../../../lib/server/client.module';
 import { ConfigModule } from '@nestjs/config';
 
@@ -10,7 +10,7 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true,
     }),
   ],
-  controllers: [AppController],
+  controllers: [PresenceController],
   providers  : [AppService],
 })
 export class PresenceModule {

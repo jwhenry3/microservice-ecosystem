@@ -10,6 +10,7 @@ import { PresenceModule }                 from '../../presence/src/presence.modu
 import { StateModule }                    from '../../state/src/state.module';
 import { ClientModule }                   from '../../../lib/server/client.module';
 import { TypeOrmModule }                  from '@nestjs/typeorm';
+import { MapModule }                      from '../../map/src/map.module';
 
 
 @Module({
@@ -18,6 +19,7 @@ import { TypeOrmModule }                  from '@nestjs/typeorm';
       AccountModule,
       PresenceModule.forRoot(),
       StateModule.forRoot(),
+      MapModule,
     ] : []),
     ClientModule,
     TerminusModule,
@@ -25,16 +27,16 @@ import { TypeOrmModule }                  from '@nestjs/typeorm';
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({
-      type    : 'mysql',
-      host    : process.env.DB_HOST,
-      port    : Number(process.env.DB_PORT),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      entities: [
+      type       : 'mysql',
+      host       : process.env.DB_HOST,
+      port       : Number(process.env.DB_PORT),
+      username   : process.env.DB_USERNAME,
+      password   : process.env.DB_PASSWORD,
+      entities   : [
         ...AccountEntities,
       ],
-      database: 'game',
-      synchronize: true
+      database   : 'game',
+      synchronize: true,
     }),
   ],
   controllers: [HealthController, EventController],
