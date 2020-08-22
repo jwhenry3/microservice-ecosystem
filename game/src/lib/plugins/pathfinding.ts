@@ -12,6 +12,7 @@ export class PathfindingPlugin {
       if (collisionData[0]) {
         this.easyStar.setGrid(collisionData[0]);
         this.easyStar.setAcceptableTiles([0]);
+        this.easyStar.enableDiagonals();
       }
     }
   }
