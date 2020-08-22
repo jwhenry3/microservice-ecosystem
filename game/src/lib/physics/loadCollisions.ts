@@ -31,14 +31,15 @@ export function loadCollisions(scene: Phaser.Scene & { key: string }) {
           }
         }
         if (firstLevel[y][x] === -1) {
-          player = scene.add.circle(x * 32 + 16, y * 32 + 16, 12, getColor('#4477ff'));
+          player = scene.add.circle(x * 32 + 16, y * 32 + 16, 15, getColor('#4477ff'));
           scene.physics.add.existing(player, false);
-          (player.body as Phaser.Physics.Arcade.Body).setBounce(1, 1).setCollideWorldBounds(true).setCircle(12).setFriction(0, 0);
+          (player.body as Phaser.Physics.Arcade.Body).setCollideWorldBounds(true).setFriction(0, 0);
         }
       }
     }
     if (player) {
-      scene.cameras.main.startFollow(player, true, 16, 16);
+      scene.cameras.main.startFollow(player);
+      scene.cameras.main.setZoom(1.5).setDeadzone(128,128);
       return { grid, player, walls: walls };
     }
     return null;

@@ -56,8 +56,16 @@ export class CharacterMovement {
         }
         this.target.body.velocity.x = velocity.x;
         this.target.body.velocity.y = velocity.y;
-        this.scene.physics.world.collide(this.target, this.scene.walls);
-        if (distance < 24 && this.path.length > 1) {
+        this.scene.physics.world.collide(this.target, this.scene.walls, (obj1, obj2) => {
+          if (obj1.body.velocity.x !== 0) {
+            obj1.body.velocity.x *= 1.4142;
+          }
+          if (obj1.body.velocity.y !== 0) {
+            obj1.body.velocity.y *= 1.4142;
+          }
+        });
+
+        if (distance < 20 && this.path.length > 1) {
           this.path.splice(0, 1);
         }
       } else {
