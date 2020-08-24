@@ -1,3 +1,5 @@
+import '@geckos.io/phaser-on-nodejs';
+import 'phaser';
 import { Module }        from '@nestjs/common';
 import { ClientModule }  from '../../../lib/server/client.module';
 import { ConfigModule }  from '@nestjs/config';

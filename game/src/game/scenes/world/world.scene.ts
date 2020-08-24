@@ -12,6 +12,8 @@ export class WorldScene extends BaseScene {
 
   movement!: CharacterMovement;
 
+  onServer = typeof process.env.ON_SERVER !== 'undefined';
+
   preload() {
   }
 
@@ -36,13 +38,15 @@ export class WorldScene extends BaseScene {
   update(time: number, delta: number): void {
     super.update(time, delta);
     if (this.movement) {
-      let mouseDown = this.input.mousePointer.leftButtonDown();
-      if (!this.hasClicked && mouseDown) {
-        this.hasClicked = true;
-        this.movement.findPath();
-      }
-      if (!mouseDown) {
-        this.hasClicked = false;
+      if (!this.onServer) {
+        let mouseDown = this.input.mousePointer.leftButtonDown();
+        if (!this.hasClicked && mouseDown) {
+          this.hasClicked = true;
+          this.movement.findPath();
+        }
+        if (!mouseDown) {
+          this.hasClicked = false;
+        }
       }
       this.movement.update();
     }

@@ -1,9 +1,6 @@
-import { NetworkedGame } from '../networked.game';
-
-
 export abstract class BaseScene extends Phaser.Scene {
   lifecycle: any;
-  game!: NetworkedGame;
+  game!: Phaser.Game;
   abstract key: string;
 
 

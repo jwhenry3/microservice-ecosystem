@@ -8,6 +8,7 @@ import Characters         from './character/Characters';
 import CreateCharacter    from './character/CreateCharacter';
 import { CharacterModel } from '../../../../models/character.model';
 import { UiEntity }       from './ui.entity';
+import { NetworkedGame }  from '../../../networked.game';
 
 export class LobbyUI extends BaseEntity {
   key = 'login';
@@ -17,7 +18,7 @@ export class LobbyUI extends BaseEntity {
   characters!: UiEntity;
   createCharacter!: UiEntity;
 
-  constructor(scene: BaseScene) {
+  constructor(public scene: BaseScene & {game:NetworkedGame}) {
     super(scene, 0, 0, []);
     this.login           = new UiEntity(this.scene, 'login', this.getTemplate('login'));
     this.register        = new UiEntity(this.scene, 'register', this.getTemplate('register'));

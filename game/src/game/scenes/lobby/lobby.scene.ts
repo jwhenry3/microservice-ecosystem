@@ -1,9 +1,11 @@
-import { BaseScene } from '../base.scene';
-import { LobbyUI }   from './ui/lobby.ui';
+import { BaseScene }     from '../base.scene';
+import { LobbyUI }       from './ui/lobby.ui';
+import { NetworkedGame } from '../../networked.game';
 
 export class LobbyScene extends BaseScene {
   key = 'lobby';
   bg!: Phaser.GameObjects.Image;
+  game!: NetworkedGame;
 
   login!: LobbyUI;
 
