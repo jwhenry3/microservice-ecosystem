@@ -3,7 +3,7 @@ html, body {
   height: 100%;
   margin: 0;
   position: relative;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 .game {
@@ -61,11 +61,45 @@ code {
     }
   }
 }
+
 canvas {
   pointer-events: all;
 }
+
 .modal {
   position: relative;
+}
+
+#game-server {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+
+  > div {
+    position: relative;
+    flex: 1;
+    min-width: 320px;
+    min-height: 240px;
+    width: auto !important;
+    height: auto !important;
+    box-sizing: border-box;
+
+    > canvas {
+      border: 1px solid #2af;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
 }
 
 .panel {
@@ -74,6 +108,7 @@ canvas {
   color: #fff;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000,
   -1px 1px 0 #000, 1px 1px 0 #000;
+
   input:-webkit-autofill::first-line,
   input:-internal-autofill-previewed,
   input:-internal-autofill-selected,
@@ -87,16 +122,18 @@ canvas {
   select:-webkit-autofill:hover,
   select:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0 30px #fafafa inset !important;
-    font-size:16px !important;
+    font-size: 16px !important;
   }
 
   button {
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000,
     -1px 1px 0 #000, 1px 1px 0 #000;
     text-transform: none;
+
     &:focus, &:active, &[disabled] {
       color: #fff;
     }
+
     &[disabled] {
       opacity: 0.5;
     }
@@ -117,7 +154,7 @@ canvas {
     color: #ff9294;
   }
 
-  .MuiInputBase-root.MuiOutlinedInput-root > :first-child  {
+  .MuiInputBase-root.MuiOutlinedInput-root > :first-child {
     padding: 8px 16px;
     border-radius: 8px;
     border: 1px solid #e0e0e0;
@@ -131,6 +168,7 @@ canvas {
       border: 1px solid #679cfb;
     }
   }
+
   .MuiOutlinedInput-notchedOutline {
     border-radius: 8px;
   }
@@ -157,65 +195,79 @@ canvas {
     color: #333;
     font-weight: 500;
   }
+
   .field-label {
-    height:24px;
-    display:flex;
-    align-items:center;
-    margin-top:8px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
   }
-  .MuiButtonGroup-root  {
+
+  .MuiButtonGroup-root {
     border: 1px solid #f0f0f0;
-    display:flex;
+    display: flex;
+
     button {
       box-shadow: none;
-      flex:1;
+      flex: 1;
     }
+
     button:not(.active) {
       background: transparent;
     }
+
     button.active {
-      background-color: rgba(255,255,255,0.5);
+      background-color: rgba(255, 255, 255, 0.5);
     }
   }
+
   .MuiSlider-colorSecondary {
     color: #f0f0f0
   }
+
   .padding {
     padding: 0 16px;
     box-sizing: border-box;
   }
+
   .picker {
     > div {
-      display:block !important;
+      display: block !important;
     }
+
     > div:first-child > div:first-child {
       background-color: rgba(255, 255, 255, 0.2) !important;
     }
+
     .compact-picker {
-      width:100% !important;
-      padding-bottom:4px;
+      width: 100% !important;
+      padding-bottom: 4px;
+
       span > div {
-        width:24px !important;
-        height:24px !important;
-        margin:0 !important;
+        width: 24px !important;
+        height: 24px !important;
+        margin: 0 !important;
+
         > div {
-          background:none !important;
+          background: none !important;
+
           &:after {
             content: ' ';
-            margin:-5px;
-            box-shadow: 0 0 5px 2px rgba(255,255,255,0.5);
-            position:absolute;
-            top:0;
-            left:0;
-            right:0;
-            bottom:0;
+            margin: -5px;
+            box-shadow: 0 0 5px 2px rgba(255, 255, 255, 0.5);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             border: 2px solid #eee;
           }
         }
       }
     }
+
     .compact-picker > div:last-child {
-      display:none !important;
+      display: none !important;
     }
   }
 }
