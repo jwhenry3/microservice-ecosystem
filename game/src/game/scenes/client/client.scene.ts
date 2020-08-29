@@ -20,8 +20,8 @@ export class ClientScene extends WorldScene {
     }
   }
 
-  addPlayer(name: string, x: number, y: number, self: boolean = false) {
-    super.addPlayer(name, x, y, self);
+  addPlayer(id: number, name: string, x: number, y: number, self: boolean = false) {
+    super.addPlayer(id, name, x, y, self);
     console.log(self, this.myPlayer);
     if (self && this.myPlayer) {
       this.movement = new CharacterMovement(this, this.pathfinding, this.myPlayer);

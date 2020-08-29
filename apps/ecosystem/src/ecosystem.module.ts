@@ -11,6 +11,7 @@ import { StateModule }                    from '../../state/src/state.module';
 import { ClientModule }                   from '../../../lib/server/client.module';
 import { TypeOrmModule }                  from '@nestjs/typeorm';
 import { MapModule }                      from '../../map/src/map.module';
+import { LocationEntity }                 from '../../map/src/entities/location.entity';
 
 
 @Module({
@@ -33,7 +34,7 @@ import { MapModule }                      from '../../map/src/map.module';
       username   : process.env.DB_USERNAME,
       password   : process.env.DB_PASSWORD,
       entities   : [
-        ...AccountEntities,
+        ...(process.env.ALL_IN_ONE ? [...AccountEntities, LocationEntity] : [])
       ],
       database   : 'game',
       synchronize: true,

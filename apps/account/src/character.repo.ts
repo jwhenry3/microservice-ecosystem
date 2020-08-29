@@ -12,6 +12,12 @@ export class CharacterRepo extends Repository<CharacterEntity> {
     });
   }
 
+  async getCharacterById(id: number) {
+    return await this.findOne({
+      where: { id },
+    });
+  }
+
   async getCharacterByName(name: string) {
     return await this.findOne({
       where: { name },

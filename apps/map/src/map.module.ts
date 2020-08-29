@@ -1,12 +1,13 @@
 import '@geckos.io/phaser-on-nodejs';
 import 'phaser';
-import { Module }        from '@nestjs/common';
-import { ClientModule }  from '../../../lib/server/client.module';
-import { ConfigModule }  from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import * as path         from 'path';
-import { MapController } from './map.controller';
-import { MapService }    from './map.service';
+import { Module }         from '@nestjs/common';
+import { ClientModule }   from '../../../lib/server/client.module';
+import { ConfigModule }   from '@nestjs/config';
+import { TypeOrmModule }  from '@nestjs/typeorm';
+import * as path          from 'path';
+import { MapController }  from './map.controller';
+import { MapService }     from './map.service';
+import { LocationEntity } from './entities/location.entity';
 
 export const MapEntities = [
   path.resolve(__dirname, 'entities/*.entity.js'),
@@ -15,7 +16,7 @@ export const MapEntities = [
 @Module({
   imports    : [
     ConfigModule,
-    TypeOrmModule.forFeature([]),
+    TypeOrmModule.forFeature([LocationEntity]),
     ClientModule,
   ],
   providers  : [MapService],

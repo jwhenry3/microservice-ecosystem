@@ -26,7 +26,7 @@ export class CharacterMovement {
       let distance = this.getDistance();
       if (distance > 1) {
         this.setVelocityFromPath();
-        this.scene.physics.world.collide(this.subject, this.scene.walls, () => this.adjustCollisionVelocity());
+        this.scene.physics.world.collide(this.subject, this.scene.wallGroup, () => this.adjustCollisionVelocity());
         if (distance < 20 && this.path.length > 1) {
           this.getNextNode();
         }

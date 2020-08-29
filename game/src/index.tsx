@@ -7,13 +7,8 @@ import { GameClient }       from './game/game.client';
 import App                  from './App';
 import { focusedCanvas }    from './game/ui/events';
 import { unFocusComponent } from './ui-components';
-import { GameServer }       from './game/game.server';
 
-if (window.location.href.indexOf('?server') !== -1) {
-  let server = new GameServer();
-} else {
-  GameClient.start();
-}
+GameClient.start();
 ReactDOM.render(
   <React.StrictMode>
     <App/>

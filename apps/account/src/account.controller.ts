@@ -79,9 +79,17 @@ export class AccountController {
   }
 
   @MessagePattern('request.' + CONSTANTS.GET_CHARACTERS)
-  async onGetCharacters({ requesterId, data }: { requesterId: string, data: {} }) {
+  async onGetCharacters({ requesterId, data }: { requesterId: string, data: { id?: number } }) {
     let account = await this.account.getAccountBySocketId(requesterId);
     if (account) {
+      if (data?.id) {
+        let character = await this.character.getCharacterById(data.id);
+        if (character) {
+          let { name, hairColor, hairStyle, skinTone, gender, id, race } = character;
+          return { id, name, gender, hairColor, hairStyle, skinTone, race } as CharacterModel;
+        }
+        return null;
+      }
       return (await this.character.getCharactersByAccount(account)).map(character => {
         let { name, hairColor, hairStyle, skinTone, gender, id, race } = character;
         return { id, name, gender, hairColor, hairStyle, skinTone, race } as CharacterModel;
