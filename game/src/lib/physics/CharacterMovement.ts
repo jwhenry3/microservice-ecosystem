@@ -1,5 +1,5 @@
 import { PathfindingPlugin } from '../plugins/pathfinding';
-import { WorldScene }        from '../../game/scenes/world/world.scene';
+import { WorldScene }        from '../../game/scenes/world.scene';
 
 export class CharacterMovement {
 

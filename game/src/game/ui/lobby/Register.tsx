@@ -1,8 +1,8 @@
 import React, { Component }                  from 'react';
-import { Button, TextField }                 from '@material-ui/core';
-import { Network }                                          from '../../../network';
+import { Button, TextField }                                from '@material-ui/core';
+import { Network }                                          from '../../network';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import Panel                                                from '../../../ui/Panel';
+import Panel                                                from '../Panel';
 
 export interface RegisterProps {
   network: Network

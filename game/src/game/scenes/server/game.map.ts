@@ -1,5 +1,5 @@
 import Phaser       from 'phaser';
-import { getColor } from '../../lib/physics/loadCollisions';
+import { getColor } from '../../../lib/physics/loadCollisions';
 
 // Create as many of these as needed to serve as map servers.
 // Running this in the browser may allow for multiple instances of phaser or scenes

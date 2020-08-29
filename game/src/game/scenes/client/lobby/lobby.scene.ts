@@ -1,6 +1,6 @@
-import { BaseScene }     from '../base.scene';
-import { LobbyUI }       from './ui/lobby.ui';
-import { NetworkedGame } from '../../networked.game';
+import { BaseScene }     from '../../base.scene';
+import { LobbyUI }       from '../../../ui/lobby/lobby.ui';
+import { NetworkedGame } from '../../../networked.game';
 
 export class LobbyScene extends BaseScene {
   key = 'lobby';

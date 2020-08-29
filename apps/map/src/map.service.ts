@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Zone1Scene } from '../../../game/src/game/scenes/world/zone-1.scene';
+import { Zone1Scene } from '../../../game/src/game/scenes/client/world/zone-1.scene';
 // set the fps you need
 const FPS              = 30;
 global['phaserOnNodeFPS'] = FPS; // default is 60

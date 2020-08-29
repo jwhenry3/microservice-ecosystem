@@ -1,6 +1,6 @@
-import { ReactNode }              from 'react';
+import { ReactNode }                     from 'react';
 import { removeComponent, setComponent } from '../../ui-components';
-import { BaseScene }                     from './base.scene';
+import { BaseScene }                     from '../scenes/base.scene';
 
 export abstract class BaseEntity extends Phaser.GameObjects.Container {
   key = 'test-entity';

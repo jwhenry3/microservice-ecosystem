@@ -1,9 +1,9 @@
 import React, { Component }                                 from 'react';
-import { Network }                                          from '../../../../network';
-import { CharacterModel }                                   from '../../../../../models/character.model';
+import { Network }                                          from '../../../network';
+import { CharacterModel }                                   from '../../../../models/character.model';
 import { Button, IconButton, List, ListItem, ListItemText } from '@material-ui/core';
 import './Characters.scss';
-import Panel                                                from '../../../../ui/Panel';
+import Panel                                                from '../../Panel';
 import { Subscription }                                     from 'rxjs';
 import { Close }                                            from '@material-ui/icons';
 

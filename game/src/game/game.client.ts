@@ -1,8 +1,8 @@
-import Phaser                from 'phaser';
-import { LobbyScene }        from './scenes/lobby/lobby.scene';
-import { NetworkedGame }     from './networked.game';
-import { throttle }          from 'lodash';
-import { Zone1Scene }        from './scenes/world/zone-1.scene';
+import Phaser            from 'phaser';
+import { LobbyScene }    from './scenes/client/lobby/lobby.scene';
+import { NetworkedGame } from './networked.game';
+import { throttle }   from 'lodash';
+import { Zone1Scene } from './scenes/client/world/zone-1.scene';
 
 export class GameClient {
   static game: NetworkedGame;

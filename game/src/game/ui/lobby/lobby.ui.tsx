@@ -1,14 +1,14 @@
-import { BaseEntity }     from '../../base.entity';
-import Modal              from '../../../../Modal';
+import { BaseEntity } from '../base.entity';
+import Modal          from '../../../Modal';
 import Login              from './Login';
 import React              from 'react';
-import { BaseScene }      from '../../base.scene';
+import { BaseScene }      from '../../scenes/base.scene';
 import Register           from './Register';
 import Characters         from './character/Characters';
 import CreateCharacter    from './character/CreateCharacter';
-import { CharacterModel } from '../../../../models/character.model';
-import { UiEntity }       from './ui.entity';
-import { NetworkedGame }  from '../../../networked.game';
+import { CharacterModel } from '../../../models/character.model';
+import { UiEntity }       from '../../scenes/client/ui.entity';
+import { NetworkedGame }  from '../../networked.game';
 
 export class LobbyUI extends BaseEntity {
   key = 'login';
@@ -18,7 +18,7 @@ export class LobbyUI extends BaseEntity {
   characters!: UiEntity;
   createCharacter!: UiEntity;
 
-  constructor(public scene: BaseScene & {game:NetworkedGame}) {
+  constructor(public scene: BaseScene & { game: NetworkedGame }) {
     super(scene, 0, 0, []);
     this.login           = new UiEntity(this.scene, 'login', this.getTemplate('login'));
     this.register        = new UiEntity(this.scene, 'register', this.getTemplate('register'));
@@ -32,31 +32,30 @@ export class LobbyUI extends BaseEntity {
     this.toLogin();
   }
 
-  toCharacters      = () => {
-    this.login.removeUI();
-    this.register.removeUI();
-    this.characters.addUI();
-    this.createCharacter.removeUI();
-  };
-  toCreateCharacter = () => {
+  reset = () => {
     this.login.removeUI();
     this.register.removeUI();
     this.characters.removeUI();
+    this.createCharacter.removeUI();
+  };
+
+  toCharacters      = () => {
+    this.reset();
+    this.characters.addUI();
+  };
+  toCreateCharacter = () => {
+    this.reset();
     this.createCharacter.addUI();
   };
 
   toRegister = () => {
-    this.login.removeUI();
+    this.reset();
     this.register.addUI();
-    this.characters.removeUI();
-    this.createCharacter.removeUI();
   };
 
   toLogin = () => {
+    this.reset();
     this.login.addUI();
-    this.register.removeUI();
-    this.characters.removeUI();
-    this.createCharacter.removeUI();
   };
 
   onCharacterSelected = (character: CharacterModel) => {

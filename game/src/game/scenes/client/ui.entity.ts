@@ -1,4 +1,4 @@
-import { BaseEntity } from '../../base.entity';
+import { BaseEntity } from '../../ui/base.entity';
 import { ReactNode }  from 'react';
 
 export class UiEntity extends BaseEntity {
