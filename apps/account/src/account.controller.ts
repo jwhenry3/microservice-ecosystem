@@ -14,6 +14,7 @@ export class AccountController {
     private auth: AuthService,
     private client: ClientProxy,
   ) {
+    this.account.clearSocketIds().then();
   }
 
   @MessagePattern('request.' + CONSTANTS.REGISTER)
@@ -31,13 +32,13 @@ export class AccountController {
   @MessagePattern('request.' + CONSTANTS.LOGIN)
   async onLogin({ requesterId, data }: { requesterId: string, data: { email: string, password: string } }) {
     let result = await this.account.login(data.email, data.password, requesterId);
-    if (result) {
+    if (typeof result === 'object' && result.account) {
       this.client.emit('emit.to', { event: CONSTANTS.LOGGED_IN, id: requesterId, data: {} });
       return {
         token: this.auth.createToken(result.account),
       };
     }
-    return false;
+    return result;
   }
 
   @MessagePattern('request.' + CONSTANTS.LOGOUT)
@@ -97,18 +98,6 @@ export class AccountController {
       });
     }
     return [];
-  }
-
-  @MessagePattern('request.' + CONSTANTS.SELECT_CHARACTER)
-  async onSelectedCharacter({ requesterId, data }: { requesterId: string, data: { id: number | null } }) {
-    let account = await this.account.getAccountBySocketId(requesterId);
-    if (account) {
-      if (!data.id || await this.character.findOne({ account, id: data.id })) {
-        await this.account.selectCharacter(account, data.id);
-        return true;
-      }
-    }
-    return false;
   }
 
   @MessagePattern('request.' + CONSTANTS.DELETE_CHARACTER)

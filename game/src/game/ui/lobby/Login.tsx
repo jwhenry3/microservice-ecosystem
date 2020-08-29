@@ -31,8 +31,8 @@ export default class Login extends Component<LoginProps, any> {
   };
 
   onSubmit = (values: LoginForm, helpers: FormikHelpers<LoginForm>) => {
-    this.props.network.auth.login(values.email, values.password).then((result: { token: string }) => {
-      if (result.token) {
+    this.props.network.auth.login(values.email, values.password).then((result: { token: string } | 'logged-in' | 'not-found') => {
+      if (typeof result === 'object' && result.token) {
         this.props.network.auth.session = {
           email: values.email,
           token: result.token,
@@ -41,6 +41,13 @@ export default class Login extends Component<LoginProps, any> {
         return;
       }
       helpers.setSubmitting(false);
+      console.log(result);
+      if (result === 'logged-in') {
+        console.error('Already Logged In!');
+      } else {
+        console.error('Invalid Credentials');
+      }
+
     });
   };
 

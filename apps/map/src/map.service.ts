@@ -25,7 +25,6 @@ export class MapService {
   start() {
     this.maps['zone-1']          = new GameMap('zone-1', Zone1Scene);
     this.maps['zone-1'].onUpdate = (state) => {
-      console.log('state updated!', state);
       this.client.emit('emit.to', {
         event: 'map.update',
         id   : 'zone-1',
@@ -47,6 +46,9 @@ export class MapService {
     let character = await this.getCharacter(characterId, requesterId);
     if (character) {
       let location = await this.repo.findOne({ where: { characterId: character.id } });
+      if (location?.online) {
+        return false;
+      }
       if (!location) {
         location             = new LocationEntity();
         location.characterId = characterId;

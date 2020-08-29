@@ -5,6 +5,12 @@ import { EntityRepository, Repository } from 'typeorm';
 export class AccountRepo extends Repository<AccountEntity> {
 
 
+  async clearSocketIds() {
+    await this.createQueryBuilder().update(AccountEntity)
+              .set({ currentSocketId: null })
+              .execute();
+  }
+
   async getAccountByEmail(email: string) {
     return await this.findOne({
       where: { email },
@@ -17,32 +23,27 @@ export class AccountRepo extends Repository<AccountEntity> {
     });
   }
 
-  async login(email: string, password: string, socketId: string) {
+  async login(email: string, password: string, socketId: string): Promise<{ account: AccountEntity } | 'logged-in' | 'not-found'> {
     let account = await this.getAccountByEmail(email);
     if (account) {
+      console.log(account);
       if (account.verify(password)) {
-        account.currentSocketId    = socketId;
-        account.currentCharacterId = null;
-        await this.save(account, { reload: true });
-        return { account };
+        if (!account.currentSocketId) {
+          account.currentSocketId = socketId;
+          await this.save(account, { reload: true });
+          return { account };
+        } else {
+          return 'logged-in';
+        }
       }
     }
-    return null;
+    return 'not-found';
   }
 
   async updateSocketId(account: AccountEntity, socketId: string) {
     account.currentSocketId = socketId;
     await this.save(account, { reload: true });
     return { account };
-  }
-
-  async selectCharacter(account: AccountEntity, characterId: number | null) {
-    if (!characterId || account.currentSocketId) {
-      account.currentCharacterId = characterId;
-      await this.save(account, { reload: true });
-      return { account };
-    }
-    return null;
   }
 
   async register(email: string, password: string, socketId: string) {
@@ -61,8 +62,7 @@ export class AccountRepo extends Repository<AccountEntity> {
   async logout(email: string) {
     let account = await this.getAccountByEmail(email);
     if (account) {
-      account.currentSocketId    = null;
-      account.currentCharacterId = null;
+      account.currentSocketId = null;
       await this.save(account, { reload: true });
       return { account };
     }

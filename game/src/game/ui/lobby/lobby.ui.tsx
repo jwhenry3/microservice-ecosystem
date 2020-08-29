@@ -58,17 +58,17 @@ export class LobbyUI extends BaseEntity {
     this.login.addUI();
   };
 
-  onCharacterSelected = (character: CharacterModel) => {
-    this.scene.game.network.character.selectCharacter(character).then(async result => {
-      if (result) {
-        let joined = await this.scene.game.network.map.join(character.id as number) as any;
-        if (joined) {
-          this.scene.game.network.character.currentId = character.id as number;
-          this.scene.scene.stop('lobby');
-          this.scene.scene.start(joined.map);
-        }
+  onCharacterSelected = async (character: CharacterModel) => {
+    let joined = await this.scene.game.network.map.join(character.id as number) as any;
+    if (joined) {
+      this.scene.game.network.character.currentId = character.id as number;
+      this.scene.scene.stop('lobby');
+      this.scene.scene.start(joined.map);
+    } else {
+      if (joined === false) {
+        console.error('Character Already Logged In!');
       }
-    });
+    }
   };
 
   getTemplate(value: string) {

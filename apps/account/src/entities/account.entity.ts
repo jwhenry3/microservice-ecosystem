@@ -14,8 +14,6 @@ export class AccountEntity {
   password: string;
   @Column({ nullable: true })
   currentSocketId: string;
-  @Column({ nullable: true })
-  currentCharacterId: number;
   @OneToMany(t => CharacterEntity, c => c.account)
   characters: CharacterEntity[];
 
