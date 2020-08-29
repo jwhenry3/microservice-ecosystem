@@ -1,5 +1,5 @@
-import { BaseEntity } from '../base.entity';
-import Modal          from '../../../Modal';
+import { BaseEntity }     from '../base.entity';
+import Modal              from '../../../Modal';
 import Login              from './Login';
 import React              from 'react';
 import { BaseScene }      from '../../scenes/base.scene';
@@ -59,10 +59,14 @@ export class LobbyUI extends BaseEntity {
   };
 
   onCharacterSelected = (character: CharacterModel) => {
-    this.scene.game.network.character.selectCharacter(character).then(result => {
+    this.scene.game.network.character.selectCharacter(character).then(async result => {
       if (result) {
-        this.scene.scene.stop('lobby');
-        this.scene.scene.start('zone-1');
+        let joined = await this.scene.game.network.map.join(character.id as number) as any;
+        if (joined) {
+          this.scene.game.network.character.currentId = character.id as number;
+          this.scene.scene.stop('lobby');
+          this.scene.scene.start(joined.map);
+        }
       }
     });
   };

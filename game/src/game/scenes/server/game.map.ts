@@ -1,15 +1,36 @@
 import Phaser          from 'phaser';
 import { ServerScene } from './server.scene';
 
+export interface PlayerState {
+  id: number
+  name: string
+  x: number
+  y: number
+  path: { x: number, y: number }[]
+}
+
+export interface MapState {
+  map: string
+  players: PlayerState[]
+}
+
 const FPS = 30;
 // Create as many of these as needed to serve as map servers.
 // Running this in the browser may allow for multiple instances of phaser or scenes
 export class GameMap {
 
   game: Phaser.Game;
-  scene:ServerScene;
+  scene: ServerScene;
 
-  constructor(public readonly key: string,   scene: typeof ServerScene) {
+  state: MapState = {
+    map    : this.key,
+    players: [],
+  };
+
+  onUpdate = (state: MapState) => {
+  };
+
+  constructor(public readonly key: string, scene: typeof ServerScene) {
     const config: Phaser.Types.Core.GameConfig = {
       type   : Phaser.HEADLESS,
       width  : 640,
@@ -28,8 +49,19 @@ export class GameMap {
       },
     };
     this.game                                  = new Phaser.Game(config);
-    this.game.scene.add(this.key, this.scene);
+    this.game.scene.add(this.key, scene);
     this.game.scene.start(this.key);
     this.scene = this.game.scene.getAt(0) as ServerScene;
+  }
+
+  update() {
+    let state: MapState = {
+      map    : this.key,
+      players: this.scene.playerArray.map(player => player.toState()),
+    };
+    if (JSON.stringify(this.state) !== JSON.stringify(state)) {
+      this.state = state;
+      this.onUpdate(this.state);
+    }
   }
 }

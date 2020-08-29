@@ -3,6 +3,8 @@ import { CharacterModel } from '../../models/character.model';
 
 export class CharacterNet {
 
+  currentId: number | null = null;
+
   constructor(private net: Net) {
   }
 

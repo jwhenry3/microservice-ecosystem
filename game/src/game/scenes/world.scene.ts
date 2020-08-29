@@ -21,6 +21,7 @@ export class WorldScene extends BaseScene {
 
   players: { [key: string]: Player }   = {};
   playerById: { [id: number]: Player } = {};
+  playerArray: Player[]                = [];
   myPlayer: Player | null              = null;
 
   preload() {
@@ -48,14 +49,15 @@ export class WorldScene extends BaseScene {
   }
 
   addPlayer(id: number, name: string, x: number, y: number, self: boolean = false) {
-    this.players[name]  = new Player(id, name, this, x, y, self);
+    this.players[name]  = new Player(id, name, this.pathfinding, this, x, y, self);
     this.playerById[id] = this.players[name];
+    this.playerGroup.add(this.players[name]);
+    this.playerArray.push(this.players[name]);
     if (self) {
       if (this.myPlayer) {
         this.removePlayer(this.myPlayer.name);
       }
       this.myPlayer = this.players[name];
-      this.playerGroup.add(this.players[name]);
       this.cameras.main.startFollow(this.myPlayer);
       this.cameras.main.setZoom(1.5).setDeadzone(128, 128);
     }
@@ -65,6 +67,7 @@ export class WorldScene extends BaseScene {
     if (this.players[name]) {
       this.playerGroup.remove(this.players[name]);
       this.players[name].destroy(true);
+      this.playerArray.splice(this.playerArray.indexOf(this.players[name]), 1);
       delete this.playerById[this.players[name].id];
       delete this.players[name];
       if (this.myPlayer?.name === name) {
@@ -78,6 +81,9 @@ export class WorldScene extends BaseScene {
     this.physics.overlap(this.playerGroup, this.transitionGroup, (obj1, obj2) => {
       console.log('collide!');
     });
+    for (let player of this.playerArray) {
+      player.update(time, delta);
+    }
   }
 
 }

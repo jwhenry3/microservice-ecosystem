@@ -1,29 +1,26 @@
-import { Controller, Get } from '@nestjs/common';
-import { MapService }      from './map.service';
-import { EventPattern }    from '@nestjs/microservices';
+import { Controller, Get }              from '@nestjs/common';
+import { MapService }                   from './map.service';
+import { EventPattern, MessagePattern } from '@nestjs/microservices';
 
 @Controller()
 export class MapController {
   constructor(private readonly service: MapService) {
+    this.service.start();
   }
 
-  @EventPattern('emit.map.change')
-  onMapChange({ characterId, map }: { characterId: number, map: string }) {
-    this.service.onChanged(characterId, map);
+  @MessagePattern('request.map.join')
+  async onJoined({ data, requesterId }: { data: { characterId: number }, requesterId: string }) {
+    return await this.service.onJoin(data.characterId, requesterId);
   }
 
-  @EventPattern('emit.map.online')
-  onJoined({ characterId }: { characterId: number }) {
-    this.service.onJoined(characterId);
+  @MessagePattern('request.map.leave')
+  async onLeft({ data }: { data: { characterId: number }, requesterId: string }) {
+    return await this.service.onLeave(data.characterId);
   }
 
-  @EventPattern('emit.map.offline')
-  onLeft({ characterId }: { characterId: number }) {
-    this.service.onLeft(characterId);
-  }
-
-  @EventPattern('emit.map.move')
-  onMove({ characterId, destination }: { characterId: number, destination: [number, number] }) {
-    this.service.onMove(characterId, destination);
+  @MessagePattern('request.map.move')
+  async onMove({ data }: { data: { characterId: number, destination: [number, number] }, requesterId: string }) {
+    console.log('move!', data);
+    return await this.service.onMove(data.characterId, data.destination);
   }
 }

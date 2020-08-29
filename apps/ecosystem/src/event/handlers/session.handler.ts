@@ -6,7 +6,14 @@ export class SessionHandler {
 
   }
 
-  handleRequestBehavior(client: Socket, payload: { event: string, data: any }, response: { status: 'error' | 'success', reason?: string }) {
+  handleRequestBehavior(client: Socket, payload: { event: string, data: any }, response: any) {
+    if (payload.event === 'map.join' && response?.map) {
+      console.log('success!');
+      client.join(response.map);
+    }
+    if (payload.event === 'map.leave' && response?.map) {
+      client.leave(response.map);
+    }
     if (payload.event === 'session.join' && response.status === 'success') {
       client.join(payload.data.name);
     }

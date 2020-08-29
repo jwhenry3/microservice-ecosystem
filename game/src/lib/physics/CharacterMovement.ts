@@ -1,24 +1,25 @@
 import { PathfindingPlugin } from '../plugins/pathfinding';
 import { WorldScene }        from '../../game/scenes/world.scene';
+import { Player }            from '../../game/player';
 
 export class CharacterMovement {
 
-  path: Phaser.Geom.Point[] = [];
+  path: { x: number, y: number }[] = [];
 
-  constructor(public scene: WorldScene, public pathfinding: PathfindingPlugin, public subject: Phaser.GameObjects.Arc | Phaser.GameObjects.Sprite) {
+  constructor(public scene: WorldScene, public pathfinding: PathfindingPlugin, public subject: Player) {
   }
 
-  findPath() {
-    this.pathfinding.findPath(
+  findPath(x, y) {
+    return this.pathfinding.findPath(
       { x: this.subject.x, y: this.subject.y },
-      { x: this.scene.input.activePointer.worldX, y: this.scene.input.activePointer.worldY },
-        )
-        .then((result) => {
-          if (result && result?.length > 1) {
-            result.splice(0, 1);
-            this.path = result;
-          }
-        });
+      { x: x * 32, y: y * 32 },
+               )
+               .then((result) => {
+                 if (result && result?.length > 1) {
+                   result.splice(0, 1);
+                   this.path = result;
+                 }
+               });
   }
 
   update() {
@@ -34,9 +35,9 @@ export class CharacterMovement {
         this.snapPosition();
         this.getNextNode();
       }
-      if (!this.path.length) {
-        this.stop();
-      }
+    }
+    if (!this.path.length) {
+      this.stop();
     }
   }
 

@@ -1,8 +1,9 @@
 import Phaser            from 'phaser';
 import { LobbyScene }    from './scenes/client/lobby/lobby.scene';
 import { NetworkedGame } from './networked.game';
-import { throttle }   from 'lodash';
-import { Zone1Scene } from './scenes/client/world/zone-1.scene';
+import { throttle }      from 'lodash';
+import { Zone1Scene }    from './scenes/client/world/zone-1.scene';
+import { WorldScene }    from './scenes/world.scene';
 
 export class GameClient {
   static game: NetworkedGame;
@@ -48,5 +49,19 @@ export class GameClient {
       });
     }, 300, { leading: true, trailing: true }));
     this.game.scene.start('lobby');
+    this.game.network.map.onUpdate((state) => {
+      console.log('state!', state);
+      let scene = this.game.scene.getScene(state.map) as WorldScene;
+      if (scene) {
+        for (let player of state.players) {
+          let clientPlayer = scene.playerById[player.id];
+          if (!clientPlayer) {
+            scene.addPlayer(player.id, player.name, player.x, player.y, player.id === this.game.network.character.currentId);
+            clientPlayer = scene.playerById[player.id];
+          }
+          clientPlayer.movement.path = player.path || [];
+        }
+      }
+    });
   }
 }
