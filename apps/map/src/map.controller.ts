@@ -14,13 +14,18 @@ export class MapController {
   }
 
   @MessagePattern('request.map.leave')
-  async onLeft({ data }: { data: { characterId: number }, requesterId: string }) {
-    return await this.service.onLeave(data.characterId);
+  async onLeft({ data, requesterId }: { data: { characterId: number }, requesterId: string }) {
+    return await this.service.onLeave(data.characterId, requesterId);
+  }
+
+  @EventPattern('emit.map.logout')
+  async onLogout({ accountId }: { accountId: number }) {
+    await this.service.onLogout(accountId);
   }
 
   @MessagePattern('request.map.move')
-  async onMove({ data }: { data: { characterId: number, destination: [number, number] }, requesterId: string }) {
+  async onMove({ data, requesterId }: { data: { characterId: number, destination: [number, number] }, requesterId: string }) {
     console.log('move!', data);
-    return await this.service.onMove(data.characterId, data.destination);
+    return await this.service.onMove(data.characterId, data.destination, requesterId);
   }
 }

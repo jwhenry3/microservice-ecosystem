@@ -9,6 +9,11 @@ export class CharacterEntity implements CharacterModel {
   id: number;
   @ManyToOne(t => AccountEntity, a => a.characters)
   account: AccountEntity;
+
+  get accountId() {
+    return this.account.id;
+  }
+
   @Column()
   name: string;
   @Column()

@@ -4,11 +4,12 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
 export class LocationEntity {
   @PrimaryColumn()
   characterId: number;
-
+  @Column()
+  accountId: number;
   @Column()
   map: string;
   @Column()
-  online:boolean;
+  online: boolean;
 
   @Column()
   x: number;

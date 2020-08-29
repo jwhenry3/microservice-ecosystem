@@ -37,8 +37,9 @@ export class EventGateway implements OnGatewayDisconnect {
     }
   }
 
-  handleDisconnect(client: Socket) {
-    this.client.emit('emit.session.disconnect', { requesterId: client.id });
+  async handleDisconnect(client: Socket) {
+    console.log('logout!');
+    await this.client.send('request.account.logout', { requesterId: client.id }).toPromise();
   }
 
 
