@@ -5,7 +5,6 @@ import { ClientProxy }            from '@nestjs/microservices';
 import { Repository }             from 'typeorm';
 import { LocationEntity }         from './entities/location.entity';
 import { InjectRepository }       from '@nestjs/typeorm';
-import { CONSTANTS }              from '../../../game/src/lib/constants';
 import { interval, Subscription } from 'rxjs';
 import { CharacterModel }         from '../../../game/src/models/character.model';
 // set the fps you need
@@ -68,7 +67,7 @@ export class MapService {
   }
 
   private getCharacter(characterId: number, requesterId: string): Promise<CharacterModel> {
-    return this.client.send('request.' + CONSTANTS.GET_CHARACTER, {
+    return this.client.send('request.character.get', {
       data: { id: characterId },
       requesterId,
     }).toPromise();

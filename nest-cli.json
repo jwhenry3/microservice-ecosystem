@@ -35,13 +35,13 @@
         "tsConfigPath": "apps/presence/tsconfig.app.json"
       }
     },
-    "state": {
+    "battle": {
       "type": "application",
-      "root": "apps/state",
+      "root": "apps/battle",
       "entryFile": "main",
-      "sourceRoot": "apps/state/src",
+      "sourceRoot": "apps/battle/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/state/tsconfig.app.json"
+        "tsConfigPath": "apps/battle/tsconfig.app.json"
       }
     },
     "map": {

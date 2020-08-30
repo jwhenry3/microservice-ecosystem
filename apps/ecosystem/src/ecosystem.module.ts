@@ -6,12 +6,11 @@ import { EventController }                from './event/event.controller';
 import { TerminusModule }                 from '@nestjs/terminus';
 import { ConfigModule }                   from '@nestjs/config';
 import { AccountEntities, AccountModule } from '../../account/src/account.module';
-import { PresenceModule }                 from '../../presence/src/presence.module';
-import { StateModule }                    from '../../state/src/state.module';
-import { ClientModule }                   from '../../../lib/server/client.module';
+import { PresenceModule }               from '../../presence/src/presence.module';
+import { BattleEntities, BattleModule } from '../../battle/src/battle.module';
+import { ClientModule }                 from '../../../lib/server/client.module';
 import { TypeOrmModule }                  from '@nestjs/typeorm';
-import { MapModule }                      from '../../map/src/map.module';
-import { LocationEntity }                 from '../../map/src/entities/location.entity';
+import { MapEntities, MapModule }         from '../../map/src/map.module';
 
 
 @Module({
@@ -19,7 +18,7 @@ import { LocationEntity }                 from '../../map/src/entities/location.
     ...(process.env.ALL_IN_ONE ? [
       AccountModule,
       PresenceModule.forRoot(),
-      StateModule.forRoot(),
+      BattleModule.forRoot(),
       MapModule,
     ] : []),
     ClientModule,
@@ -34,7 +33,7 @@ import { LocationEntity }                 from '../../map/src/entities/location.
       username   : process.env.DB_USERNAME,
       password   : process.env.DB_PASSWORD,
       entities   : [
-        ...(process.env.ALL_IN_ONE ? [...AccountEntities, LocationEntity] : [])
+        ...(process.env.ALL_IN_ONE ? [...AccountEntities, ...MapEntities, ...BattleEntities] : []),
       ],
       database   : 'game',
       synchronize: true,
