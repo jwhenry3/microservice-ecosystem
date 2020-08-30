@@ -1,4 +1,4 @@
-import { MobType } from './mob.types';
+import { MobType } from '../mob.types';
 
 export class Mob {
   type  = '';
@@ -6,9 +6,13 @@ export class Mob {
   hp    = 0;
   maxhp = 0;
   patk  = 0;
+  pacc  = 0;
   pdef  = 0;
+  peva  = 0;
   matk  = 0;
+  macc  = 0;
   mdef  = 0;
+  meva  = 0;
 
   constructor(public config: MobType, public level: number = null) {
     this.type = config.type;
@@ -24,8 +28,12 @@ export class Mob {
     this.hp    = this.calculate('hp', config);
     this.maxhp = this.hp;
     this.patk  = this.calculate('patk', config);
+    this.pacc  = this.calculate('pacc', config);
+    this.peva  = this.calculate('peva', config);
     this.pdef  = this.calculate('pdef', config);
     this.matk  = this.calculate('matk', config);
+    this.macc  = this.calculate('macc', config);
+    this.meva  = this.calculate('meva', config);
     this.mdef  = this.calculate('mdef', config);
   }
 

@@ -2,7 +2,26 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class BattleService {
-  getHello(): string {
-    return 'Hello World!';
+
+
+  startBattle(characters: number[], map:string, mob?:string) {
+
   }
+
+  joinBattle() {
+
+  }
+
+  spectateBattle() {
+
+  }
+
+  leaveBattle() {
+
+  }
+
+  issueCommand() {
+
+  }
+
 }
