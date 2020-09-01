@@ -17,7 +17,7 @@ export class Player extends Phaser.GameObjects.Arc {
     super(scene, x * 32 + 16, y * 32 + 16, 15, 0, 360, false, getColor('#4477ff'));
     scene.add.existing(this);
     scene.physics.add.existing(this, false);
-    (this.body as Phaser.Physics.Arcade.Body).setCollideWorldBounds(true).setFriction(0, 0);
+    (this.body as Phaser.Physics.Arcade.Body).setFriction(0, 0);
     this.movement = new CharacterMovement(this.scene, this.pathfinding, this);
   }
 

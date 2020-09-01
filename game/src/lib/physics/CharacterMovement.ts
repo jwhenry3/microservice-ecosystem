@@ -4,15 +4,15 @@ import { Player }            from '../../game/player';
 
 export class CharacterMovement {
 
-  path: { x: number, y: number }[] = [];
+  path: [number, number][] = [];
 
   constructor(public scene: WorldScene, public pathfinding: PathfindingPlugin, public subject: Player) {
   }
 
   findPath(x, y) {
     return this.pathfinding.findPath(
-      { x: this.subject.x, y: this.subject.y },
-      { x: x * 32, y: y * 32 },
+      [Math.floor(this.subject.x / 32), Math.floor(this.subject.y / 32)],
+      [x, y],
                )
                .then((result) => {
                  if (result && result?.length > 1) {
@@ -36,7 +36,7 @@ export class CharacterMovement {
         this.getNextNode();
       }
     }
-    if (!this.path.length) {
+    if (!this.path.length && (this.subject.body.velocity.x !== 0 || this.subject.body.velocity.y !== 0)) {
       this.stop();
     }
   }
@@ -55,13 +55,13 @@ export class CharacterMovement {
 
   private snapPosition() {
     if (this.path.length) {
-      this.subject.x = this.path[0].x;
-      this.subject.y = this.path[0].y;
+      this.subject.x = (this.path[0][0] * 32);
+      this.subject.y = (this.path[0][1] * 32);
     }
   }
 
   private getNextNode() {
-    this.path.splice(0, 1);
+    this.path = this.path.filter((ele, index) => index !== 0);
   }
 
   private adjustCollisionVelocity() {
@@ -74,25 +74,25 @@ export class CharacterMovement {
   }
 
   private getVelocityFromPath() {
-    let velocity = new Phaser.Geom.Point(
-      (this.path[0].x - this.subject.x),
-      (this.path[0].y - this.subject.y),
-    );
-    velocity.x   = velocity.x * 4;
-    velocity.y   = velocity.y * 4;
+    let velocity = {
+      x: (this.path[0][0] * 32) - this.subject.x,
+      y: (this.path[0][1] * 32) - this.subject.y,
+    };
+    velocity.x   = Math.floor(velocity.x * 4);
+    velocity.y   = Math.floor(velocity.y * 4);
     this.limitSpeed(velocity);
     this.adjustDiagonal(velocity);
     return velocity;
   }
 
-  private adjustDiagonal(velocity: Phaser.Geom.Point) {
+  private adjustDiagonal(velocity: { x: number, y: number }) {
     if (Math.abs(velocity.x) === Math.abs(velocity.y)) {
       velocity.x /= 1.4142;
       velocity.y /= 1.4142;
     }
   }
 
-  private limitSpeed(velocity: Phaser.Geom.Point) {
+  private limitSpeed(velocity: { x: number, y: number }) {
     let maxSpeed = 120;
     if (velocity.x > maxSpeed) {
       velocity.x = maxSpeed;
@@ -110,8 +110,8 @@ export class CharacterMovement {
 
   getDistance() {
     return Phaser.Math.Distance.BetweenPoints({ x: this.subject.x, y: this.subject.y }, {
-      x: this.path[0].x,
-      y: this.path[0].y,
+      x: (this.path[0][0] * 32),
+      y: (this.path[0][1] * 32),
     });
   }
 }

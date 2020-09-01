@@ -41,7 +41,6 @@ export default class Login extends Component<LoginProps, any> {
         return;
       }
       helpers.setSubmitting(false);
-      console.log(result);
       if (result === 'logged-in') {
         console.error('Already Logged In!');
       } else {

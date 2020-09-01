@@ -14,20 +14,14 @@ export class ClientScene extends WorldScene {
         this.hasClicked = true;
         this.game.network.map.move(
           this.myPlayer.id,
-          Math.floor(this.input.activePointer.worldX / 32),
-          Math.floor(this.input.activePointer.worldY / 32),
-        ).then(result => {
-          console.log('movement', result);
+          Math.round(this.input.activePointer.worldX / 32),
+          Math.round(this.input.activePointer.worldY / 32),
+        ).then(() => {
         });
       }
       if (!mouseDown) {
         this.hasClicked = false;
       }
     }
-  }
-
-  addPlayer(id: number, name: string, x: number, y: number, self: boolean = false) {
-    super.addPlayer(id, name, x, y, self);
-    console.log(self, this.myPlayer);
   }
 }

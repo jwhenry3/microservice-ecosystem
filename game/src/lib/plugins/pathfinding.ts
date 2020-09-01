@@ -21,22 +21,19 @@ export class PathfindingPlugin {
       if (this.collisionData[0]) {
         this.easyStar.setGrid(this.collisionData[0]);
         this.easyStar.setAcceptableTiles(walkable);
-        // this.easyStar.enableCornerCutting();
         this.easyStar.enableDiagonals();
       }
     }
   }
 
-  findPath = (origin, target): Promise<Phaser.Geom.Point[] | null> => {
+  findPath = (origin, target): Promise<[number, number][] | null> => {
 
-    let origin_coord = this.getCoordFromPoint(origin);
-    let target_coord = this.getCoordFromPoint(target);
-
-    if (!this.outsideGrid(origin_coord) && !this.outsideGrid(target_coord)) {
+    if (!this.outsideGrid(origin) && !this.outsideGrid(target)) {
       return new Promise(resolve => {
         try {
-          this.easyStar.findPath(origin_coord.column, origin_coord.row, target_coord.column, target_coord.row, (path) => {
-            resolve(this.buildPoints(path));
+          this.easyStar.findPath(origin[0], origin[1], target[0], target[1], (path) => {
+            let built = this.buildPoints(path);
+            resolve(built);
           });
           this.easyStar.calculate();
         } catch (e) {
@@ -47,29 +44,14 @@ export class PathfindingPlugin {
     return new Promise(resolve => resolve(null));
   };
 
-  buildPoints = (path: { x: number, y: number }[]) => {
-    let path_positions: Phaser.Geom.Point[] = [];
+  buildPoints = (path: { x: number, y: number }[]): [number, number][] => {
     if (path?.length) {
-      path.forEach((path_coord) => {
-        path_positions.push(this.getPointFromCoord({ row: path_coord.y, column: path_coord.x }));
-      });
+      return path.map(path => [path.x, path.y]);
     }
-    return path_positions;
+    return [];
   };
 
   outsideGrid = (coord) => {
     return coord.row < 0 || coord.row > this.gridHeight - 1 || coord.column < 0 || coord.column > this.gridWidth - 1;
-  };
-
-  getCoordFromPoint = (point) => {
-    let row    = Math.floor(point.y / 32);
-    let column = Math.floor(point.x / 32);
-    return { row, column };
-  };
-
-  getPointFromCoord = (coord): Phaser.Geom.Point => {
-    let x = (coord.column * 32) + (32 / 2);
-    let y = (coord.row * 32) + (32 / 2);
-    return new Phaser.Geom.Point(x, y);
   };
 }

@@ -1,6 +1,6 @@
 import { goblin } from './mob.types';
 
-export const options = {
+export const battleOptions = {
   'zone-1': {
     mobs  : {
       'goblin': [

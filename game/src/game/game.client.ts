@@ -53,18 +53,34 @@ export class GameClient {
       console.log('state!', state);
       let scene = this.game.scene.getScene(state.map) as WorldScene;
       if (scene) {
-        for (let player of state.players) {
-          let clientPlayer = scene.playerById[player.id];
-          if (!clientPlayer) {
-            scene.addPlayer(player.id, player.name, player.x, player.y, player.id === this.game.network.character.currentId);
-            clientPlayer = scene.playerById[player.id];
-          }
-          if (!player.path) {
-            player.path = [{ x: player.x, y: player.y }];
-          }
-          clientPlayer.movement.path = player.path || [];
-        }
+        let statePlayers: number[] = this.updatePlayers(state, scene);
+        this.removePlayers(scene, statePlayers);
       }
     });
+  }
+
+  private static updatePlayers(state, scene: WorldScene) {
+    let statePlayers: number[] = [];
+    for (let player of state.players) {
+      statePlayers.push(player.id);
+      let clientPlayer = scene.playerById[player.id];
+      if (!clientPlayer) {
+        scene.addPlayer(player.id, player.name, player.x, player.y, player.id === this.game.network.character.currentId);
+        clientPlayer = scene.playerById[player.id];
+      }
+      if (!player.path) {
+        player.path = [[player.x, player.y]];
+      }
+      clientPlayer.movement.path = player.path || [];
+    }
+    return statePlayers;
+  }
+
+  private static removePlayers(scene: WorldScene, statePlayers: number[]) {
+    for (let player of scene.playerArray) {
+      if (!statePlayers.includes(player.id)) {
+        scene.removePlayer(player.name);
+      }
+    }
   }
 }

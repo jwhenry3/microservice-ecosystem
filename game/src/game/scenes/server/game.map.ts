@@ -6,7 +6,7 @@ export interface PlayerState {
   name: string
   x: number
   y: number
-  path: { x: number, y: number }[]
+  path: [number, number][]
 }
 
 export interface MapState {
