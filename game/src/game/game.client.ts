@@ -68,7 +68,7 @@ export class GameClient {
         scene.addPlayer(player.id, player.name, player.x, player.y, player.id === this.game.network.character.currentId);
         clientPlayer = scene.playerById[player.id];
       }
-      if (!player.path) {
+      if (!player.path?.length) {
         player.path = [[player.x, player.y]];
       }
       clientPlayer.movement.path = player.path || [];

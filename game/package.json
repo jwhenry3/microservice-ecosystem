@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@jwhenry/react-windows": "^1.0.8",
     "@jwhenry/rx-state": "^1.2.3",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
@@ -13,6 +14,7 @@
     "@types/jest": "^24.9.1",
     "@types/lodash": "^4.14.158",
     "@types/node": "^12.12.53",
+    "@types/p2": "^0.7.36",
     "@types/react": "^16.9.44",
     "@types/react-color": "^3.0.4",
     "@types/react-dom": "^16.9.8",
@@ -24,6 +26,7 @@
     "mobx": "^5.15.6",
     "mobx-react": "^6.3.0",
     "node-sass": "^4.14.1",
+    "p2": "^0.7.1",
     "phaser": "^3.24.1",
     "phaser-lifecycle-plugin": "^0.1.0",
     "react": "^16.13.1",

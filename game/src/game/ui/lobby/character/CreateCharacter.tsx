@@ -7,7 +7,7 @@ import {
   TextField,
 }                                                                                    from '@material-ui/core';
 import './CreateCharacter.scss';
-import Panel                                                                         from '../../Panel';
+import { Panel }                                                                     from '@jwhenry/react-windows';
 import { ErrorMessage, Field, FieldProps, Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import {
   GENDER,

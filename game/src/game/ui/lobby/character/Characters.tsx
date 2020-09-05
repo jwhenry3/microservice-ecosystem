@@ -3,7 +3,7 @@ import { Network }                                          from '../../../netwo
 import { CharacterModel }                                   from '../../../../models/character.model';
 import { Button, IconButton, List, ListItem, ListItemText } from '@material-ui/core';
 import './Characters.scss';
-import Panel                                                from '../../Panel';
+import { Panel }                                            from '@jwhenry/react-windows';
 import { Subscription }                                     from 'rxjs';
 import { Close }                                            from '@material-ui/icons';
 

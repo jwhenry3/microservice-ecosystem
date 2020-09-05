@@ -27,6 +27,8 @@ code {
   monospace;
 }
 
+@import '../node_modules/@jwhenry/react-windows/dist/index.css';
+
 #ui-container {
   position: fixed;
   top: 0;
@@ -105,9 +107,22 @@ canvas {
 .panel {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #fff;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000,
-  -1px 1px 0 #000, 1px 1px 0 #000;
+
+  .panel-container {
+    background-color: rgba(20, 40, 50, 0.8);
+    .panel-top {
+      border-bottom:none;
+      svg {
+        color: rgba(255,255,255,0.8);
+      }
+    }
+  }
+
+  .panel-container, .panel-container .panel-top {
+    color: #fff;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000,
+    -1px 1px 0 #000, 1px 1px 0 #000;
+  }
 
   input:-webkit-autofill::first-line,
   input:-internal-autofill-previewed,
@@ -138,6 +153,7 @@ canvas {
       opacity: 0.5;
     }
   }
+
 
   label, .MuiInputBase-root {
     text-shadow: none;

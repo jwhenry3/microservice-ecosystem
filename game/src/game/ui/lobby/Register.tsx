@@ -1,8 +1,8 @@
-import React, { Component }                  from 'react';
+import React, { Component }                                 from 'react';
 import { Button, TextField }                                from '@material-ui/core';
 import { Network }                                          from '../../network';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import Panel                                                from '../Panel';
+import { Panel }                                            from '@jwhenry/react-windows';
 
 export interface RegisterProps {
   network: Network
@@ -36,7 +36,7 @@ export default class Register extends Component<RegisterProps, any> {
     return errors;
   };
 
-  onSubmit = (values: RegisterForm, helpers:FormikHelpers<RegisterForm>) => {
+  onSubmit = (values: RegisterForm, helpers: FormikHelpers<RegisterForm>) => {
     this.props.network.auth.register(values.email, values.password).then((result: { token: string }) => {
       if (result.token) {
         this.props.network.auth.session = {
@@ -63,7 +63,7 @@ export default class Register extends Component<RegisterProps, any> {
             }) => (
             <Form autoComplete="off">
               <input type="email" hidden id="Email" value="Email" name="hidden-email" readOnly={true}/>
-              <input type="password" hidden id="Password" value="Password" name="hidden-password" readOnly={true} />
+              <input type="password" hidden id="Password" value="Password" name="hidden-password" readOnly={true}/>
               <Field name="email">
                 {({ field, form, meta }) => (
                   <TextField variant="outlined" type="email" label="Email Address"

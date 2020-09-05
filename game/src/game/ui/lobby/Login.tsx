@@ -2,7 +2,7 @@ import React, { Component }                                 from 'react';
 import { Button, TextField }                                from '@material-ui/core';
 import { Network }                                          from '../../network';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import Panel                                                from '../Panel';
+import { Panel }                                            from '@jwhenry/react-windows';
 
 export interface LoginProps {
   network: Network

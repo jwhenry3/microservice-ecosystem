@@ -4,14 +4,14 @@ import './index.scss';
 import * as serviceWorker   from './serviceWorker';
 import 'phaser';
 import { GameClient }       from './game/game.client';
-import App                  from './App';
 import { focusedCanvas }    from './game/ui/events';
-import { unFocusComponent } from './ui-components';
+import { unFocusComponent } from '@jwhenry/react-windows';
+import { Panels }           from '@jwhenry/react-windows';
 
 GameClient.start();
 ReactDOM.render(
   <React.StrictMode>
-    <App/>
+    <Panels/>
   </React.StrictMode>,
   document.getElementById('root'),
 );

@@ -1,20 +1,9 @@
-import React, { useLayoutEffect, useState }              from 'react';
+import React      from 'react';
 import './App.css';
-import { displayOrder, getComponents, updateComponents } from './ui-components';
+import { Panels } from '@jwhenry/react-windows';
 
 const App = () => {
-  const [componentList, setComponentList] = useState<string[]>([]);
-  useLayoutEffect(() => {
-    let sub = updateComponents.subscribe(() => {
-      if (JSON.stringify(displayOrder) !== JSON.stringify(componentList)) {
-        setComponentList([...displayOrder]);
-      }
-    });
-    return () => sub.unsubscribe();
-  }, [componentList, setComponentList]);
-
-  let components = getComponents();
-  return <>{componentList.map((key: string) => components[key])}</>;
+  return <Panels/>;
 };
 
 export default App;

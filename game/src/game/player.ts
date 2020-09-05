@@ -14,7 +14,7 @@ export class Player extends Phaser.GameObjects.Arc {
     x: number, y: number,
     public self: boolean       = false,
     public controller: boolean = false) {
-    super(scene, x * 32 + 16, y * 32 + 16, 15, 0, 360, false, getColor('#4477ff'));
+    super(scene, x * 32 + 16, y * 32 + 16, 15, 0, 360, false, getColor('#4477ff'), 1);
     scene.add.existing(this);
     scene.physics.add.existing(this, false);
     (this.body as Phaser.Physics.Arcade.Body).setFriction(0, 0);

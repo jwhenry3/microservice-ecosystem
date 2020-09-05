@@ -1,5 +1,4 @@
 import { BaseEntity }     from '../base.entity';
-import Modal              from '../../../Modal';
 import Login              from './Login';
 import React              from 'react';
 import { BaseScene }      from '../../scenes/base.scene';
@@ -9,6 +8,7 @@ import CreateCharacter    from './character/CreateCharacter';
 import { CharacterModel } from '../../../models/character.model';
 import { UiEntity }       from '../../scenes/client/ui.entity';
 import { NetworkedGame }  from '../../networked.game';
+import { Modal }          from '@jwhenry/react-windows/dist';
 
 export class LobbyUI extends BaseEntity {
   key = 'login';
