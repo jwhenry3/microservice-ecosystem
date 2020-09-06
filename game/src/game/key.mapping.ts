@@ -4,21 +4,21 @@ export const keyLabels     = {
 };
 
 export class KeyMapping {
-  keys: { [key: string]: string } = {};
+  map: { [key: string]: string } = {};
 
-  set(key: string, action: string) {
-    this.keys[key] = action;
+  setMapping(key: string, action: string) {
+    this.map[key] = action;
   }
 
-  get(key: string) {
-    return this.keys[key];
+  getMapping(key: string) {
+    return this.map[key];
   }
 
-  unset(key: string) {
-    delete this.keys[key];
+  unsetMapping(key: string) {
+    delete this.map[key];
   }
 
   getMappings() {
-    return availableKeys.map(key => ({ [keyLabels[key] || key]: this.keys[key] }));
+    return availableKeys.map(key => ({ [keyLabels[key] || key]: this.map[key] }));
   }
 }
