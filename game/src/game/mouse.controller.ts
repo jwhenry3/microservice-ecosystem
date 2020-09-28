@@ -5,6 +5,7 @@ export class MouseController {
 
   update(scene: WorldScene) {
     if (scene.myPlayer) {
+      let sprite = scene.myPlayer.sprite;
       let mouseDown = scene.input.mousePointer.leftButtonDown();
       if (!this.hasClicked && mouseDown) {
         this.hasClicked = true;
@@ -21,8 +22,8 @@ export class MouseController {
               return scene.game.network.map.move(
                 scene.myPlayer!.id,
                 [
-                  Math.round(scene.myPlayer!.x / 32),
-                  Math.round(scene.myPlayer!.y / 32),
+                  Math.round(sprite.x / 32),
+                  Math.round(sprite.y / 32),
                 ],
                 movement.path
               );

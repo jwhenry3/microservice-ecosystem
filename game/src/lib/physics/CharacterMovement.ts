@@ -6,12 +6,15 @@ export class CharacterMovement {
 
   path: [number, number][] = [];
 
+  sprite: Phaser.GameObjects.Sprite | Phaser.GameObjects.Arc;
+
   constructor(public scene: WorldScene, public pathfinding: PathfindingPlugin, public subject: Player) {
+    this.sprite = this.subject.sprite;
   }
 
   findPath(x, y) {
     return this.pathfinding.findPath(
-      [Math.floor(this.subject.x / 32), Math.floor(this.subject.y / 32)],
+      [Math.floor(this.sprite.x / 32), Math.floor(this.sprite.y / 32)],
       [x, y],
                )
                .then((result) => {
@@ -27,7 +30,7 @@ export class CharacterMovement {
       let distance = this.getDistance();
       if (distance > 1) {
         this.setVelocityFromPath();
-        this.scene.physics.world.collide(this.subject, this.scene.wallGroup, () => this.adjustCollisionVelocity());
+        this.scene.physics.world.collide(this.sprite, this.scene.wallGroup, () => this.adjustCollisionVelocity());
         if (distance < 20 && this.path.length > 1) {
           this.getNextNode();
         }
@@ -36,28 +39,28 @@ export class CharacterMovement {
         this.getNextNode();
       }
     }
-    if (!this.path.length && (this.subject.body.velocity.x !== 0 || this.subject.body.velocity.y !== 0)) {
+    if (!this.path.length && (this.sprite.body.velocity.x !== 0 || this.sprite.body.velocity.y !== 0)) {
       this.stop();
     }
   }
 
   private setVelocityFromPath() {
-    let velocity                 = this.getVelocityFromPath();
-    this.subject.body.velocity.x = velocity.x;
-    this.subject.body.velocity.y = velocity.y;
+    let velocity                = this.getVelocityFromPath();
+    this.sprite.body.velocity.x = velocity.x;
+    this.sprite.body.velocity.y = velocity.y;
   }
 
   private stop() {
-    this.path                    = [];
-    this.subject.body.velocity.x = 0;
-    this.subject.body.velocity.y = 0;
+    this.path                   = [];
+    this.sprite.body.velocity.x = 0;
+    this.sprite.body.velocity.y = 0;
     this.sendNewData();
   }
 
   private snapPosition() {
     if (this.path.length) {
-      this.subject.x = (this.path[0][0] * 32);
-      this.subject.y = (this.path[0][1] * 32);
+      this.sprite.x = (this.path[0][0] * 32);
+      this.sprite.y = (this.path[0][1] * 32);
       this.sendNewData();
     }
   }
@@ -72,8 +75,8 @@ export class CharacterMovement {
       this.scene.game.network.map.move(
         this.subject.id,
         [
-          Math.round(this.subject.x / 32),
-          Math.round(this.subject.y / 32),
+          Math.round(this.sprite.x / 32),
+          Math.round(this.sprite.y / 32),
         ],
         this.path,
       ).then();
@@ -81,18 +84,18 @@ export class CharacterMovement {
   }
 
   private adjustCollisionVelocity() {
-    if (this.subject.body.velocity.x !== 0) {
-      this.subject.body.velocity.x *= 1.4142;
+    if (this.sprite.body.velocity.x !== 0) {
+      this.sprite.body.velocity.x *= 1.4142;
     }
-    if (this.subject.body.velocity.y !== 0) {
-      this.subject.body.velocity.y *= 1.4142;
+    if (this.sprite.body.velocity.y !== 0) {
+      this.sprite.body.velocity.y *= 1.4142;
     }
   }
 
   private getVelocityFromPath() {
     let velocity = {
-      x: (this.path[0][0] * 32) - this.subject.x,
-      y: (this.path[0][1] * 32) - this.subject.y,
+      x: (this.path[0][0] * 32) - this.sprite.x,
+      y: (this.path[0][1] * 32) - this.sprite.y,
     };
     velocity.x   = Math.floor(velocity.x * 4);
     velocity.y   = Math.floor(velocity.y * 4);
@@ -125,7 +128,7 @@ export class CharacterMovement {
   }
 
   getDistance() {
-    return Phaser.Math.Distance.BetweenPoints({ x: this.subject.x, y: this.subject.y }, {
+    return Phaser.Math.Distance.BetweenPoints({ x: this.sprite.x, y: this.sprite.y }, {
       x: (this.path[0][0] * 32),
       y: (this.path[0][1] * 32),
     });

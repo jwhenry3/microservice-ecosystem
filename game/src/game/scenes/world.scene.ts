@@ -37,7 +37,7 @@ export class WorldScene extends BaseScene {
     super.create();
     this.playerGroup = this.add.group();
     if (this.playerArray.length) {
-      this.playerGroup.addMultiple(this.playerArray);
+      this.playerGroup.addMultiple(this.playerArray.map(player => player.sprite));
     }
     this.pathfinding = new PathfindingPlugin();
     this.pathfinding.init({ key: this.key });
@@ -65,12 +65,12 @@ export class WorldScene extends BaseScene {
     this.players[name]  = new Player(id, name, this.pathfinding, this, x, y, self);
     this.playerById[id] = this.players[name];
     if (this.playerGroup) {
-      this.playerGroup.add(this.players[name]);
+      this.playerGroup.add(this.players[name].sprite);
     }
     this.playerArray.push(this.players[name]);
     if (self) {
       this.myPlayer = this.players[name];
-      this.cameras.main.startFollow(this.myPlayer);
+      this.cameras.main.startFollow(this.myPlayer.sprite);
       this.cameras.main.setZoom(1.5).setDeadzone(128, 128);
     }
   }
@@ -78,9 +78,9 @@ export class WorldScene extends BaseScene {
   removePlayer(name: string) {
     if (this.players[name]) {
       if (this.playerGroup) {
-        this.playerGroup.remove(this.players[name]);
+        this.playerGroup.remove(this.players[name].sprite);
       }
-      this.players[name].destroy(true);
+      this.players[name].sprite.destroy(true);
       if (this.playerArray.indexOf(this.players[name]) !== -1) {
         this.playerArray.splice(this.playerArray.indexOf(this.players[name]), 1);
       }
