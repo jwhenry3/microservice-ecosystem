@@ -102,6 +102,7 @@ export class MapService {
   private async removePlayerLocation(location: LocationEntity) {
     location.online = false;
     await this.repo.save(location);
+    delete this.maps[location.map].players[location.characterId];
     return location;
   }
 

@@ -9,7 +9,7 @@ import { NetworkedGame }            from '../networked.game';
 
 export class WorldScene extends BaseScene {
   game!: NetworkedGame;
-  key = 'world';
+  key                = 'world';
   grid!: Phaser.GameObjects.Grid;
   wallGroup!: Phaser.GameObjects.Group;
   transitionGroup!: Phaser.GameObjects.Group;
@@ -27,7 +27,7 @@ export class WorldScene extends BaseScene {
 
   players: { [key: string]: Player }   = {};
   playerById: { [id: number]: Player } = {};
-  playerArray: Player[]                = [];
+  playerArray: string[]                = [];
   myPlayer: Player | null              = null;
 
   preload() {
@@ -37,7 +37,7 @@ export class WorldScene extends BaseScene {
     super.create();
     this.playerGroup = this.add.group();
     if (this.playerArray.length) {
-      this.playerGroup.addMultiple(this.playerArray.map(player => player.sprite));
+      this.playerGroup.addMultiple(this.playerArray.map(id => this.playerById[id].sprite));
     }
     this.pathfinding = new PathfindingPlugin();
     this.pathfinding.init({ key: this.key });
@@ -67,12 +67,12 @@ export class WorldScene extends BaseScene {
     if (this.playerGroup) {
       this.playerGroup.add(this.players[name].sprite);
     }
-    this.playerArray.push(this.players[name]);
     if (self) {
       this.myPlayer = this.players[name];
       this.cameras.main.startFollow(this.myPlayer.sprite);
       this.cameras.main.setZoom(1.5).setDeadzone(128, 128);
     }
+    this.playerArray = Object.keys(this.playerById);
   }
 
   removePlayer(name: string) {
@@ -81,14 +81,12 @@ export class WorldScene extends BaseScene {
         this.playerGroup.remove(this.players[name].sprite);
       }
       this.players[name].sprite.destroy(true);
-      if (this.playerArray.indexOf(this.players[name]) !== -1) {
-        this.playerArray.splice(this.playerArray.indexOf(this.players[name]), 1);
-      }
       delete this.playerById[this.players[name].id];
       delete this.players[name];
       if (this.myPlayer?.name === name) {
         this.myPlayer = null;
       }
+      this.playerArray = Object.keys(this.playerById);
     }
   }
 
@@ -97,9 +95,7 @@ export class WorldScene extends BaseScene {
     this.physics.overlap(this.playerGroup, this.transitionGroup, (obj1, obj2) => {
       console.log('collide!');
     });
-    for (let player of this.playerArray) {
-      player.update(time, delta);
-    }
+    this.playerArray.forEach(id => this.playerById[id].update(time, delta));
     this.mouseController.update(this);
   }
 

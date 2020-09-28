@@ -76,9 +76,9 @@ export class GameClient {
   }
 
   private static removePlayers(scene: WorldScene, statePlayers: number[]) {
-    for (let player of scene.playerArray) {
-      if (!statePlayers.includes(player.id)) {
-        scene.removePlayer(player.name);
+    for (let playerId of Object.keys(scene.playerById)) {
+      if (!statePlayers.includes(parseInt(playerId + ''))) {
+        scene.removePlayer(scene.playerById[playerId].name);
       }
     }
   }
