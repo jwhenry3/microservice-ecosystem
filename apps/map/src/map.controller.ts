@@ -24,8 +24,7 @@ export class MapController {
   }
 
   @MessagePattern('request.map.move')
-  async onMove({ data, requesterId }: { data: { characterId: number, destination: [number, number] }, requesterId: string }) {
-    console.log('move!', data);
-    return await this.service.onMove(data.characterId, data.destination, requesterId);
+  async onMove({ data, requesterId }: { data: { characterId: number, position: [number, number], path: [number, number][] }, requesterId: string }) {
+    return await this.service.onMove(data.characterId, data.position, data.path, requesterId);
   }
 }

@@ -1,5 +1,5 @@
-import { ClientScene } from '../client.scene';
+import { WorldScene }  from '../../world.scene';
 
-export class Zone1Scene extends ClientScene {
+export class Zone1Scene extends WorldScene {
   key = 'zone-1';
 }

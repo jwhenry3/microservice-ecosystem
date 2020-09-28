@@ -13,8 +13,8 @@ export class MapNet {
     return await this.net.request('map.leave', { characterId });
   }
 
-  async move(characterId: number, x: number, y: number): Promise<[number,number][]> {
-    return await this.net.request('map.move', { characterId, destination: [x, y] });
+  async move(characterId: number, position: [number, number], path: [number, number][]): Promise<[number, number][]> {
+    return await this.net.request('map.move', { characterId, position, path });
   }
 
   onUpdate(cb: (...args: any[]) => void) {

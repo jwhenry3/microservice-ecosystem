@@ -26,7 +26,6 @@ export class AccountRepo extends Repository<AccountEntity> {
   async login(email: string, password: string, socketId: string): Promise<{ account: AccountEntity } | 'logged-in' | 'not-found'> {
     let account = await this.getAccountByEmail(email);
     if (account) {
-      console.log(account);
       if (account.verify(password)) {
         if (!account.currentSocketId) {
           account.currentSocketId = socketId;

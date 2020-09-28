@@ -3,14 +3,20 @@ import { getColor, loadCollisions } from '../../lib/physics/loadCollisions';
 import { PathfindingPlugin }        from '../../lib/plugins/pathfinding';
 import { Player }                   from '../player';
 import { Transition }               from '../transition';
+import { KeyboardController }       from '../keyboard.controller';
+import { MouseController }          from '../mouse.controller';
+import { NetworkedGame }            from '../networked.game';
 
 export class WorldScene extends BaseScene {
+  game!: NetworkedGame;
   key = 'world';
   grid!: Phaser.GameObjects.Grid;
   wallGroup!: Phaser.GameObjects.Group;
   transitionGroup!: Phaser.GameObjects.Group;
   playerGroup!: Phaser.GameObjects.Group;
   pathfinding!: PathfindingPlugin;
+  keyboardController = new KeyboardController();
+  mouseController    = new MouseController();
 
   transitions: { x: number, y: number, key: string, id: string }[] = [{
     x  : 2,
@@ -46,6 +52,7 @@ export class WorldScene extends BaseScene {
       this.transitionGroup.add(square);
       this.physics.add.existing(square, true);
     }
+    this.keyboardController.initialize(this.input.keyboard);
   }
 
   resize() {
@@ -93,6 +100,7 @@ export class WorldScene extends BaseScene {
     for (let player of this.playerArray) {
       player.update(time, delta);
     }
+    this.mouseController.update(this);
   }
 
 }

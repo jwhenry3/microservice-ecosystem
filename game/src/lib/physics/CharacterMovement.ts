@@ -1,6 +1,6 @@
 import { PathfindingPlugin } from '../plugins/pathfinding';
-import { WorldScene }        from '../../game/scenes/world.scene';
 import { Player }            from '../../game/player';
+import { WorldScene }        from '../../game/scenes/world.scene';
 
 export class CharacterMovement {
 
@@ -51,17 +51,33 @@ export class CharacterMovement {
     this.path                    = [];
     this.subject.body.velocity.x = 0;
     this.subject.body.velocity.y = 0;
+    this.sendNewData();
   }
 
   private snapPosition() {
     if (this.path.length) {
       this.subject.x = (this.path[0][0] * 32);
       this.subject.y = (this.path[0][1] * 32);
+      this.sendNewData();
     }
   }
 
   private getNextNode() {
     this.path = this.path.filter((ele, index) => index !== 0);
+    this.sendNewData();
+  }
+
+  private sendNewData() {
+    if (this.subject.self) {
+      this.scene.game.network.map.move(
+        this.subject.id,
+        [
+          Math.round(this.subject.x / 32),
+          Math.round(this.subject.y / 32),
+        ],
+        this.path,
+      ).then();
+    }
   }
 
   private adjustCollisionVelocity() {

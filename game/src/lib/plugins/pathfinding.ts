@@ -22,6 +22,7 @@ export class PathfindingPlugin {
         this.easyStar.setGrid(this.collisionData[0]);
         this.easyStar.setAcceptableTiles(walkable);
         this.easyStar.enableDiagonals();
+        this.easyStar.disableCornerCutting();
       }
     }
   }

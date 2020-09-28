@@ -1,19 +1,18 @@
-import { Controller, Get }                           from '@nestjs/common';
-import { AccountRepo }                               from './account.repo';
+import { Controller, Get, OnApplicationBootstrap } from '@nestjs/common';
+import { AccountRepo }                             from './account.repo';
 import { ClientProxy, EventPattern, MessagePattern } from '@nestjs/microservices';
 import { AuthService }                               from './auth.service';
 import { CharacterRepo }                             from './character.repo';
 import { CharacterModel }                            from '../../../game/src/models/character.model';
 
 @Controller()
-export class AccountController {
+export class AccountController implements OnApplicationBootstrap {
   constructor(
     private account: AccountRepo,
     private character: CharacterRepo,
     private auth: AuthService,
     private client: ClientProxy,
   ) {
-    this.account.clearSocketIds().then();
   }
 
   @MessagePattern('request.account.register')
@@ -109,5 +108,10 @@ export class AccountController {
       }
     }
     return false;
+  }
+
+  onApplicationBootstrap(): any {
+    console.log('clear socket ids!');
+    this.account.clearSocketIds().then();
   }
 }
