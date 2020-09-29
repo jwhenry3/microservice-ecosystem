@@ -31,16 +31,17 @@ export class WorldScene extends BaseScene {
   myPlayer: Player | null              = null;
 
   preload() {
+    this.pathfinding = new PathfindingPlugin();
+    this.pathfinding.init({ key: this.key });
   }
 
   create() {
     super.create();
+    this.input.setPollAlways();
     this.playerGroup = this.add.group();
     if (this.playerArray.length) {
       this.playerGroup.addMultiple(this.playerArray.map(id => this.playerById[id].sprite));
     }
-    this.pathfinding = new PathfindingPlugin();
-    this.pathfinding.init({ key: this.key });
     let data = loadCollisions(this);
     if (data) {
       this.grid      = data.grid;

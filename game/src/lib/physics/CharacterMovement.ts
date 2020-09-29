@@ -30,8 +30,8 @@ export class CharacterMovement {
       let distance = this.getDistance();
       if (distance > 1) {
         this.setVelocityFromPath();
-        this.scene.physics.world.collide(this.sprite, this.scene.wallGroup, () => this.adjustCollisionVelocity());
-        if (distance < 20 && this.path.length > 1) {
+        this.scene.physics.world.collide(this.scene.wallGroup, this.sprite);
+        if (distance < 24 && this.path.length > 1) {
           this.getNextNode();
         }
       } else {
@@ -83,15 +83,6 @@ export class CharacterMovement {
     }
   }
 
-  private adjustCollisionVelocity() {
-    if (this.sprite.body.velocity.x !== 0) {
-      this.sprite.body.velocity.x *= 1.4142;
-    }
-    if (this.sprite.body.velocity.y !== 0) {
-      this.sprite.body.velocity.y *= 1.4142;
-    }
-  }
-
   private getVelocityFromPath() {
     let velocity = {
       x: (this.path[0][0] * 32) - this.sprite.x,
@@ -99,7 +90,6 @@ export class CharacterMovement {
     };
     velocity.x   = Math.floor(velocity.x * 4);
     velocity.y   = Math.floor(velocity.y * 4);
-    this.limitSpeed(velocity);
     this.adjustDiagonal(velocity);
     return velocity;
   }
@@ -108,22 +98,6 @@ export class CharacterMovement {
     if (Math.abs(velocity.x) === Math.abs(velocity.y)) {
       velocity.x /= 1.4142;
       velocity.y /= 1.4142;
-    }
-  }
-
-  private limitSpeed(velocity: { x: number, y: number }) {
-    let maxSpeed = 120;
-    if (velocity.x > maxSpeed) {
-      velocity.x = maxSpeed;
-    }
-    if (velocity.x < -maxSpeed) {
-      velocity.x = -maxSpeed;
-    }
-    if (velocity.y > maxSpeed) {
-      velocity.y = maxSpeed;
-    }
-    if (velocity.y < -maxSpeed) {
-      velocity.y = -maxSpeed;
     }
   }
 

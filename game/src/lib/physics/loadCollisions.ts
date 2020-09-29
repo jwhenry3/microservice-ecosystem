@@ -18,7 +18,7 @@ export function loadCollisions(scene: Phaser.Scene & { key: string }) {
     let firstLevel = collisionData[0];
     let width      = firstLevel[0].length;
     let height     = firstLevel.length;
-    let grid       = scene.add.grid((32 * width / 2) - 16, (32 * height / 2) - 16, 32 * width, 32 * height, 32, 32, getColor('#00cc88'), 0.5, getColor('#0000ff'));
+    let grid       = scene.add.grid((32 * width / 2), (32 * height / 2), 32 * width, 32 * height, 32, 32, getColor('#00cc88'), 0.5, getColor('#0000ff'));
     let walls      = scene.add.group();
     for (let y = 0; y < firstLevel.length; y++) {
       for (let x = 0; x < firstLevel[y].length; x++) {
