@@ -29,34 +29,14 @@ export class MouseController {
 
   private getMovementDetails(scene: WorldScene, sprite: PlayerSprite) {
     scene.input.activePointer.updateWorldPoint(scene.cameras.main);
-    let destination: [number, number] = [Math.round(scene.input.activePointer.worldX / 32),
-                                         Math.round(scene.input.activePointer.worldY / 32),
+    let destination: [number, number] = [Math.round(scene.input.activePointer.worldX),
+                                         Math.round(scene.input.activePointer.worldY),
     ];
     let current: [number, number]     = [
-      Math.round(sprite.x / 32),
-      Math.round(sprite.y / 32),
+      Math.round(sprite.x),
+      Math.round(sprite.y),
     ];
-    let diff: [number, number]        = [
-      destination[0] - current[0],
-      destination[1] - current[1],
-    ];
-    let newCoord: [number, number]    = [
-      current[0] + (diff[0] > 0 ? 1 : diff[0] < 0 ? -1 : 0),
-      current[1] + (diff[1] > 0 ? 1 : diff[1] < 0 ? -1 : 0),
-    ];
-    let path                          = [newCoord];
-    if (Math.abs(diff[0]) > 1 || Math.abs(diff[1]) > 1) {
-      path.push([
-        path[0][0] + (diff[0] > 1 ? 1 : diff[0] < -1 ? -1 : 0),
-        path[0][1] + (diff[1] > 1 ? 1 : diff[1] < -1 ? -1 : 0),
-      ]);
-    }
-    if (Math.abs(diff[0]) > 2 || Math.abs(diff[1]) > 2) {
-      path.push([
-        path[1][0] + (diff[0] > 1 ? 1 : diff[0] < -1 ? -1 : 0),
-        path[1][1] + (diff[1] > 1 ? 1 : diff[1] < -1 ? -1 : 0),
-      ]);
-    }
+    let path                          = [destination];
     return { current, path };
   }
 }

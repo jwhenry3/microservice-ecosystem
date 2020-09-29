@@ -12,25 +12,12 @@ export class CharacterMovement {
     this.sprite = this.subject.sprite;
   }
 
-  findPath(x, y) {
-    return this.pathfinding.findPath(
-      [Math.floor(this.sprite.x / 32), Math.floor(this.sprite.y / 32)],
-      [x, y],
-               )
-               .then((result) => {
-                 if (result && result?.length > 1) {
-                   result.splice(0, 1);
-                   this.path = result;
-                 }
-               });
-  }
-
   update() {
     if (this.path.length) {
       let distance = this.getDistance();
       if (distance > 1) {
         this.setVelocityFromPath();
-        this.scene.physics.world.collide(this.scene.wallGroup, this.sprite);
+        this.scene.physics.collide(this.scene.wallGroup, this.sprite);
         if (distance < 24 && this.path.length > 1) {
           this.getNextNode();
         }
@@ -59,8 +46,8 @@ export class CharacterMovement {
 
   private snapPosition() {
     if (this.path.length) {
-      this.sprite.x = (this.path[0][0] * 32);
-      this.sprite.y = (this.path[0][1] * 32);
+      this.sprite.x = (this.path[0][0]);
+      this.sprite.y = (this.path[0][1]);
       this.sendNewData();
     }
   }
@@ -75,8 +62,8 @@ export class CharacterMovement {
       this.scene.game.network.map.move(
         this.subject.id,
         [
-          Math.round(this.sprite.x / 32),
-          Math.round(this.sprite.y / 32),
+          Math.round(this.sprite.x),
+          Math.round(this.sprite.y),
         ],
         this.path,
       ).then();
@@ -85,8 +72,8 @@ export class CharacterMovement {
 
   private getVelocityFromPath() {
     let velocity = {
-      x: (this.path[0][0] * 32) - this.sprite.x,
-      y: (this.path[0][1] * 32) - this.sprite.y,
+      x: (this.path[0][0]) - this.sprite.x,
+      y: (this.path[0][1]) - this.sprite.y,
     };
     velocity.x   = Math.floor(velocity.x * 4);
     velocity.y   = Math.floor(velocity.y * 4);
@@ -95,7 +82,7 @@ export class CharacterMovement {
   }
 
   private adjustDiagonal(velocity: { x: number, y: number }) {
-    if (Math.abs(velocity.x) === Math.abs(velocity.y)) {
+    if (velocity.x !== 0 && velocity.y !== 0) {
       velocity.x /= 1.4142;
       velocity.y /= 1.4142;
     }
@@ -103,8 +90,8 @@ export class CharacterMovement {
 
   getDistance() {
     return Phaser.Math.Distance.BetweenPoints({ x: this.sprite.x, y: this.sprite.y }, {
-      x: (this.path[0][0] * 32),
-      y: (this.path[0][1] * 32),
+      x: (this.path[0][0]),
+      y: (this.path[0][1]),
     });
   }
 }

@@ -37,7 +37,6 @@ export class WorldScene extends BaseScene {
 
   create() {
     super.create();
-    this.input.setPollAlways();
     this.playerGroup = this.add.group();
     if (this.playerArray.length) {
       this.playerGroup.addMultiple(this.playerArray.map(id => this.playerById[id].sprite));
