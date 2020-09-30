@@ -1,6 +1,5 @@
-import { PathfindingPlugin } from '../plugins/pathfinding';
-import { Player }            from '../../game/player';
-import { WorldScene }        from '../../game/scenes/world.scene';
+import { Player }     from '../../game/player';
+import { WorldScene } from '../../game/scenes/world.scene';
 
 export class CharacterMovement {
 
@@ -8,7 +7,7 @@ export class CharacterMovement {
 
   sprite: Phaser.GameObjects.Sprite | Phaser.GameObjects.Arc;
 
-  constructor(public scene: WorldScene, public pathfinding: PathfindingPlugin, public subject: Player) {
+  constructor(public scene: WorldScene, public subject: Player) {
     this.sprite = this.subject.sprite;
   }
 
@@ -16,8 +15,11 @@ export class CharacterMovement {
     if (this.path.length) {
       let distance = this.getDistance();
       if (distance > 1) {
-        this.setVelocityFromPath();
-        this.scene.physics.collide(this.scene.wallGroup, this.sprite);
+        if (distance < 12 && this.path.length === 1) {
+          this.getVelocityBasedOnDistance();
+        } else {
+          this.setVelocityFromPath();
+        }
         if (distance < 24 && this.path.length > 1) {
           this.getNextNode();
         }
@@ -70,15 +72,23 @@ export class CharacterMovement {
     }
   }
 
-  private getVelocityFromPath() {
+  private getVelocityBasedOnDistance() {
     let velocity = {
       x: (this.path[0][0]) - this.sprite.x,
       y: (this.path[0][1]) - this.sprite.y,
     };
-    velocity.x   = Math.floor(velocity.x * 4);
-    velocity.y   = Math.floor(velocity.y * 4);
+    velocity.x   = Math.floor((velocity.x / velocity.x) * 4);
+    velocity.y   = Math.floor((velocity.y) * 4);
     this.adjustDiagonal(velocity);
     return velocity;
+  }
+
+  private getVelocityFromPath() {
+    let angle = Phaser.Math.Angle.Between(this.sprite.x, this.sprite.y, this.path[0][0], this.path[0][1]);
+    return {
+      x: Math.cos(angle) * 320,
+      y: Math.sin(angle) * 320,
+    };
   }
 
   private adjustDiagonal(velocity: { x: number, y: number }) {
